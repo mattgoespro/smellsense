@@ -1,4 +1,4 @@
-package com.example.smellsense
+package za.co.smellsense
 
 import io.flutter.embedding.android.FlutterActivity
 

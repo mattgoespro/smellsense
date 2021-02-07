@@ -1,0 +1,14 @@
+# Customize the codemagic.yaml file according to your project and commit it to the root of your repository
+# Check out https://docs.codemagic.io/getting-started/yaml/ for more information
+# You can also download your configuration from Worklow Editor to get started
+
+workflows:
+  build-ios:
+    name: Build SmellSense for iOS
+    scripts:
+      - name: Build for iOS
+        script: xcodebuild build -workspace "ios/Runner.xcodeproj/project.xcworkspace" -scheme "Runner" CODE_SIGN_INDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+    publishing:
+      email:
+        recipients:
+          - mattyoung305@gmail.com

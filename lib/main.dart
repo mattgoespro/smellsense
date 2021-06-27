@@ -13,17 +13,18 @@ import 'package:smellsense/storage/storage.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
+Future<void> setup() async {
   getIt.registerSingleton<SmellSenseStorage>(SmellSenseStorage());
   getIt.registerSingleton<ScentProvider>(ScentProvider());
+  await getIt.get<SmellSenseStorage>().initStorage();
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initFuture = MobileAds.instance.initialize();
   final adState = AdState(initFuture);
 
-  setup();
+  await setup();
 
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);

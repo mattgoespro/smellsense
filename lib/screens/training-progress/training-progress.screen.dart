@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:smellsense/model/feeling.dart';
 import 'package:smellsense/model/scent.dart';
+import 'package:smellsense/model/training.dart';
 import 'package:smellsense/shared/widgets/app-bar.dart';
 import 'package:smellsense/storage/model/scent-rating.model.dart';
 import 'package:smellsense/storage/model/scent-ratings.model.dart';
@@ -18,8 +21,9 @@ class _ViewTrainingProgressScreenState
     extends State<ViewTrainingProgressScreen> {
   SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
   Map<String, List<ScentRatings>> _trainingRatings;
-  List<String> scentSelections;
+  List<String> _scentSelections;
   String _selectedDate = '';
+  String _startingViewport = '';
 
   @override
   void initState() {
@@ -64,8 +68,7 @@ class _ViewTrainingProgressScreenState
 
     for (String date in sortedDates) {
       List<ScentRating> scentRatings = this.getHighestTrainingRatings(date);
-
-      for (String scentName in scentSelections) {
+      for (String scentName in this._scentSelections) {
         var scentRating;
 
         for (var rating in scentRatings) {
@@ -95,6 +98,8 @@ class _ViewTrainingProgressScreenState
       }
     }
 
+    this._startingViewport = data.keys.first;
+
     return [
       for (String scent in data.keys)
         charts.Series<OrdinalScentRatings, String>(
@@ -112,87 +117,238 @@ class _ViewTrainingProgressScreenState
     ];
   }
 
-  _getData() async {
-    var data = {};
-    data['scents'] = await this._storage.getScentSelectionHistory();
-    data['trainingRatings'] = await this._storage.getDatedScentRatings();
-    return data;
+  List<ScentRating> _getBestScentRatingData(List<ScentRatings> data) {
+    int max = -1;
+    List<ScentRating> bestRatings;
+
+    for (ScentRatings ratings in data) {
+      int totalRating = ratings.getTotalScentRating();
+
+      if (ratings.getTotalScentRating() > max) {
+        max = totalRating;
+        bestRatings = ratings.ratings;
+      }
+    }
+
+    return bestRatings;
+  }
+
+  Widget createScentRating(ScentRating scentRating) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(
+            color: Colors.black54,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, bottom: 10),
+            child: Text(
+              scentRating.scentName,
+              style: TextStyle(
+                color: Scent.scents
+                    .firstWhere((scent) => scent.name == scentRating.scentName)
+                    .color,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(
+                left: 30,
+                bottom: 10,
+              ),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Rating: ',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                          children: [
+                            TextSpan(
+                              text:
+                                  '${Training.answerOptions[scentRating.rating - 1]}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (scentRating.rating == 2) ...[
+                      Text(
+                        'Severity: ${scentRating.severity}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Feeling: ',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SvgPicture.asset(
+                            Feeling.feelings[scentRating.feeling - 1].emoji,
+                            width: 20,
+                            height: 20,
+                          )
+                        ],
+                      ),
+                    ],
+                    Text('Comment:'),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 5,
+                        left: 10,
+                      ),
+                      child: Text(
+                        scentRating.comment != null
+                            ? scentRating.comment
+                            : '- None -',
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+
+  void _showTrainingDataDialog() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        List<ScentRatings> datedScentRatings =
+            this._storage.getDatedScentRatingsByDate(this._selectedDate);
+        List<ScentRating> bestRatings =
+            this._getBestScentRatingData(datedScentRatings);
+
+        return SimpleDialog(
+          titlePadding: EdgeInsets.all(10),
+          title: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Details',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.black,
+              )
+            ],
+          ),
+          contentPadding: EdgeInsets.zero,
+          children: [
+            Center(
+              child: Text(
+                'Date: ${this._selectedDate}',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w200,
+                ),
+              ),
+            ),
+            for (ScentRating rating in bestRatings)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: this.createScentRating(rating),
+              )
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    this._scentSelections = this._storage.getScentSelectionHistory();
+    this._trainingRatings = this._storage.getDatedScentRatings();
+    var chart = GroupedFillColorBarChart(
+      this.getTrainingRatings(),
+      onBarHover: (charts.SelectionModel selection) {
+        if (selection.hasDatumSelection) {
+          List<charts.SeriesDatum<dynamic>> data = selection.selectedDatum;
+
+          OrdinalScentRatings rating = data[0].datum;
+
+          setState(() {
+            this._selectedDate = rating.date;
+          });
+
+          this._showTrainingDataDialog();
+        }
+      },
+      startingViewport: this._startingViewport,
+    );
+
     return Scaffold(
       appBar: SmellSenseAppBar(),
-      body: FutureBuilder(
-        future: this._getData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            this.scentSelections = snapshot.data['scents'];
-            this._trainingRatings = snapshot.data['trainingRatings'];
-
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      'Training Progress',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w100,
-                        fontSize:
-                            Theme.of(context).textTheme.headline5.fontSize,
-                      ),
-                    ),
-                  ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Training Progress',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w100,
+                  fontSize: Theme.of(context).textTheme.headline5.fontSize,
                 ),
-                if (this._trainingRatings.length > 0) ...[
-                  Text(
-                    this._selectedDate != ''
-                        ? 'Date: ${this._selectedDate}'
-                        : 'Touch chart to show date',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w100,
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
-                    ),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GroupedFillColorBarChart(
-                        this.getTrainingRatings(),
-                        onBarHover: (charts.SelectionModel selection) {
-                          if (selection.hasDatumSelection) {
-                            List<charts.SeriesDatum<dynamic>> data =
-                                selection.selectedDatum;
-
-                            setState(() {
-                              this._selectedDate = data[0].datum.date;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ] else
-                  Text(
-                    'No training data to show.',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w100,
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
-                    ),
-                  )
-              ],
-            );
-          }
-        },
+              ),
+            ),
+          ),
+          if (this._trainingRatings.length > 0) ...[
+            Text(
+              this._selectedDate != ''
+                  ? 'Date: ${this._selectedDate}'
+                  : 'Touch bar to show details',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w100,
+                fontSize: Theme.of(context).textTheme.headline6.fontSize,
+              ),
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: chart,
+              ),
+            ),
+          ] else
+            Text(
+              'No training data to show.',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w100,
+                fontSize: Theme.of(context).textTheme.headline6.fontSize,
+              ),
+            )
+        ],
       ),
     );
   }
@@ -202,8 +358,14 @@ class GroupedFillColorBarChart extends StatefulWidget {
   final List<charts.Series> seriesList;
   final bool animate;
   final Function onBarHover;
+  final String startingViewport;
 
-  GroupedFillColorBarChart(this.seriesList, {this.animate, this.onBarHover});
+  GroupedFillColorBarChart(
+    this.seriesList, {
+    this.animate,
+    this.onBarHover,
+    this.startingViewport,
+  });
 
   @override
   _GroupedFillColorBarChartState createState() =>
@@ -233,6 +395,7 @@ class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.NoneRenderSpec(),
+        viewport: charts.OrdinalViewport(widget.startingViewport, 15),
       ),
       behaviors: [
         charts.SeriesLegend(
@@ -241,9 +404,7 @@ class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
           outsideJustification: charts.OutsideJustification.middleDrawArea,
           desiredMaxColumns: 4,
         ),
-        charts.SelectNearest(
-          eventTrigger: charts.SelectionTrigger.tapAndDrag,
-        ),
+        charts.PanAndZoomBehavior()
       ],
     );
   }

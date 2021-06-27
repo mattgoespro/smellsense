@@ -19,17 +19,26 @@ class ScentRatingAdapter extends TypeAdapter<ScentRating> {
     return ScentRating(
       fields[0] as String,
       fields[1] as int,
+      fields[2] as String,
+      fields[3] as String,
+      fields[4] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, ScentRating obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.scentName)
       ..writeByte(1)
-      ..write(obj.rating);
+      ..write(obj.rating)
+      ..writeByte(2)
+      ..write(obj.comment)
+      ..writeByte(3)
+      ..write(obj.severity)
+      ..writeByte(4)
+      ..write(obj.feeling);
   }
 
   @override

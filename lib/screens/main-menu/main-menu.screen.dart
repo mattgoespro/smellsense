@@ -33,8 +33,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     });
   }
 
-  _initMenu() async {
-    var sel = await this._storage.getCurrentScentSelections();
+  _initMenu() {
+    var sel = this._storage.getCurrentScentSelections();
 
     if (sel != null) {
       this._scentSelections = sel
@@ -145,6 +145,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    this._initMenu();
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: FutureBuilder(

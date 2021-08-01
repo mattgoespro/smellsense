@@ -145,33 +145,35 @@ class _AboutScreenState extends State<AboutScreen> {
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Button.primary(
                       text: 'Submit',
-                      onPressed: (this.bugTitle == null ||
-                              this.bugTitle.trim() == "" ||
-                              this.bugSteps == null ||
-                              this.bugTitle.trim() == "")
-                          ? null
-                          : () async {
-                              setState(() {
-                                this.bugTitle = null;
-                                this.bugSteps = null;
-                              });
+                      onPressed: () async {
+                        if (this.bugTitle == null ||
+                            this.bugTitle.trim() == "" ||
+                            this.bugSteps == null ||
+                            this.bugSteps.trim() == "") {
+                          Fluttertoast.showToast(
+                              msg: 'Please fill in the required fields.');
+                        } else {
+                          setState(() {
+                            this.bugTitle = null;
+                            this.bugSteps = null;
+                          });
 
-                              Navigator.of(context).pop();
+                          Navigator.of(context).pop();
 
-                              this.message.text = this.bugSteps;
-                              try {
-                                await send(this.message, this.smtpServer);
-                                Fluttertoast.showToast(
-                                  msg: "Bug reported successfully.",
-                                );
-                              } on MailerException catch (e) {
-                                print(e);
-                                Fluttertoast.showToast(
-                                  msg:
-                                      "Failed to report bug. Reason: ${e.message}",
-                                );
-                              }
-                            },
+                          this.message.text = this.bugSteps;
+                          try {
+                            await send(this.message, this.smtpServer);
+                            Fluttertoast.showToast(
+                              msg: "Bug reported successfully.",
+                            );
+                          } on MailerException catch (e) {
+                            print(e);
+                            Fluttertoast.showToast(
+                              msg: "Failed to report bug. Reason: ${e.message}",
+                            );
+                          }
+                        }
+                      },
                     ),
                   ),
                 ],

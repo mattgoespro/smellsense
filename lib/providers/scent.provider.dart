@@ -1,3 +1,5 @@
+import 'package:smellsense/model/scent-training-rating.dart';
+
 class ScentProvider {
-  Map<String, int> scentRatings = {};
+  Map<String, ScentTrainingRating> scentRatings = {};
 }

@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:hive/hive.dart';
 import 'package:smellsense/storage/model/scent-ratings.model.dart';
 

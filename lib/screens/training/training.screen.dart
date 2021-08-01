@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:smellsense/model/scent-training-rating.dart';
 import 'package:smellsense/model/scent.dart';
 import 'package:smellsense/model/training.dart';
 import 'package:smellsense/providers/scent.provider.dart';
@@ -24,16 +25,29 @@ class SmellTrainingScreen extends StatefulWidget {
 class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
   int _activeStep = 0;
   bool _timerActive = true;
+
+  // Map to group checkbox selections per scent
   var _answers = {};
+
   PageController pageController = PageController();
   ScentProvider _scentProvider = GetIt.I<ScentProvider>();
   SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
 
-  _onScentAnswerSelection(Scent scent, String answer) {
+  _onScentAnswerSelection(
+    Scent scent,
+    String answer,
+    String comment,
+    String severity,
+    int feelingIndex,
+  ) {
     setState(() {
       this._answers[scent.name] = answer;
-      this._scentProvider.scentRatings[scent.name] =
-          Training.answerOptions.indexOf(answer) + 1;
+      this._scentProvider.scentRatings[scent.name] = ScentTrainingRating(
+        Training.answerOptions.indexOf(answer) + 1,
+        comment,
+        severity,
+        feelingIndex,
+      );
     });
   }
 
@@ -57,7 +71,6 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
           ),
           indicatorDecoration: IndicatorDecoration(
             color: Colors.blue,
-            style: PaintingStyle.stroke,
             strokeWidth: 1,
           ),
           tappingEnabled: this._timerActive,
@@ -90,11 +103,22 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
             text: 'Yes',
             onPressed: () async {
               DateTime now = DateTime.now();
-              String dateString = "${now.year}/${now.month}/${now.day}";
+              String dateString =
+                  "${now.year}/${now.month >= 10 ? now.month : "0${now.month}"}/${now.day >= 10 ? now.day : "0${now.day}"}";
               List<ScentRating> ratings = [];
 
-              for (String key in _scentProvider.scentRatings.keys) {
-                ratings.add(ScentRating(key, _scentProvider.scentRatings[key]));
+              for (String key in this._scentProvider.scentRatings.keys) {
+                ScentTrainingRating rating =
+                    this._scentProvider.scentRatings[key];
+                ratings.add(
+                  ScentRating(
+                    key,
+                    rating.rating,
+                    rating.comment,
+                    rating.severity,
+                    rating.feeling,
+                  ),
+                );
               }
 
               await _storage.storeDatedScentRatings(
@@ -115,6 +139,7 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: SmellSenseAppBar(),
       body: Padding(
         padding: EdgeInsets.all(8),

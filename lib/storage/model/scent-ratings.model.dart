@@ -19,4 +19,15 @@ class ScentRatings extends HiveObject {
 
     return totalRating;
   }
+
+  @override
+  String toString() {
+    String string = "";
+
+    for (ScentRating rating in this.ratings) {
+      string += rating.toString() + '\n';
+    }
+
+    return string;
+  }
 }

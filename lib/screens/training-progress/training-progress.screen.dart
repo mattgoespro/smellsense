@@ -184,7 +184,8 @@ class _ViewTrainingProgressScreenState
                         ),
                       ),
                     ),
-                    if (scentRating.rating == 2) ...[
+                    if (scentRating.rating == 2 &&
+                        scentRating.severity != null) ...[
                       Text(
                         'Severity: ${scentRating.severity}',
                         style: TextStyle(

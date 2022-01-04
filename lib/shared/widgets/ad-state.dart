@@ -9,8 +9,8 @@ class AdState {
   AdState(this.initialization);
 
   // Change in production
-  // String get bannerAdUnitId => BannerAd.testAdUnitId;
-  String get bannerAdUnitId => this._bannerAdUnitId;
+  String get bannerAdUnitId => BannerAd.testAdUnitId;
+  //String get bannerAdUnitId => this._bannerAdUnitId;
 
   AdListener get adListener => AdListener();
 }

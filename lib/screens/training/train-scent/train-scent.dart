@@ -81,7 +81,7 @@ class _TrainScentState extends State<TrainScent>
                 width: double.infinity,
                 height: double.infinity,
                 fillColor: Colors.white,
-                color: Colors.blue,
+                ringColor: Colors.blue,
                 textFormat: CountdownTextFormat.SS,
                 isReverse: true,
                 onComplete: () {

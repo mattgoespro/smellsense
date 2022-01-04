@@ -12,5 +12,5 @@ class AdState {
   String get bannerAdUnitId => BannerAd.testAdUnitId;
   //String get bannerAdUnitId => this._bannerAdUnitId;
 
-  AdListener get adListener => AdListener();
+  BannerAdListener get adListener => BannerAdListener();
 }

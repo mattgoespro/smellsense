@@ -287,7 +287,7 @@ class _ViewTrainingProgressScreenState
   Widget build(BuildContext context) {
     this._scentSelections = this._storage.getScentSelectionHistory();
     this._trainingRatings = this._storage.getDatedScentRatings();
-    var chart = GroupedFillColorBarChart(
+    var chart = this._trainingRatings.keys.length > 0 ? GroupedFillColorBarChart(
       this.getTrainingRatings(),
       onBarHover: (charts.SelectionModel selection) {
         if (selection.hasDatumSelection) {
@@ -303,7 +303,7 @@ class _ViewTrainingProgressScreenState
         }
       },
       startingViewport: this._startingViewport,
-    );
+    ) : null;
 
     return Scaffold(
       appBar: SmellSenseAppBar(),
@@ -323,7 +323,7 @@ class _ViewTrainingProgressScreenState
               ),
             ),
           ),
-          if (this._trainingRatings.length > 0) ...[
+          if (chart != null) ...[
             Text(
               this._selectedDate != ''
                   ? 'Date: ${this._selectedDate}'

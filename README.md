@@ -2,7 +2,7 @@
 SmellSense - The Smell Retraining App
 </h1>
 <div style="background: white; height: 800px; display: flex; flex-direction: column;">
-<img src="https://play-lh.googleusercontent.com/6glNMzPT4bVZC6lkG5D220U0OMUwePfW8AWaXVOg0ZvqxF5p7o81yZeeuZgNIv8r268" style="align-self: center;"></img>
+<img src="https://github.com/mattgoespro/public-resources/blob/master/images/SmellSense/Banner.png?raw=true" style="align-self: center;"></img>
 <p style="text-align: center; color: black; font-size: 24px;">
 <a href="https://play.google.com/store/apps/details?id=za.co.smellsense"></a>
 </p>

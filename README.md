@@ -1,6 +1,3 @@
-<h1>
-SmellSense - The Smell Retraining App
-</h1>
 <div style="background: white; height: 800px; display: flex; flex-direction: column;">
 <img src="https://github.com/mattgoespro/public-resources/blob/master/images/SmellSense/Banner.png?raw=true" style="align-self: center;"></img>
 <p style="text-align: center; color: black; font-size: 24px;">

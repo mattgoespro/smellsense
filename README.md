@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <style>
     :root {
         --blue: #00a6e4;
@@ -86,4 +84,3 @@
         </div>
     </div>
 </body>
-</html>

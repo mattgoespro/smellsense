@@ -16,3 +16,8 @@
 <a href="https://twitter.com/smellsense">
 <img class="social-icon" src="https://github.com/mattgoespro/public-resources/blob/master/images/logos/twitter.png?raw=true">
 </a>
+
+### Important iOS config files to update
+
+- _ios/Flutter/AppFrameworkInfo.plist_
+- _ios/Runner.xcodeproj/project.pbxproj_

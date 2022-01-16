@@ -1,44 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'scent-rating.model.dart';
+part of 'training_rating.model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ScentRatingAdapter extends TypeAdapter<ScentRating> {
+class TrainingRatingAdapter extends TypeAdapter<TrainingRating> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
-  ScentRating read(BinaryReader reader) {
+  TrainingRating read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ScentRating(
-      fields[0] as String,
-      fields[1] as int,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as int,
-    );
+    return TrainingRating()
+      ..dateRatings = (fields[0] as Map)?.map((dynamic k, dynamic v) =>
+          MapEntry(k as String, (v as List)?.cast<ScentRatings>()));
   }
 
   @override
-  void write(BinaryWriter writer, ScentRating obj) {
+  void write(BinaryWriter writer, TrainingRating obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.scentName)
       ..writeByte(1)
-      ..write(obj.rating)
-      ..writeByte(2)
-      ..write(obj.comment)
-      ..writeByte(3)
-      ..write(obj.severity)
-      ..writeByte(4)
-      ..write(obj.feeling);
+      ..writeByte(0)
+      ..write(obj.dateRatings);
   }
 
   @override
@@ -47,7 +35,7 @@ class ScentRatingAdapter extends TypeAdapter<ScentRating> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ScentRatingAdapter &&
+      other is TrainingRatingAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

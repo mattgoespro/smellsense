@@ -8,7 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:smellsense/providers/scent.provider.dart';
 import 'package:smellsense/router.dart';
-import 'package:smellsense/shared/widgets/ad-state.dart';
+import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/storage/storage.dart';
 
 final getIt = GetIt.instance;
@@ -34,12 +34,14 @@ void main() async {
   runApp(
     Provider.value(
       value: adState,
-      builder: (context, child) => SmellSenseApp(),
+      builder: (context, child) => const SmellSenseApp(),
     ),
   );
 }
 
 class SmellSenseApp extends StatelessWidget {
+  const SmellSenseApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -50,7 +52,7 @@ class SmellSenseApp extends StatelessWidget {
     return MaterialApp(
       title: 'SmellSense',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           centerTitle: true,
           color: Colors.white,
         ),

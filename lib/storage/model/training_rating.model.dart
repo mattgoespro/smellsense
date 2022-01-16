@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:smellsense/storage/model/scent-ratings.model.dart';
+import 'package:smellsense/storage/model/scent_ratings.model.dart';
 
-part 'training-rating.model.g.dart';
+part 'training_rating.model.g.dart';
 
 @HiveType(typeId: 2)
 class TrainingRating extends HiveObject {
@@ -14,7 +14,7 @@ class TrainingRating extends HiveObject {
   Map<String, List<ScentRatings>> dateRatings;
 
   TrainingRating() {
-    this.dateRatings = Map<String, List<ScentRatings>>();
+    dateRatings = <String, List<ScentRatings>>{};
   }
 }
 

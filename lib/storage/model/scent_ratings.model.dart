@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:smellsense/storage/model/scent-rating.model.dart';
+import 'package:smellsense/storage/model/scent_rating.model.dart';
 
-part 'scent-ratings.model.g.dart';
+part 'scent_ratings.model.g.dart';
 
 @HiveType(typeId: 1)
 class ScentRatings extends HiveObject {
@@ -24,7 +24,7 @@ class ScentRatings extends HiveObject {
   String toString() {
     String string = "";
 
-    for (ScentRating rating in this.ratings) {
+    for (ScentRating rating in ratings) {
       string += rating.toString() + '\n';
     }
 

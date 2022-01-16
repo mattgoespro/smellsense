@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/screens/about/about.dart';
+import 'package:smellsense/screens/about/about.screen.dart';
 import 'package:smellsense/screens/help/help.screen.dart';
-import 'package:smellsense/screens/main-menu/main-menu.screen.dart';
-import 'package:smellsense/screens/scent-selection/scent-selection.screen.dart';
+import 'package:smellsense/screens/main_menu/main_menu.screen.dart';
+import 'package:smellsense/screens/scent_selection/scent_selection.screen.dart';
 import 'package:smellsense/screens/training/training.screen.dart';
-import 'package:smellsense/screens/training-progress/training-progress.screen.dart';
+import 'package:smellsense/screens/training_progress/training_progress.screen.dart';
 
 class ScentSelectionRouteArguments {
   List<Scent> scentSelections;
@@ -30,32 +30,33 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => MainMenuScreen(),
+          builder: (context) => const MainMenuScreen(),
         );
       case '/training':
         var scentArgs = args as SmellTrainingRouteArguments;
         return MaterialPageRoute(
-          builder: (context) => SmellTrainingScreen(scentArgs.scents),
+          builder: (context) => SmellTrainingScreen(Key(scentArgs.scents.join()), scentArgs.scents),
         );
       case '/select-scents':
         var scentArgs = args as ScentSelectionRouteArguments;
         return MaterialPageRoute(
           builder: (context) => ScentSelectionScreen(
+            const Key("select-scents"),
             scentArgs.scentSelections,
             scentArgs.onScentSelectionChanged,
           ),
         );
       case '/training-progress':
         return MaterialPageRoute(
-          builder: (context) => ViewTrainingProgressScreen(),
+          builder: (context) => const ViewTrainingProgressScreen(),
         );
       case '/about':
         return MaterialPageRoute(
-          builder: (context) => AboutScreen(),
+          builder: (context) => const AboutScreen(),
         );
       case '/help':
         return MaterialPageRoute(
-          builder: (context) => HelpScreen(),
+          builder: (context) => const HelpScreen(),
         );
       default:
         return _errorRoute();
@@ -66,7 +67,7 @@ class RouteGenerator {
     return MaterialPageRoute(
       builder: (context) => Scaffold(
         appBar: AppBar(
-          title: Text('ERROR'),
+          title: const Text('ERROR'),
           centerTitle: true,
         ),
       ),

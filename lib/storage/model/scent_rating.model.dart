@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'scent-rating.model.g.dart';
+part 'scent_rating.model.g.dart';
 
 @HiveType(typeId: 0)
 class ScentRating extends HiveObject {

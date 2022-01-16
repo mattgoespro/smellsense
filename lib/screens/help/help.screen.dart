@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
-import 'package:smellsense/shared/widgets/app-bar.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart';
 
 class HelpScreen extends StatelessWidget {
   final String _helpInfo = """
@@ -42,27 +41,27 @@ class HelpScreen extends StatelessWidget {
     with the training.
   </p>
   """;
+
+  const HelpScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SmellSenseAppBar(),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Html(
-              data: this._helpInfo,
-              style: {
-                "h1": Style(
-                  fontWeight: FontWeight.w100,
-                ),
-                "p": Style(
-                  margin: EdgeInsets.only(left: 10),
-                  fontWeight: FontWeight.w100,
-                  color: Colors.black,
-                )
-              },
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Html(
+            data: _helpInfo,
+            style: {
+              "h1": Style(
+                fontWeight: FontWeight.w100,
+              ),
+              "p": Style(
+                margin: const EdgeInsets.only(left: 10),
+                fontWeight: FontWeight.w100,
+                color: Colors.black,
+              )
+            },
           ),
         ),
       ),

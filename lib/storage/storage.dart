@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:smellsense/storage/model/scent-rating.model.dart';
-import 'package:smellsense/storage/model/scent-ratings.model.dart';
-import 'package:smellsense/storage/model/training-rating.model.dart';
+import 'package:smellsense/storage/model/scent_rating.model.dart';
+import 'package:smellsense/storage/model/scent_ratings.model.dart';
+import 'package:smellsense/storage/model/training_rating.model.dart';
 
 class SmellSenseStorage {
   Box storage;
@@ -19,7 +19,7 @@ class SmellSenseStorage {
         ..registerAdapter(TrainingRatingAdapter());
     }
 
-    this.storage = await Hive.openBox("storage");
+    storage = await Hive.openBox("storage");
 
     if (!storage.containsKey("trainingRatings")) {
       await storage.put("trainingRatings", TrainingRating());
@@ -27,7 +27,7 @@ class SmellSenseStorage {
   }
 
   Future<void> updateScentSelections(List<String> scentSelections) {
-    List<String> scentSelectionHistory = this.getScentSelectionHistory();
+    List<String> scentSelectionHistory = getScentSelectionHistory();
     List<String> newSelectionHistory = [];
 
     if (scentSelectionHistory == null) {
@@ -44,7 +44,7 @@ class SmellSenseStorage {
   }
 
   List<String> getCurrentScentSelections() {
-    List<String> scentSelectionHistory = this.getScentSelectionHistory();
+    List<String> scentSelectionHistory = getScentSelectionHistory();
 
     if (scentSelectionHistory == null) {
       return null;
@@ -82,7 +82,7 @@ class SmellSenseStorage {
     Map<String, List<ScentRatings>> datedScentRatings =
         storage.get("trainingRatings").dateRatings;
 
-    return this._correctDates(datedScentRatings);
+    return _correctDates(datedScentRatings);
   }
 
   _correctDates(Map<String, List<ScentRatings>> datedScentRatings) {
@@ -104,7 +104,7 @@ class SmellSenseStorage {
   }
 
   List<ScentRatings> getDatedScentRatingsByDate(String date) {
-    Map<String, List<ScentRatings>> dateRatings = this.getDatedScentRatings();
+    Map<String, List<ScentRatings>> dateRatings = getDatedScentRatings();
     return dateRatings[date];
   }
 }

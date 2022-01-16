@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:im_stepper/stepper.dart';
-import 'package:smellsense/model/scent-training-rating.dart';
+import 'package:smellsense/model/scent_training_rating.dart';
 import 'package:smellsense/model/scent.dart';
 import 'package:smellsense/model/training.dart';
 import 'package:smellsense/providers/scent.provider.dart';
-import 'package:smellsense/screens/training/train-scent/train-scent.dart';
-import 'package:smellsense/shared/widgets/app-bar.dart';
+import 'package:smellsense/screens/training/train_scent/train_scent.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/storage/model/scent-rating.model.dart';
-import 'package:smellsense/storage/model/scent-ratings.model.dart';
+import 'package:smellsense/storage/model/scent_rating.model.dart';
+import 'package:smellsense/storage/model/scent_ratings.model.dart';
 import 'package:smellsense/storage/storage.dart';
 
 class SmellTrainingScreen extends StatefulWidget {
   final List<Scent> scents;
 
-  SmellTrainingScreen(this.scents);
+  const SmellTrainingScreen(Key key, this.scents) : super(key: key);
 
   @override
   _SmellTrainingScreenState createState() => _SmellTrainingScreenState();
@@ -27,11 +27,11 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
   bool _timerActive = true;
 
   // Map to group checkbox selections per scent
-  var _answers = {};
+  final _answers = {};
 
   PageController pageController = PageController();
-  ScentProvider _scentProvider = GetIt.I<ScentProvider>();
-  SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
+  final ScentProvider _scentProvider = GetIt.I<ScentProvider>();
+  final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
 
   _onScentAnswerSelection(
     Scent scent,
@@ -41,8 +41,8 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
     int feelingIndex,
   ) {
     setState(() {
-      this._answers[scent.name] = answer;
-      this._scentProvider.scentRatings[scent.name] = ScentTrainingRating(
+      _answers[scent.name] = answer;
+      _scentProvider.scentRatings[scent.name] = ScentTrainingRating(
         Training.answerOptions.indexOf(answer) + 1,
         comment,
         severity,
@@ -53,36 +53,36 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
 
   void onTimerStatusChange(bool active) {
     setState(() {
-      this._timerActive = active;
+      _timerActive = active;
     });
   }
 
   Widget get _stepperWidget => Padding(
-        padding: EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.only(bottom: 20),
         child: DotStepper(
           dotRadius: 7,
           spacing: 30,
           dotCount: widget.scents.length,
-          activeStep: this._activeStep,
+          activeStep: _activeStep,
           indicator: Indicator.jump,
-          fixedDotDecoration: FixedDotDecoration(
+          fixedDotDecoration: const FixedDotDecoration(
             color: Colors.white,
             strokeWidth: 1,
           ),
-          indicatorDecoration: IndicatorDecoration(
+          indicatorDecoration: const IndicatorDecoration(
             color: Colors.blue,
             strokeWidth: 1,
           ),
-          tappingEnabled: this._timerActive,
+          tappingEnabled: _timerActive,
           onDotTapped: (tappedDotIndex) {
-            this.pageController.animateToPage(
+            pageController.animateToPage(
                   tappedDotIndex,
-                  duration: Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 100),
                   curve: Curves.easeIn,
                 );
           },
           lineConnectorsEnabled: true,
-          lineConnectorDecoration: LineConnectorDecoration(strokeWidth: 0.1),
+          lineConnectorDecoration: const LineConnectorDecoration(strokeWidth: 0.1),
         ),
       );
 
@@ -90,7 +90,7 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(
+        title: const Text(
           'Are you sure you are done training?',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
         ),
@@ -107,9 +107,9 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                   "${now.year}/${now.month >= 10 ? now.month : "0${now.month}"}/${now.day >= 10 ? now.day : "0${now.day}"}";
               List<ScentRating> ratings = [];
 
-              for (String key in this._scentProvider.scentRatings.keys) {
+              for (String key in _scentProvider.scentRatings.keys) {
                 ScentTrainingRating rating =
-                    this._scentProvider.scentRatings[key];
+                    _scentProvider.scentRatings[key];
                 ratings.add(
                   ScentRating(
                     key,
@@ -142,7 +142,7 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
       resizeToAvoidBottomInset: false,
       appBar: SmellSenseAppBar(),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -151,16 +151,17 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                   itemCount: 4,
                   onPageChanged: (pageNumber) {
                     setState(() {
-                      this._activeStep = pageNumber;
+                      _activeStep = pageNumber;
                     });
                   },
-                  controller: this.pageController,
+                  controller: pageController,
                   itemBuilder: (context, index) {
                     return TrainScent(
+                      Key(widget.scents[index].toString()),
                       scent: widget.scents[index],
-                      answers: this._answers,
-                      onAnswer: this._onScentAnswerSelection,
-                      onTimerStatusChange: this.onTimerStatusChange,
+                      answers: _answers,
+                      onAnswer: _onScentAnswerSelection,
+                      onTimerStatusChange: onTimerStatusChange,
                     );
                   }),
             ),
@@ -170,23 +171,23 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
               children: [
                 Button.primary(
                   text: 'Back',
-                  onPressed: this._timerActive
+                  onPressed: _timerActive
                       ? () {
-                          this.pageController.previousPage(
-                                duration: Duration(milliseconds: 300),
+                          pageController.previousPage(
+                                duration: const Duration(milliseconds: 300),
                                 curve: Curves.ease,
                               );
                         }
                       : null,
                 ),
-                this._stepperWidget,
+                _stepperWidget,
                 Button.primary(
-                  text: this._activeStep == 3 ? 'Done' : 'Next',
-                  onPressed: this._timerActive
+                  text: _activeStep == 3 ? 'Done' : 'Next',
+                  onPressed: _timerActive
                       ? () {
-                          if (this._activeStep == 3) {
-                            if (this._answers.keys.length == 4) {
-                              this._showDoneDialog();
+                          if (_activeStep == 3) {
+                            if (_answers.keys.length == 4) {
+                              _showDoneDialog();
                             } else {
                               Fluttertoast.showToast(
                                 msg:
@@ -194,8 +195,8 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                               );
                             }
                           } else {
-                            this.pageController.nextPage(
-                                  duration: Duration(milliseconds: 300),
+                            pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
                                   curve: Curves.ease,
                                 );
                           }

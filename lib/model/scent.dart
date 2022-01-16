@@ -11,67 +11,67 @@ class Scent {
   static final List<Scent> scents = [
     Scent(
       name: 'Lemon',
-      color: ScentColors.LIME,
+      color: ScentColors.lime,
       image: 'assets/images/scents/lemon_1.png',
     ),
     Scent(
       name: 'Rose',
-      color: ScentColors.PINK,
+      color: ScentColors.pink,
       image: 'assets/images/scents/rose_1.png',
     ),
     Scent(
       name: 'Eucalyptus',
-      color: ScentColors.GREEN_DARK,
+      color: ScentColors.greenDark,
       image: 'assets/images/scents/eucalyptus_1.png',
     ),
     Scent(
       name: 'Clove',
-      color: ScentColors.BROWN_LIGHT,
+      color: ScentColors.brownLight,
       image: 'assets/images/scents/clove_1.png',
     ),
     Scent(
       name: 'Orange',
-      color: ScentColors.ORANGE,
+      color: ScentColors.orange,
       image: 'assets/images/scents/orange_1.png',
     ),
     Scent(
       name: 'Grapefruit',
-      color: ScentColors.RED,
+      color: ScentColors.red,
       image: 'assets/images/scents/grapefruit_1.png',
     ),
     Scent(
       name: 'Cinnamon',
-      color: ScentColors.BROWN,
+      color: ScentColors.brown,
       image: 'assets/images/scents/cinnamon_1.png',
     ),
     Scent(
       name: 'Mint',
-      color: ScentColors.GREEN,
+      color: ScentColors.green,
       image: 'assets/images/scents/mint_1.png',
     ),
     Scent(
       name: 'Lavendar',
-      color: ScentColors.PURPLE_DARK,
+      color: ScentColors.purpleDark,
       image: 'assets/images/scents/lavender_1.png',
     ),
     Scent(
       name: 'Citronella',
-      color: ScentColors.LIME_LIGHT,
+      color: ScentColors.limeLight,
       image: 'assets/images/scents/citronella_1.png',
     ),
     Scent(
       name: 'Rosemary',
-      color: ScentColors.PURPLE_LIGHT,
+      color: ScentColors.purpleLight,
       image: 'assets/images/scents/rosemary_1.png',
     ),
     Scent(
       name: 'Chamomile',
-      color: ScentColors.ORANGE_LIGHT,
+      color: ScentColors.orangeLight,
       image: 'assets/images/scents/chamomile_1.png',
     ),
     Scent(
       name: 'Tea Tree',
-      color: ScentColors.TURQOISE,
+      color: ScentColors.turquoise,
       image: 'assets/images/scents/teatree_1.png',
     ),
   ];

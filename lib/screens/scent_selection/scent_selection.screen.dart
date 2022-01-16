@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/shared/widgets/app-bar.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 
@@ -9,7 +9,7 @@ class ScentSelectionScreen extends StatefulWidget {
   final List<Scent> _scentSelections;
   final Function _onScentsSelected;
 
-  ScentSelectionScreen(this._scentSelections, this._onScentsSelected);
+  const ScentSelectionScreen(Key key, this._scentSelections, this._onScentsSelected): super(key: key);
 
   @override
   _ScentSelectionScreenState createState() => _ScentSelectionScreenState();
@@ -23,16 +23,16 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
     super.initState();
 
     if (widget._scentSelections != null) {
-      this._selectedScents =
+      _selectedScents =
           widget._scentSelections.map((e) => e.name).toList();
     } else {
-      this._selectedScents = ['Lemon', 'Rose', 'Eucalyptus', 'Clove'];
+      _selectedScents = ['Lemon', 'Rose', 'Eucalyptus', 'Clove'];
     }
   }
 
   Future<void> _onWriteScentSelections() async {
     SmellSenseStorage storage = GetIt.instance<SmellSenseStorage>();
-    return storage.updateScentSelections(this._selectedScents);
+    return storage.updateScentSelections(_selectedScents);
   }
 
   @override
@@ -43,7 +43,7 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 30, bottom: 10),
+            padding: const EdgeInsets.only(top: 30, bottom: 10),
             child: Center(
               child: Text(
                 'Select 4 smell training \nscents',
@@ -70,38 +70,37 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        if (value && this._selectedScents.length < 4) {
-                          this._selectedScents.add(scent.name);
+                        if (value && _selectedScents.length < 4) {
+                          _selectedScents.add(scent.name);
                         } else {
-                          this._selectedScents.remove(scent.name);
+                          _selectedScents.remove(scent.name);
                         }
                       });
                     },
-                    value: this._selectedScents.contains(scent.name),
+                    value: _selectedScents.contains(scent.name),
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
               ],
             ),
           ),
-          Divider(
+          const Divider(
             color: Colors.blueGrey,
             indent: 30,
             endIndent: 30,
           ),
           Align(
             child: Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 20,
                 bottom: 40,
               ),
               child: SizedBox(
                 child: Button.primary(
-                  text: '(${this._selectedScents.length}/4) Done',
-                  onPressed: this._selectedScents.length == 4
+                  text: '(${_selectedScents.length}/4) Done',
+                  onPressed: _selectedScents.length == 4
                       ? () async {
-                          await this._onWriteScentSelections();
-                          this.widget._onScentsSelected(this
-                              ._selectedScents
+                          await _onWriteScentSelections();
+                          widget._onScentsSelected(_selectedScents
                               .map((scent) => Scent.scents
                                   .firstWhere((s) => s.name == scent))
                               .toList());

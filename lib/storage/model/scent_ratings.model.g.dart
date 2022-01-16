@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'scent-ratings.model.dart';
+part of 'scent_ratings.model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator

@@ -4,12 +4,12 @@ class RoundedBorderRect extends StatelessWidget {
   final Color borderColor;
   final Widget child;
 
-  RoundedBorderRect({this.borderColor, this.child});
+  const RoundedBorderRect(Key key, {this.borderColor, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(5)),
+      borderRadius: const BorderRadius.all(Radius.circular(5)),
       child: Container(
         decoration: BoxDecoration(
           color: borderColor,
@@ -20,7 +20,7 @@ class RoundedBorderRect extends StatelessWidget {
           shape: BoxShape.rectangle,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -30,7 +30,7 @@ class RoundedBorderRect extends StatelessWidget {
               ),
               shape: BoxShape.rectangle,
             ),
-            child: this.child,
+            child: child,
           ),
         ),
       ),

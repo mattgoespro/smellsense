@@ -15,3 +15,4 @@
 - Click on _About_: A resource failed to call release.
 - E2E Tests
 - Custom build script with code check.
+- Use new OAuth2 gmail mailing service for bug reports.

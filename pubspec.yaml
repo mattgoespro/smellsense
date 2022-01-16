@@ -54,7 +54,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   hive_generator: ^1.1.0
-  build_runner: ^2.0.5
+  build_runner: ^2.0.5 # run 'flutter packages pub run build_runner build'
   mockito: ^5.0.0
   flutter_native_splash: ^1.1.8+4
   flutter_launcher_icons: ^0.9.0

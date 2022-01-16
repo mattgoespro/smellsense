@@ -6,13 +6,14 @@ class FadeAnimation extends StatefulWidget {
   final Widget child;
   final bool reverse;
   final int waitSecondsBetween;
-  Function onComplete;
+  final Function onComplete;
 
-  FadeAnimation(
+  const FadeAnimation(Key key,
       {this.child,
       @required this.reverse,
       this.waitSecondsBetween,
-      this.onComplete});
+      this.onComplete})
+      : super(key: key);
 
   @override
   _FadeAnimationState createState() => _FadeAnimationState();
@@ -25,19 +26,19 @@ class _FadeAnimationState extends State<FadeAnimation>
 
   @override
   void initState() {
-    this._controller = AnimationController(
+    super.initState();
+    _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     );
 
-    this._animation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(this._controller);
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
 
-    this._animation.addStatusListener((status) async {
+    _animation.addStatusListener((status) async {
       if (status == AnimationStatus.completed && widget.reverse) {
         Timer(Duration(seconds: widget.waitSecondsBetween), () {
           if (mounted) {
-            this._controller.reverse();
+            _controller.reverse();
           }
         });
       } else if (status == AnimationStatus.dismissed) {
@@ -48,13 +49,13 @@ class _FadeAnimationState extends State<FadeAnimation>
 
   @override
   void dispose() {
-    this._controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    this._controller.forward();
+    _controller.forward();
     return FadeTransition(
       opacity: _animation,
       child: widget.child,

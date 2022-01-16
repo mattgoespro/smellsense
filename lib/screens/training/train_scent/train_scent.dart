@@ -6,22 +6,23 @@ import 'package:smellsense/model/feeling.dart';
 import 'package:smellsense/model/scent.dart';
 import 'package:smellsense/model/training.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/shared/widgets/fade.dart';
-import 'package:smellsense/shared/widgets/rounded-border-rect.dart';
+import 'package:smellsense/shared/widgets/fade.widget.dart';
+import 'package:smellsense/shared/widgets/rounded_border_rect.widget.dart';
 import 'package:smellsense/theme/colors.dart';
 
 class TrainScent extends StatefulWidget {
   final Scent scent;
   final Function onAnswer;
   final Function onTimerStatusChange;
-  final answers;
+  final Map answers;
 
-  TrainScent({
+  const TrainScent(
+    Key key, {
     this.scent,
     this.answers,
     this.onAnswer,
     this.onTimerStatusChange,
-  });
+  }) : super(key: key);
 
   @override
   _TrainScentState createState() => _TrainScentState();
@@ -29,7 +30,7 @@ class TrainScent extends StatefulWidget {
 
 class _TrainScentState extends State<TrainScent>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  CountDownController _controller = CountDownController();
+  final CountDownController _controller = CountDownController();
   bool _trainingTimerDone = true;
   bool _firstStart = true;
   bool _encouragementVisible = false;
@@ -43,17 +44,29 @@ class _TrainScentState extends State<TrainScent>
   bool get wantKeepAlive => true;
 
   Widget get _timerWidget => Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (this._trainingTimerDone)
+            if (_trainingTimerDone)
               SizedBox(
                 width: double.infinity,
                 height: double.infinity,
-                child: RaisedButton(
-                  color: AppColors.BUTTON_PRIMARY,
-                  child: Text(
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        return AppColors.buttonPrimary;
+                      },
+                    ),
+                    shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                      (states) => const CircleBorder(),
+                    ),
+                    padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                      (states) => const EdgeInsets.all(15.0),
+                    ),
+                  ),
+                  child: const Text(
                     'Start',
                     style: TextStyle(
                       color: Colors.white,
@@ -61,22 +74,20 @@ class _TrainScentState extends State<TrainScent>
                       fontSize: 50,
                     ),
                   ),
-                  padding: EdgeInsets.all(15.0),
-                  shape: CircleBorder(),
                   onPressed: () {
                     setState(() {
-                      this._trainingTimerDone = false;
-                      this._firstStart = false;
-                      this._encouragementVisible = true;
+                      _trainingTimerDone = false;
+                      _firstStart = false;
+                      _encouragementVisible = true;
                     });
 
-                    widget.onTimerStatusChange(this._trainingTimerDone);
+                    widget.onTimerStatusChange(_trainingTimerDone);
                   },
                 ),
               )
             else
               CircularCountDownTimer(
-                controller: this._controller,
+                controller: _controller,
                 duration: 20,
                 width: double.infinity,
                 height: double.infinity,
@@ -86,10 +97,10 @@ class _TrainScentState extends State<TrainScent>
                 isReverse: true,
                 onComplete: () {
                   setState(() {
-                    this._trainingTimerDone = true;
+                    _trainingTimerDone = true;
                   });
 
-                  widget.onTimerStatusChange(this._trainingTimerDone);
+                  widget.onTimerStatusChange(_trainingTimerDone);
                 },
               ),
           ],
@@ -97,6 +108,7 @@ class _TrainScentState extends State<TrainScent>
       );
 
   Widget get _answersWidget => FadeAnimation(
+        const Key('fade-answers'),
         reverse: false,
         child: Column(
           children: [
@@ -108,28 +120,28 @@ class _TrainScentState extends State<TrainScent>
                   ),
                   value: option,
                   groupValue: widget.answers[widget.scent.name],
-                  onChanged: !this._trainingTimerDone
+                  onChanged: !_trainingTimerDone
                       ? null
                       : (answer) {
-                          this._answer = answer;
-                          this._comment = null;
-                          this._severity = null;
-                          this._feelingIndex = null;
+                          _answer = answer;
+                          _comment = null;
+                          _severity = null;
+                          _feelingIndex = null;
 
                           setState(() {
                             widget.onAnswer(
                               widget.scent,
-                              this._answer,
-                              this._comment,
-                              this._severity,
-                              this._feelingIndex,
+                              _answer,
+                              _comment,
+                              _severity,
+                              _feelingIndex,
                             );
                           });
 
                           int answerIndex =
                               Training.answerOptions.indexOf(answer);
 
-                          this._showAddCommentDialog(answerIndex == 1);
+                          _showAddCommentDialog(answerIndex == 1);
                         },
                 ),
               ),
@@ -143,16 +155,17 @@ class _TrainScentState extends State<TrainScent>
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (context, setState) => SimpleDialog(
-          titlePadding: EdgeInsets.only(top: 10),
+          titlePadding: const EdgeInsets.only(top: 10),
           title: Column(
             children: [
               Center(
                 child: Text(
                   parosmia ? 'Parosmia' : 'Add a comment',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w300),
                 ),
               ),
-              Divider(
+              const Divider(
                 color: Colors.black,
               )
             ],
@@ -175,7 +188,7 @@ class _TrainScentState extends State<TrainScent>
                         TextSpan(
                           text: ' *',
                           style: TextStyle(
-                            color: AppColors.ERROR,
+                            color: AppColors.error,
                             fontWeight: FontWeight.w300,
                             fontSize:
                                 Theme.of(context).textTheme.headline6.fontSize,
@@ -193,14 +206,14 @@ class _TrainScentState extends State<TrainScent>
                     title: Text(
                       Training.severities[i],
                     ),
-                    groupValue: this._severity,
+                    groupValue: _severity,
                     value: Training.severities[i],
                     onChanged: (value) {
-                      setState(() => this._severity = value);
+                      setState(() => _severity = value);
                     },
                   ),
                 ),
-              Divider(
+              const Divider(
                 color: Colors.black,
               ),
               Center(
@@ -216,7 +229,7 @@ class _TrainScentState extends State<TrainScent>
                       TextSpan(
                         text: ' *',
                         style: TextStyle(
-                          color: AppColors.ERROR,
+                          color: AppColors.error,
                           fontWeight: FontWeight.w300,
                           fontSize:
                               Theme.of(context).textTheme.headline6.fontSize,
@@ -235,13 +248,13 @@ class _TrainScentState extends State<TrainScent>
                         children: [
                           IconButton(
                             onPressed: () => setState(
-                              () => this._feelingIndex = i,
+                              () => _feelingIndex = i,
                             ),
                             icon: SvgPicture.asset(
                               Feeling.feelings[i].emoji,
                             ),
                           ),
-                          if (this._feelingIndex == i)
+                          if (_feelingIndex == i)
                             SvgPicture.asset(
                               "assets/images/other/checkmark.svg",
                               width: 20,
@@ -252,7 +265,7 @@ class _TrainScentState extends State<TrainScent>
                     )
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.black,
               ),
               Center(
@@ -272,7 +285,7 @@ class _TrainScentState extends State<TrainScent>
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Optional',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -282,11 +295,11 @@ class _TrainScentState extends State<TrainScent>
                 ),
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
-                onChanged: (value) => this._comment = value,
+                onChanged: (value) => _comment = value,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
+            const Padding(
+              padding: EdgeInsets.only(top: 10),
               child: Divider(
                 color: Colors.black,
               ),
@@ -302,21 +315,19 @@ class _TrainScentState extends State<TrainScent>
                         text: 'Ok',
                         onPressed: () {
                           if (parosmia &&
-                              (this._severity == null ||
-                                  this._severity.isEmpty ||
-                                  this._feelingIndex == null)) {
+                              (_severity == null ||
+                                  _severity.isEmpty ||
+                                  _feelingIndex == null)) {
                             Fluttertoast.showToast(
                                 msg: 'Please fill in the required fields.');
                           } else {
                             setState(() {
                               widget.onAnswer(
                                 widget.scent,
-                                this._answer,
-                                this._comment,
-                                this._severity,
-                                this._feelingIndex != null
-                                    ? this._feelingIndex + 1
-                                    : -1,
+                                _answer,
+                                _comment,
+                                _severity,
+                                _feelingIndex != null ? _feelingIndex + 1 : -1,
                               );
                             });
                             Navigator.of(context).pop();
@@ -342,6 +353,7 @@ class _TrainScentState extends State<TrainScent>
       );
 
   Widget get imageWidget => RoundedBorderRect(
+        Key(widget.scent.name),
         borderColor: widget.scent.color,
         child: Image.asset(
           widget.scent.image,
@@ -351,37 +363,40 @@ class _TrainScentState extends State<TrainScent>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    super.build(context);
+    return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
-          this._titleWidget,
+          _titleWidget,
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: this.imageWidget,
+            child: imageWidget,
           ),
-          if (this._trainingTimerDone && !this._firstStart)
+          if (_trainingTimerDone && !_firstStart)
             FadeAnimation(
+              const Key('fade-btn'),
               reverse: false,
               child: Button.primary(
                 text: 'Restart',
                 onPressed: () {
                   setState(() {
-                    this._trainingTimerDone = true;
-                    this._firstStart = true;
-                    this._encouragementVisible = false;
+                    _trainingTimerDone = true;
+                    _firstStart = true;
+                    _encouragementVisible = false;
                   });
                 },
               ),
             )
           else ...[
-            if (this._encouragementVisible)
+            if (_encouragementVisible)
               Expanded(
                 child: Center(
                   child: FadeAnimation(
+                    const Key('fade-encouragement'),
                     child: Text(
-                      Training.encouragements[this._encouragement],
-                      style: TextStyle(
+                      Training.encouragements[_encouragement],
+                      style: const TextStyle(
                         fontWeight: FontWeight.w200,
                         fontSize: 24,
                       ),
@@ -391,8 +406,8 @@ class _TrainScentState extends State<TrainScent>
                     waitSecondsBetween: 3,
                     onComplete: () {
                       setState(() {
-                        this._encouragementVisible = true;
-                        this._encouragement = (this._encouragement + 1) %
+                        _encouragementVisible = true;
+                        _encouragement = (_encouragement + 1) %
                             Training.encouragements.length;
                       });
                     },
@@ -400,25 +415,23 @@ class _TrainScentState extends State<TrainScent>
                 ),
               )
             else
-              Expanded(
+              const Expanded(
                 child: Center(
-                  child: Container(
-                    child: Text(
-                      'Press the timer\nto start...',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 32,
-                      ),
-                      textAlign: TextAlign.center,
+                  child: Text(
+                    'Press the timer\nto start...',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w100,
+                      fontSize: 32,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
             Expanded(
-              child: this._timerWidget,
+              child: _timerWidget,
             )
           ],
-          if (this._trainingTimerDone && !this._firstStart)
+          if (_trainingTimerDone && !_firstStart)
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -427,7 +440,7 @@ class _TrainScentState extends State<TrainScent>
                   top: 5,
                   bottom: 12,
                 ),
-                child: this._answersWidget,
+                child: _answersWidget,
               ),
             )
         ],

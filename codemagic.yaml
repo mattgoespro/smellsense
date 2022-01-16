@@ -1,64 +1,36 @@
-# Customize the codemagic.yaml file according to your project and commit it to the root of your repository
-# Check out https://docs.codemagic.io/getting-started/yaml/ for more information
-# You can also download your configuration from Worklow Editor to get started
+# Automatically generated on 2022-01-16 UTC from https://codemagic.io/app/60586bf9486f9db9be8fa973/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
 
 workflows:
-  build-android:
-    name: Build SmellSense for Android
+  default-workflow:
+    name: Default Workflow
+    max_build_duration: 60
     environment:
       vars:
-        # GCLOUD_SERVICE_ACCOUNT_CREDENTIALS: Encrypted(...) # <-- Put your encrypted Google Play service account credentials here.
-        FCI_KEYSTORE_PATH: /tmp/keystore.keystore
-        # FCI_KEYSTORE: Encrypted(...) # <-- Put your encrypted keystore here
-        # FCI_KEYSTORE_PASSWORD: Encrypted(...) # <-- Put your encrypted keystore password here
-        FCI_KEY_PASSWORD: Encrypted(Z0FBQUFBQmhEbk1maUVMWjBpdWV2NzlmaTRGNjNPMHRXUHBnZ3lEY2hvR0l0VUVhclh4U09PMUFVV2F1aldwd3hnLWlTWF8yT3M1ZzBfU3Rob0hKa3U0cVMwWTFBbVg2TXBZY2RlQ2NkdkVraHFlam9zV25hd2c9) # <-- Put your encrypted key alias password here
-        FCI_KEY_ALIAS: Encrypted(Z0FBQUFBQmhEbk0yZHpzSE9hSkszWGVCQlk1N09TOWpwOW80Q196Z1B0ZHRXR2FjWXFjZ0ZFMGptN2hyNEZoUDlfV1pzZFF5ZGpFWHZhOXNlckU3YkpmdEU5U20xRlIzb2c9PQ==) # <-- Put your encrypted key alias here
-        # PACKAGE_NAME: "io.codemagic.flutteryaml" # <-- Put your package name here
-        # GOOGLE_PLAY_TRACK: "alpha" # <-- This must be "alpha" or above.
+        FCI_KEY_ALIAS: Encrypted(Z0FBQUFBQmg1QlNpRnBoUFdRbDNhRFhYa2tzQ2pmWHNxLXNGWFdfeUtXQkgwZzBLSEZPcGFxN1ZhVE4xcU1GMzRCTzEtN2dfdmNOajJCWkNjaTFQZFFJTURaTm5wNkozbFE9PQ==)
+        FCI_KEY_PASSWORD: Encrypted(Z0FBQUFBQmg1QlNpVENYT2p5eTFzeUhjZHJoaWRrektCc01MUTFsTTV1bndYZk9MVTJkYXJhOHZHNWlSQ3Nndzl0eWtNUmk1NDN0MW5BTWc0LVcxdHNUb1JqLXBGY0NDUGc9PQ==)
+        FCI_KEYSTORE_PATH: Encrypted(Z0FBQUFBQmg1QlNpbHBDVjRRRzIxeDIyX1I4ajdRRVRpLXFONG1pRl9OQURPZU5Ga0VZaE5IeUFkaER1QmJjNXhkRDhBY24zenBwTHdxc2dDUExPRmVXdE14RW1lcmxkSTdiNmtWTmhBS0wyMHdzVVpEUEtpR3M9)
+        APP_STORE_CONNECT_ISSUER_ID: 904d6bcc-e5a1-4213-90c4-7ff8cf5d303e
+        APP_STORE_CONNECT_KEY_IDENTIFIER: D794H835AC
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(Z0FBQUFBQmg1QlNpT1M1V01tTlNkQktCcldJRTgzS25HZzhJaTJGRGo1TGJ3V29yTUFGemJuV2FQTTdxNFVra0VrUVJUd1VTbS04UlJQRVNoYzRLYmdoSC1QTGoxeGdtMjZkZjU5RGVqT2tSbW5RdGV6QzUzOERuN1Z0ZjgzZXdKMkhzY0ZxWnYxM1R0VTc4RnM3MEROWTBhdTZjSEJodFJHVmpDeFE3ZUhNY2lRVU5MNkU5aGVQTmZPVm8yWFNfam1hN3Z3VHVqV2pRTjhPTmdPb1ZLTTlQbUJBVlFIclZiN1RTUkxQZEN1RWxoQXBudTNwZFN1MGhTRFhPUHBVbnFmeUgxTTZRYVR3VllCN3hYcmQxRFkyaTZtVkNoVHUtampVZk9zM2RPc0dwclpMQWhRV3puTVJGSTFRRlA5cVk3MzhwSFpfaS1BRHUwT0Q4Slk1QVhGR2dYZnVxSDlzaFR6bDZPY2wtNFBJYVpOaGlGNGVHWmNnOURDWER6RGRpVnVnYkVnSU5jZVZHVGNob3hfNE8xWG12U1A3a0h3M1FqbVpwaFVxM0VlZ3p4R3oxakwyMVF2QT0=)
+        CERTIFICATE_PRIVATE_KEY: Encrypted(Z0FBQUFBQmg1QlNpcXNiNUlzNGcwWWM0VktpVFZhNVF2WUNmeGk5QTlUUGVDUFR4QmdydTdCTTQweV9KaTNGM2xuX3MybkxxU0ZWODZ0bG91Z3p4bWZqV1h6ck5OTUloNEgtd1U5YU1kdDZDTkhlY3NnSGk4Ymh6Sl9mekZsUUFwcGc5XzV6Smd0ZkdCU05XbmVhUlg1RlJqMXpRMGNjdlR2eHhYOFdhN28teXg0Ymh1ckVMREd5OERRdGxDekFmQWxNcVp2ZThXb2NRMjdRdy1ZVW9IdkNiaEFxbG5sZzNrYzJpeHl1enpydlB0N1NOdkZSbzlScXpIQ3B3azhpM1ZTWXgwelJPN0dHWlZUWEpLMlRZTENBY2NBVVRWLXc5bkZFakdUSGVzT1ZfalkzX1VjcXNBcGdXbjZXWXF2TzdhdzBQTVdVdjJTRG5XUVotNkJjVVVMUTVqZ2NFbkN6Si1aY1NPX3dHZ3lLSG5INnNGMWFzbFowc0wtYkotMy00aG5ybUJyNUpDOVFCVlVOQ0lmRVV6UHNyUUxjci1xankwc2FzQVZSaEdEb01vV00tQmZ0dkNZZmVKMHlabERNZU1kWEZYZTd6ejdCbVMyNndwX3VScWNydDNudElGMlJ3QnZQV1dhaWY4NlN0dG1WRmhxeUw5bkhrOXYtY012VGVROUNrdXRzSkdGRFB3MFVtOEdsQkJWOGpKYWhuOGNoaGhvYkNiSV9CT28wcHVlRHMtZEdsQ2RMdzlZbXBWSUZqZDFpS1lKNDJsbHhSeU8xOWc4bkxNc1plRV9VbVFwT3RXZFBKWkR2ZGJhd2xqVmptYnZCS29GWVAtZmJya0czUkxiRzFlZVZhRFlBRnhXZEQ1VDdKUjhURjZYY29DTS04bEdEU2R0SGdKQUdQT1ZJMFVrLTR6QlQ4VjA2ekgxemZKSjNnSnc5Z3NQNkdaS0JwV2NUMV80OXBuVlhEX3RuRnYtWDJxSXdyTDJIYjRQN0JRYlBZVWdsWnR6NmZ3cmJCZHFnWFV3bXFtZzRhRlg4Ynp1WUJxX0JhMk1qcjEyT3VEenRnZE9GOG1jSEluT193Rk9mV050cUw3WTlXTURKeDQzZS1qMy11Q3ZKWVVIZFJrNDFvWmxuSTFSZm9UUHRZT1FXM1EzSjBIYjE2OWdpNkZNQ3FwN2VQbzBUNjltV1p3UnlzYmg2TWRLYU9tOTU4QjZYTDQzcVBRTzk1dWhITEZ2Z0tsWDNxYVJwa0N1VWY3WUZpV0NON0prTzZ5M1hBLUdQQ012TUk2UjFxWWl3ZkZVcUxXd01SODhEelluZWdOb0hJUUVuOWU3Q0RIVkRtNC1sNnBqS1dUaGZyMGJscGFEdHdGN3VYbUNxVGNnWDRMeEx2M3NxY2tJMy1FQWpsclViUmdya1NxYjcxUmp1eUctVTRiYXpIQzFnckJuRVFDMUVfNHFZTzJyTjBTYVBSVUszQ0ZsdWNSOGJhYy1haWFRbUg3MkNtaXhLNndmZGM5bm8xVFRLcjQ3eHRzS3BaR0RTQXBVQnpSTTdpZF80SVFyd1hBN0VGRFJkUzNKYURGcWVuX0c5aFl6RDNJRFpxS0ZfeVN1MHVoVmNVRGF1T0NYNkMycDQxM2RxSzJhYTlnQk1aNHdRSmM3cW9FcFVEUGJvSFBuRGdsYUMyN3lZbDBLaTJ0ZFZUMWFxeS1oRWQ0SFl2NV84S05lZG5SN0R4NTcxajY3MjNnNEhCVklDdlRsRldkb0NqQklJS0x2UGJ5dFZZZndZSTd4TWxMSVFra2hnR3pFcW1LRnlNXzBFNGswdG12dW1SOU92VzAyQWJZNHR2NlNkZ1kyYkRXbVJPQkZxTjRuVEtUVG1KaDNieFMwUjJJS3JSWkhCVTg4UFdqQUpVYW56bzFPaGk5aTdTZG5HQ2FkbV95cjVlOTBvU3l4UU12Z2pldjA1Z3FCMHRrbzVXakdSWVA3NGhaVms3dVFzUC1rcHdmeC10ZmxBUXBvc2haYWRxcnR6X1pSNnVrVUYxdVQzQkJhSjFJNmpENzFHUVM4VU05eTJoZTJOY1lNYUswekpQY3BHcjA2ZVpSdzN5ZnpDZFFaVEI4a2lTalM0bjlzbmxDNFhnR25UNWoyY3pFS0xGUU54eVB6aXZ2Q2pqZ05Ja1BRZTAxbDJYS1h2Zm81ZW0wcUVOTmw5NHlHbmhCTnF6UXJqNkhUUXl3MC1TazAwQ0dIRnVsZmdjUTUwd0RQRWhTLV90dnM1bmVRenZTbUpnc3JXdmZZaU9SdThxM0JmcGRSRmF1NnpETGdFTHltM3FLV2M5MHZ0SmMzbDJ1NFllbzdVdE9LSTBFZ3VMVENUVlJMTFBIb2lfOXN0X2FJRnlZdndLTDNsekRnbm1yRGhISGk2NjcxX2trZEZxR3Y2UjlHeV9ZWGk4czkwM2VaNGNEa2JBQm9qMzJ5RUR6RmRiTEJPLWFfMWJTX1EyUTBxcGR6bUVpMjVxWUlmNk5Xdkx0NVhuRlZ3d1Q2YTJkY3dVVm9wbUVhUWNxLThWa2R3bkIxa0JpdHhYRTlpREluMDhsUFpHSzc4U0xhclRMTjNrVUVaV2FzNmxsclh3cEFyclFIa1gyeXg1YlJKWFQ4Q1NseHhEY194Y2Q3cDhaYXYxcURLeG41U0Z0cFZWUC11cUZmMjVLclRyc1kzam1XeV9fYmdJb3dvRGo1Rmp0SzV2akp1b0syOUlaTTZTVHFfZWJodlJOc01RcHFxeHBodVh3WkVFbGpKRjhydW56NFFEdy1FcllJR2xsLW85TUdVRE1ZVkhSNXRqMVJUQTRTbFJFTEo1NHV1RzVDR3NFczlaaldJTHhBTXBMZGF1S25kbXVXV3ByMlhfbjdDVy1TMFBBQjE1aUJwandmUXV2VGdoTHRHU2FsdjJPM29uSml1djdPdUVDSnNtWUdqNS1PZlFKbmdWT1hobEh3T1dTSlZpdG4ybzJKZWt5Tm1IdUNTZWdJQXc0c1FBZ2ZUUWtEQzBfTkZMZjdHdzIyaU5hUXFnNHpCRUZkcWJScHJZeGt2ek1XNFBCYzU1MVRqaTFPeEk3a2ZL)
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Set up key properties
-        script: |
-          echo $FCI_KEYSTORE | base64 --decode > /tmp/keystore.keystore
-          cat >> "$FCI_BUILD_DIR/android/key.properties" <<EOF
-          keyPassword=$FCI_KEY_PASSWORD
-          keyAlias=$FCI_KEY_ALIAS
-          storeFile=/tmp/keystore.keystore
-          EOF
-      - name: Set up local.properties
-        script: |
-          echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
-      - name: Get Flutter packages
-        script: |
-          cd . && flutter packages pub get
-      # Lint
-      # - name: Flutter analyze
-      #  script: |
-      #    cd . && flutter analyze
-      - name: Install pods
-        script: |
-          find . -name "Podfile" -execdir pod install \;
-      - name: Build for Android
-        script: flutter build appbundle
+      - flutter packages pub get
+      - find . -name "Podfile" -execdir pod install \;
+      - keychain initialize
+      - app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT
+        --create
+      - keychain add-certificates
+      - xcode-project use-profiles
+      - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:
-      - build/**/outputs/bundle/**/*.aab
-      - build/**/outputs/bundle/**/*.aab
-      - build/**/outputs/**/mapping.txt
-      - flutter_drive.log
-    publishing:
-      email:
-        recipients:
-          - mattyoung305@gmail.com
-  build-ios:
-    name: Build SmellSense for iOS
-    scripts:
-      - name: Build for iOS
-        script: xcode-project use-profiles && flutter build ipa --debug --export-options-plist=/Users/builder/export_options.plist
-    artifacts:
-      - build/*
+      - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
+      - "*.snap"
+      - build/windows/**/*.msix
       - flutter_drive.log
     publishing:
       email:

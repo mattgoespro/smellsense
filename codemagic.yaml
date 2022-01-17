@@ -13,8 +13,8 @@ definitions:
       exit 0;
 
 workflows:
-  default-workflow:
-    name: Default Workflow
+  build-ios:
+    name: Build for iOS
     max_build_duration: 60
     environment:
       vars:

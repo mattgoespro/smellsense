@@ -4,3 +4,6 @@
 - Unit and Integration tests
 - Custom build script with code check (probably using codemagic).
 - Use new OAuth2 gmail mailing service for bug reports.
+- Replace _icons_ directory and use text and svg's instead.
+- Update to null safetly:
+  - Ensure packages are null-safe as well.

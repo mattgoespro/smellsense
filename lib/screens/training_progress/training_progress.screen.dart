@@ -231,7 +231,7 @@ class _ViewTrainingProgressScreenState
 
   void _showTrainingDataDialog() {
     showDialog(
-      barrierDismissible: false,
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         List<ScentRatings> datedScentRatings =

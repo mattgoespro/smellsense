@@ -151,7 +151,7 @@ class _TrainScentState extends State<TrainScent>
 
   void _showAddCommentDialog(bool parosmia) {
     showDialog(
-      barrierDismissible: false,
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (context, setState) => SimpleDialog(

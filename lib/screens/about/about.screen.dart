@@ -88,7 +88,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
   void _showReportBugDialog() {
     showDialog(
-      barrierDismissible: false,
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) => StatefulBuilder(
         builder: (context, setState) => SimpleDialog(

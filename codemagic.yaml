@@ -1,5 +1,16 @@
-# Automatically generated on 2022-01-16 UTC from https://codemagic.io/app/60586bf9486f9db9be8fa973/settings
-# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+definitions:
+  - &script-check-ads-activated
+    name: Checking if using Google AdMob test banners.
+    script: |
+      OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
+
+      if  [[ ! -z "$OUTPUT" ]]; then
+        echo "Error: Test banner must be enabled in Debug workflow.";
+        exit 1;
+      fi
+
+      echo "No error";
+      exit 0;
 
 workflows:
   default-workflow:
@@ -17,7 +28,11 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+    cache:
+      cache_paths:
+        - $FLUTTER_ROOT/.pub-cache
     scripts:
+      - *script-check-ads-activated
       - flutter packages pub get
       - find . -name "Podfile" -execdir pod install \;
       - keychain initialize

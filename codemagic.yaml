@@ -1,16 +1,23 @@
 definitions:
   - &script-check-ads-activated
-    name: Checking if using Google AdMob test banners.
+    name: Verify Google AdMob Ad Banners
     script: |
       OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
 
       if  [[ ! -z "$OUTPUT" ]]; then
-        echo "Error: Test banner must be enabled in Debug workflow.";
+        echo "Error: Test banners must be enabled in debug builds.";
         exit 1;
       fi
 
-      echo "No error";
       exit 0;
+  - &flutter-get-packages
+    name: "[Flutter] Get project pub packages."
+    script: flutter packages pub get
+  - &cache
+    cache_paths:
+      - $FLUTTER_ROOT/.pub-cache # Dart cache
+      - $HOME/.gradle/caches # Gradle cache
+      - $HOME/Library/Caches/CocoaPods # CocoaPods cache
 
 workflows:
   build-android:
@@ -27,11 +34,11 @@ workflows:
       xcode: latest
       cocoapods: default
     cache:
-      cache_paths:
-        - $FLUTTER_ROOT/.pub-cache
+      - *cache
     scripts:
+      - *script-check-ads-activated
       - |
-        # set up key.properties
+        # [Android] Set up code signing.
         echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
         cat >> "$FCI_BUILD_DIR/android/key.properties" <<EOF
         storePassword=$FCI_KEYSTORE_PASSWORD
@@ -40,10 +47,12 @@ workflows:
         storeFile=/tmp/keystore.keystore
         EOF
       - |
-        # set up local properties
+        # [Flutter] Set up SDK paths.
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
-      - flutter packages pub get
-      - flutter build appbundle --debug
+      - *flutter-get-packages
+      - |
+        # [Flutter] Build app bundle
+        flutter build appbundle --debug
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
@@ -71,16 +80,19 @@ workflows:
       xcode: latest
       cocoapods: default
     cache:
-      cache_paths:
-        - $FLUTTER_ROOT/.pub-cache
+      - *cache
     scripts:
       - *script-check-ads-activated
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - keychain initialize
-      - app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT
+      - *flutter-get-packages
+      - |
+        # [iOS] Install Pod dependencies.
+        find . -name "Podfile" -execdir pod install \;
+      - |
+        # [iOS] Set up code signing.
+        keychain initialize
+        app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT
         --create
-      - keychain add-certificates
+        keychain add-certificates
       - xcode-project use-profiles
       - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:

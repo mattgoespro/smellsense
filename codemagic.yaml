@@ -1,17 +1,17 @@
 definitions:
   - &script-check-ads-activated
-    name: Verify Google AdMob Ad Banners
+    name: Checking enabled-status of mobile ads
     script: |
       OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
 
       if  [[ ! -z "$OUTPUT" ]]; then
-        echo "Error: Test banners must be enabled in debug builds.";
+        echo "Error: Test ads must be enabled in debug builds.";
         exit 1;
       fi
 
       exit 0;
   - &flutter-get-packages
-    name: "[Flutter] Get project pub packages"
+    name: "[Flutter] Fetching project pub packages"
     script: flutter packages pub get
   - &cache
     cache_paths:
@@ -36,8 +36,7 @@ workflows:
     cache: *cache
     scripts:
       - *script-check-ads-activated
-      - *flutter-get-packages
-      - name: "[Android] Set up code signing"
+      - name: "[Android] Setting up code signing"
         script: |
           echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
           cat >> "$FCI_BUILD_DIR/android/key.properties" <<EOF
@@ -46,9 +45,10 @@ workflows:
           keyAlias=$FCI_KEY_ALIAS
           storeFile=/tmp/keystore.keystore
           EOF
-      - name: "[Flutter] Set up SDK paths"
+      - name: "[Flutter] Setting up SDK paths"
         script: echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
-      - name: "[Flutter] Build app bundle."
+      - *flutter-get-packages
+      - name: "[Flutter] Building app bundle"
         script: flutter build appbundle --debug
     artifacts:
       - build/**/outputs/apk/**/*.apk
@@ -79,8 +79,7 @@ workflows:
     cache: *cache
     scripts:
       - *script-check-ads-activated
-      - *flutter-get-packages
-      - name: "[iOS] Install Pod dependencies"
+      - name: "[iOS] Installing Pod dependencies"
         script: find . -name "Podfile" -execdir pod install \;
       - name: "[iOS] Set up code signing"
         script: |
@@ -90,6 +89,7 @@ workflows:
           keychain add-certificates
       - name: "[iOS] Configure xcode profile"
         script: xcode-project use-profiles
+      - *flutter-get-packages
       - name: "[Flutter] Build IPA"
         script: flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:

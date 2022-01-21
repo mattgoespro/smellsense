@@ -35,7 +35,8 @@ class RouteGenerator {
       case '/training':
         var scentArgs = args as SmellTrainingRouteArguments;
         return MaterialPageRoute(
-          builder: (context) => SmellTrainingScreen(Key(scentArgs.scents.join()), scentArgs.scents),
+          builder: (context) => SmellTrainingScreen(
+              Key(scentArgs.scents.join()), scentArgs.scents),
         );
       case '/select-scents':
         var scentArgs = args as ScentSelectionRouteArguments;

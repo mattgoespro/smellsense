@@ -12,7 +12,7 @@ import 'package:smellsense/storage/storage.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class ViewTrainingProgressScreen extends StatefulWidget {
-  const ViewTrainingProgressScreen({Key key}) : super(key: key);
+  const ViewTrainingProgressScreen({Key? key}) : super(key: key);
 
   @override
   _ViewTrainingProgressScreenState createState() =>
@@ -22,8 +22,8 @@ class ViewTrainingProgressScreen extends StatefulWidget {
 class _ViewTrainingProgressScreenState
     extends State<ViewTrainingProgressScreen> {
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
-  Map<String, List<ScentRatings>> _trainingRatings;
-  List<String> _scentSelections;
+  late Map<String, List<ScentRatings>> _trainingRatings;
+  List<String>? _scentSelections;
   String _selectedDate = '';
   String _startingViewport = '';
 
@@ -47,11 +47,11 @@ class _ViewTrainingProgressScreenState
     super.dispose();
   }
 
-  List<ScentRating> getHighestTrainingRatings(String date) {
+  List<ScentRating>? getHighestTrainingRatings(String date) {
     int maxTrainingRating = -1;
-    ScentRatings maxTrainingScentRatings;
+    late ScentRatings maxTrainingScentRatings;
 
-    for (ScentRatings ratings in _trainingRatings[date]) {
+    for (ScentRatings ratings in _trainingRatings[date]!) {
       int totalRating = ratings.getTotalScentRating();
       if (totalRating > maxTrainingRating) {
         maxTrainingRating = totalRating;
@@ -69,11 +69,11 @@ class _ViewTrainingProgressScreenState
     Map<String, List<OrdinalScentRatings>> data = {};
 
     for (String date in sortedDates) {
-      List<ScentRating> scentRatings = getHighestTrainingRatings(date);
-      for (String scentName in _scentSelections) {
-        ScentRating scentRating;
+      List<ScentRating>? scentRatings = getHighestTrainingRatings(date);
+      for (String scentName in _scentSelections!) {
+        ScentRating? scentRating;
 
-        for (var rating in scentRatings) {
+        for (var rating in scentRatings!) {
           if (rating.scentName == scentName) {
             scentRating = rating;
             break;
@@ -89,7 +89,7 @@ class _ViewTrainingProgressScreenState
               )
             ];
           } else {
-            data[scentName].add(
+            data[scentName]!.add(
               OrdinalScentRatings(
                 date,
                 scentRating.rating,
@@ -108,7 +108,7 @@ class _ViewTrainingProgressScreenState
           id: scent,
           domainFn: (OrdinalScentRatings rating, _) => rating.date,
           measureFn: (OrdinalScentRatings rating, _) => rating.rating,
-          data: data[scent],
+          data: data[scent]!,
           colorFn: (_, __) => charts.ColorUtil.fromDartColor(Scent.scents
               .firstWhere((element) => element.name == scent)
               .color),
@@ -119,9 +119,9 @@ class _ViewTrainingProgressScreenState
     ];
   }
 
-  List<ScentRating> _getBestScentRatingData(List<ScentRatings> data) {
+  List<ScentRating>? _getBestScentRatingData(List<ScentRatings> data) {
     int max = -1;
-    List<ScentRating> bestRatings;
+    List<ScentRating>? bestRatings;
 
     for (ScentRatings ratings in data) {
       int totalRating = ratings.getTotalScentRating();
@@ -173,8 +173,7 @@ class _ViewTrainingProgressScreenState
                       ),
                       children: [
                         TextSpan(
-                          text:
-                              Training.answerOptions[scentRating.rating - 1],
+                          text: Training.answerOptions[scentRating.rating - 1],
                           style: const TextStyle(
                             fontSize: 15,
                             fontStyle: FontStyle.italic,
@@ -203,7 +202,7 @@ class _ViewTrainingProgressScreenState
                         ),
                       ),
                       SvgPicture.asset(
-                        Feeling.feelings[scentRating.feeling - 1].emoji,
+                        Feeling.feelings[scentRating.feeling! - 1].emoji!,
                         width: 20,
                         height: 20,
                       )
@@ -217,7 +216,7 @@ class _ViewTrainingProgressScreenState
                     left: 10,
                   ),
                   child: Text(
-                    scentRating.comment ?? '- None -',
+                    _getComment(scentRating.comment),
                     style: const TextStyle(
                       fontStyle: FontStyle.italic,
                     ),
@@ -229,15 +228,21 @@ class _ViewTrainingProgressScreenState
     );
   }
 
+  String _getComment(String? comment) {
+    return (comment != null && comment.trim().isNotEmpty)
+        ? '- None -'
+        : comment!;
+  }
+
   void _showTrainingDataDialog() {
     showDialog(
       barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         List<ScentRatings> datedScentRatings =
-            _storage.getDatedScentRatingsByDate(_selectedDate);
+            _storage.getDatedScentRatingsByDate(_selectedDate)!;
         List<ScentRating> bestRatings =
-            _getBestScentRatingData(datedScentRatings);
+            _getBestScentRatingData(datedScentRatings)!;
 
         return SimpleDialog(
           titlePadding: const EdgeInsets.all(10),
@@ -283,24 +288,27 @@ class _ViewTrainingProgressScreenState
   Widget build(BuildContext context) {
     _scentSelections = _storage.getScentSelectionHistory();
     _trainingRatings = _storage.getDatedScentRatings();
-    var chart = _trainingRatings.keys.isNotEmpty ? GroupedFillColorBarChart(
-      Key(toString()),
-      getTrainingRatings(),
-      onBarHover: (charts.SelectionModel selection) {
-        if (selection.hasDatumSelection) {
-          List<charts.SeriesDatum<dynamic>> data = selection.selectedDatum;
+    var chart = _trainingRatings.keys.isNotEmpty
+        ? GroupedFillColorBarChart(
+            Key(toString()),
+            getTrainingRatings(),
+            onBarHover: (charts.SelectionModel selection) {
+              if (selection.hasDatumSelection) {
+                List<charts.SeriesDatum<dynamic>> data =
+                    selection.selectedDatum;
 
-          OrdinalScentRatings rating = data[0].datum;
+                OrdinalScentRatings? rating = data[0].datum;
 
-          setState(() {
-            _selectedDate = rating.date;
-          });
+                setState(() {
+                  _selectedDate = rating!.date;
+                });
 
-          _showTrainingDataDialog();
-        }
-      },
-      startingViewport: _startingViewport,
-    ) : null;
+                _showTrainingDataDialog();
+              }
+            },
+            startingViewport: _startingViewport,
+          )
+        : null;
 
     return Scaffold(
       appBar: SmellSenseAppBar(),
@@ -315,7 +323,7 @@ class _ViewTrainingProgressScreenState
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w100,
-                  fontSize: Theme.of(context).textTheme.headline5.fontSize,
+                  fontSize: Theme.of(context).textTheme.headline5!.fontSize,
                 ),
               ),
             ),
@@ -328,7 +336,7 @@ class _ViewTrainingProgressScreenState
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w100,
-                fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
               ),
             ),
             Flexible(
@@ -343,7 +351,7 @@ class _ViewTrainingProgressScreenState
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w100,
-                fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
               ),
             )
         ],
@@ -353,10 +361,10 @@ class _ViewTrainingProgressScreenState
 }
 
 class GroupedFillColorBarChart extends StatefulWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-  final Function onBarHover;
-  final String startingViewport;
+  final List<charts.Series<OrdinalScentRatings, String>> seriesList;
+  final bool? animate;
+  final Function? onBarHover;
+  final String? startingViewport;
 
   const GroupedFillColorBarChart(
     Key key,
@@ -380,7 +388,8 @@ class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
       selectionModels: [
         charts.SelectionModelConfig(
           type: charts.SelectionModelType.info,
-          updatedListener: widget.onBarHover,
+          updatedListener: widget.onBarHover as void Function(
+              charts.SelectionModel<String>)?,
         )
       ],
       defaultRenderer: charts.BarRendererConfig(
@@ -394,7 +403,7 @@ class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: const charts.NoneRenderSpec(),
-        viewport: charts.OrdinalViewport(widget.startingViewport, 15),
+        viewport: charts.OrdinalViewport(widget.startingViewport!, 15),
       ),
       behaviors: [
         charts.SeriesLegend(
@@ -411,7 +420,7 @@ class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
 
 class OrdinalScentRatings {
   final String date;
-  final int rating;
+  final int? rating;
 
   OrdinalScentRatings(this.date, this.rating);
 }

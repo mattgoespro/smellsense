@@ -11,13 +11,13 @@ class ScentRating extends HiveObject {
   int rating;
 
   @HiveField(2)
-  String comment;
+  String? comment;
 
   @HiveField(3)
-  String severity;
+  String? severity;
 
   @HiveField(4)
-  int feeling;
+  int? feeling;
 
   ScentRating(
     this.scentName,

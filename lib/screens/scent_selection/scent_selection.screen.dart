@@ -6,25 +6,26 @@ import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 
 class ScentSelectionScreen extends StatefulWidget {
-  final List<Scent> _scentSelections;
+  final List<Scent>? _scentSelections;
   final Function _onScentsSelected;
 
-  const ScentSelectionScreen(Key key, this._scentSelections, this._onScentsSelected): super(key: key);
+  const ScentSelectionScreen(
+      Key key, this._scentSelections, this._onScentsSelected)
+      : super(key: key);
 
   @override
   _ScentSelectionScreenState createState() => _ScentSelectionScreenState();
 }
 
 class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
-  List<String> _selectedScents = [];
+  List<String?> _selectedScents = [];
 
   @override
   initState() {
     super.initState();
 
     if (widget._scentSelections != null) {
-      _selectedScents =
-          widget._scentSelections.map((e) => e.name).toList();
+      _selectedScents = widget._scentSelections!.map((e) => e.name).toList();
     } else {
       _selectedScents = ['Lemon', 'Rose', 'Eucalyptus', 'Clove'];
     }
@@ -50,7 +51,7 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w100,
-                  fontSize: Theme.of(context).textTheme.headline5.fontSize,
+                  fontSize: Theme.of(context).textTheme.headline5!.fontSize,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -70,7 +71,7 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        if (value && _selectedScents.length < 4) {
+                        if (value! && _selectedScents.length < 4) {
                           _selectedScents.add(scent.name);
                         } else {
                           _selectedScents.remove(scent.name);

@@ -1,6 +1,6 @@
 class Feeling {
-  String name;
-  String emoji;
+  String? name;
+  String? emoji;
 
   Feeling({this.emoji});
 

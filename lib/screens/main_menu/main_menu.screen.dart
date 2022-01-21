@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../router.dart';
 
 class MainMenuScreen extends StatefulWidget {
-  const MainMenuScreen({Key key}) : super(key: key);
+  const MainMenuScreen({Key? key}) : super(key: key);
 
   @override
   _MainMenuScreenState createState() => _MainMenuScreenState();
@@ -23,9 +23,9 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   bool _isFirstAppStart = false;
   final ScentProvider _scentProvider = GetIt.I<ScentProvider>();
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
-  List<Scent> _scentSelections;
+  List<Scent> _scentSelections = [];
 
-  BannerAd banner;
+  BannerAd? banner;
 
   _onScentSelectionChanged(List<Scent> selections) {
     setState(() {
@@ -141,7 +141,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
 
   @override
   void dispose() {
-    banner.dispose();
+    banner!.dispose();
     super.dispose();
   }
 
@@ -185,7 +185,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                 SizedBox(
                   height: 50,
                   child: AdWidget(
-                    ad: banner,
+                    ad: banner!,
                   ),
                 )
               else

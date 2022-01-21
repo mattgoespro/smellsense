@@ -76,13 +76,14 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
           tappingEnabled: _timerActive,
           onDotTapped: (tappedDotIndex) {
             pageController.animateToPage(
-                  tappedDotIndex,
-                  duration: const Duration(milliseconds: 100),
-                  curve: Curves.easeIn,
-                );
+              tappedDotIndex,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.easeIn,
+            );
           },
           lineConnectorsEnabled: true,
-          lineConnectorDecoration: const LineConnectorDecoration(strokeWidth: 0.1),
+          lineConnectorDecoration:
+              const LineConnectorDecoration(strokeWidth: 0.1),
         ),
       );
 
@@ -108,15 +109,14 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
               List<ScentRating> ratings = [];
 
               for (String key in _scentProvider.scentRatings.keys) {
-                ScentTrainingRating rating =
-                    _scentProvider.scentRatings[key];
+                ScentTrainingRating rating = _scentProvider.scentRatings[key]!;
                 ratings.add(
                   ScentRating(
                     key,
                     rating.rating,
                     rating.comment,
                     rating.severity,
-                    rating.feeling,
+                    rating.feeling < 0 ? null : rating.feeling,
                   ),
                 );
               }
@@ -174,9 +174,9 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                   onPressed: _timerActive
                       ? () {
                           pageController.previousPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease,
-                              );
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
                         }
                       : null,
                 ),
@@ -196,9 +196,9 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                             }
                           } else {
                             pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.ease,
-                                );
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease,
+                            );
                           }
                         }
                       : null,

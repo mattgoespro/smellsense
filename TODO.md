@@ -1,9 +1,10 @@
 # Investigate
 
-- Fix log **A splash screen was provided to Flutter, but this is deprecated. See flutter.dev/go/android-splash-migration for migration steps.**
 - Unit and Integration tests
-- Use new OAuth2 gmail mailing service for bug reports.
+- Main Screen Banner from png to text
 - Replace _icons_ directory and use text and svgs instead.
+- Look at **flutter_screenutil** package use.
+- Lock scrolling while training timer is running.
 
 ## In Progress
 

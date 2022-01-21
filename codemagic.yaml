@@ -1,5 +1,5 @@
 definitions:
-  - &script-check-ads-activated
+  - &check-ads-enabled
     name: Checking enabled-status of mobile ads
     script: |
       OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
@@ -10,9 +10,9 @@ definitions:
       fi
 
       exit 0;
-  - &flutter-get-packages
-    name: "[Flutter] Fetching project pub packages"
-    script: flutter packages pub get
+  - &flutter-lint
+    name: "[Flutter] Linting code check"
+    script: flutter analyze
   - &cache
     cache_paths:
       - $FLUTTER_ROOT/.pub-cache # Dart cache
@@ -35,7 +35,8 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *script-check-ads-activated
+      - *flutter-lint
+      - *check-ads-enabled
       - name: "[Android] Setting up code signing"
         script: |
           echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
@@ -47,7 +48,6 @@ workflows:
           EOF
       - name: "[Flutter] Setting up SDK paths"
         script: echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
-      - *flutter-get-packages
       - name: "[Flutter] Building app bundle"
         script: flutter build appbundle --debug
     artifacts:
@@ -78,7 +78,8 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *script-check-ads-activated
+      - *flutter-lint
+      - *check-ads-enabled
       - name: "[iOS] Installing Pod dependencies"
         script: find . -name "Podfile" -execdir pod install \;
       - name: "[iOS] Set up code signing"
@@ -89,7 +90,6 @@ workflows:
           keychain add-certificates
       - name: "[iOS] Configure xcode profile"
         script: xcode-project use-profiles
-      - *flutter-get-packages
       - name: "[Flutter] Build IPA"
         script: flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:

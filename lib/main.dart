@@ -40,7 +40,7 @@ void main() async {
 }
 
 class SmellSenseApp extends StatelessWidget {
-  const SmellSenseApp({Key key}) : super(key: key);
+  const SmellSenseApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

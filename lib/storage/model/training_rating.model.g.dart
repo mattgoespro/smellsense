@@ -17,8 +17,8 @@ class TrainingRatingAdapter extends TypeAdapter<TrainingRating> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TrainingRating()
-      ..dateRatings = (fields[0] as Map)?.map((dynamic k, dynamic v) =>
-          MapEntry(k as String, (v as List)?.cast<ScentRatings>()));
+      ..dateRatings = (fields[0] as Map?)?.map((dynamic k, dynamic v) =>
+          MapEntry(k as String, (v as List).cast<ScentRatings>()));
   }
 
   @override

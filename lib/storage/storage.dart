@@ -5,7 +5,7 @@ import 'package:smellsense/storage/model/scent_ratings.model.dart';
 import 'package:smellsense/storage/model/training_rating.model.dart';
 
 class SmellSenseStorage {
-  Box storage;
+  late Box storage;
 
   Future<void> initStorage() async {
     Hive.init((await getApplicationDocumentsDirectory()).path);
@@ -26,9 +26,9 @@ class SmellSenseStorage {
     }
   }
 
-  Future<void> updateScentSelections(List<String> scentSelections) {
-    List<String> scentSelectionHistory = getScentSelectionHistory();
-    List<String> newSelectionHistory = [];
+  Future<void> updateScentSelections(List<String?> scentSelections) {
+    List<String>? scentSelectionHistory = getScentSelectionHistory();
+    List<String?> newSelectionHistory = [];
 
     if (scentSelectionHistory == null) {
       newSelectionHistory = scentSelections;
@@ -39,12 +39,12 @@ class SmellSenseStorage {
     return storage.put('scentSelections', newSelectionHistory);
   }
 
-  List<String> getScentSelectionHistory() {
+  List<String>? getScentSelectionHistory() {
     return storage.get("scentSelections")?.cast<String>();
   }
 
-  List<String> getCurrentScentSelections() {
-    List<String> scentSelectionHistory = getScentSelectionHistory();
+  List<String>? getCurrentScentSelections() {
+    List<String>? scentSelectionHistory = getScentSelectionHistory();
 
     if (scentSelectionHistory == null) {
       return null;
@@ -59,8 +59,8 @@ class SmellSenseStorage {
   Future<void> storeDatedScentRatings(String date, ScentRatings ratings) async {
     TrainingRating trainingRating = storage.get("trainingRatings");
 
-    if (trainingRating.dateRatings[date] == null) {
-      trainingRating.dateRatings[date] = [];
+    if (trainingRating.dateRatings![date] == null) {
+      trainingRating.dateRatings![date] = [];
     }
 
     // concatenate scent names in ratings to form ID
@@ -68,12 +68,12 @@ class SmellSenseStorage {
 
     // remove all old scent option ratings that are no longer related to
     // the new scent option set
-    trainingRating.dateRatings[date].removeWhere((ratings) {
+    trainingRating.dateRatings![date]!.removeWhere((ratings) {
       String ratingId = ratings.ratings.map((e) => e.scentName).join();
       return id != ratingId;
     });
 
-    trainingRating.dateRatings[date].add(ratings);
+    trainingRating.dateRatings![date]!.add(ratings);
 
     return trainingRating.save();
   }
@@ -97,13 +97,14 @@ class SmellSenseStorage {
             "${dateUnits[0]}/${int.parse(dateUnits[1]) >= 10 ? dateUnits[1] : "0${dateUnits[1]}"}/${int.parse(dateUnits[2]) >= 10 ? dateUnits[2] : "0${dateUnits[2]}"}";
       }
 
-      correctedDateScentRatings[dateString] = datedScentRatings[date];
+      correctedDateScentRatings[dateString] =
+          datedScentRatings[date] as List<ScentRatings>;
     }
 
     return correctedDateScentRatings;
   }
 
-  List<ScentRatings> getDatedScentRatingsByDate(String date) {
+  List<ScentRatings>? getDatedScentRatingsByDate(String date) {
     Map<String, List<ScentRatings>> dateRatings = getDatedScentRatings();
     return dateRatings[date];
   }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:smellsense/theme/colors.dart';
 
 class Button extends ElevatedButton {
-  Button.primary({Key key, text, onPressed})
-      : super(key: key, 
+  Button.primary({Key? key, required text, onPressed})
+      : super(
+          key: key,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            backgroundColor: MaterialStateProperty.resolveWith<Color?>(
               (Set<MaterialState> states) {
                 return states.contains(MaterialState.disabled)
                     ? AppColors.buttonPrimaryDisabled
@@ -29,8 +30,9 @@ class Button extends ElevatedButton {
           onPressed: onPressed,
         );
 
-  Button.secondary({Key key, text, onPressed})
-      : super(key: key, 
+  Button.secondary({Key? key, required text, onPressed})
+      : super(
+          key: key,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) => Colors.white),

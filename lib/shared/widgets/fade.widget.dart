@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class FadeAnimation extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
   final bool reverse;
-  final int waitSecondsBetween;
-  final Function onComplete;
+  final int? waitSecondsBetween;
+  final Function? onComplete;
 
   const FadeAnimation(Key key,
       {this.child,
-      @required this.reverse,
+      required this.reverse,
       this.waitSecondsBetween,
       this.onComplete})
       : super(key: key);
@@ -21,8 +21,8 @@ class FadeAnimation extends StatefulWidget {
 
 class _FadeAnimationState extends State<FadeAnimation>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -36,13 +36,13 @@ class _FadeAnimationState extends State<FadeAnimation>
 
     _animation.addStatusListener((status) async {
       if (status == AnimationStatus.completed && widget.reverse) {
-        Timer(Duration(seconds: widget.waitSecondsBetween), () {
+        Timer(Duration(seconds: widget.waitSecondsBetween!), () {
           if (mounted) {
             _controller.reverse();
           }
         });
       } else if (status == AnimationStatus.dismissed) {
-        widget.onComplete();
+        widget.onComplete!();
       }
     });
   }

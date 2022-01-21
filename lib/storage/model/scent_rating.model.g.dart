@@ -19,9 +19,9 @@ class ScentRatingAdapter extends TypeAdapter<ScentRating> {
     return ScentRating(
       fields[0] as String,
       fields[1] as int,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as int,
+      fields[2] as String?,
+      fields[3] as String?,
+      fields[4] as int?,
     );
   }
 

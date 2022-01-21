@@ -17,7 +17,7 @@ class ScentRatingsAdapter extends TypeAdapter<ScentRatings> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ScentRatings(
-      (fields[0] as List)?.cast<ScentRating>(),
+      (fields[0] as List).cast<ScentRating>(),
     );
   }
 

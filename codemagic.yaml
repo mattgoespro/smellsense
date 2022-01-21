@@ -14,7 +14,7 @@ definitions:
 
       exit 0;
   - &flutter-lint
-    name: "[Flutter] Linting code check"
+    name: "Linting"
     script: flutter analyze
   - &cache
     cache_paths:
@@ -51,6 +51,8 @@ definitions:
 # Workflows
 #
 workflows:
+
+
   build-all:
     name: Build for Android/iOS
     environment:
@@ -98,6 +100,10 @@ workflows:
         script: xcode-project use-profiles
       - name: "[iOS] Build IPA"
         script: flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+    publishing:
+      *publishing
+
+
   build-android:
     name: Build for Android
     max_build_duration: *env-max-build-duration
@@ -131,8 +137,9 @@ workflows:
       - "*.snap"
       - build/windows/**/*.msix
       - flutter_drive.log
-    publishing:
-      *publishing
+    
+
+
   build-ios:
     name: Build for iOS
     max_build_duration: 60
@@ -164,5 +171,3 @@ workflows:
       - "*.snap"
       - build/windows/**/*.msix
       - flutter_drive.log
-    publishing:
-      *publishing

@@ -56,6 +56,27 @@ class SmellSenseApp extends StatelessWidget {
           centerTitle: true,
           color: Colors.white,
         ),
+        fontFamily: 'Roboto',
+        textTheme: const TextTheme(
+          headline1: TextStyle(
+            color: Colors.black,
+            fontSize: 54,
+          ),
+          headline2: TextStyle(
+            color: Colors.black,
+            fontSize: 36,
+          ),
+          subtitle1: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w200,
+          ),
+          subtitle2: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w200,
+          ),
+        ),
       ),
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,

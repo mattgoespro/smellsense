@@ -262,7 +262,7 @@ class _TrainScentState extends State<TrainScent>
                           ),
                           if (_feelingIndex == i)
                             SvgPicture.asset(
-                              "assets/images/other/checkmark.svg",
+                              "assets/svg/icons/checkmark.svg",
                               width: 20,
                               height: 20,
                             ),

@@ -1,0 +1,5 @@
+flutter_icons:
+  android: true
+  image_path_android: "assets/images/launch_icons/android-app-icon-nearestneighbour-8bit.png"
+  ios: true
+  image_path_ios: "assets/images/launch_icons/ios-app-icon-nearestneighbour-8bit.png"

@@ -9,7 +9,6 @@ import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../router.dart';
 
 class MainMenuScreen extends StatefulWidget {
@@ -170,7 +169,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SvgPicture.asset(
-                              "assets/images/svg/smellsense_logo.svg",
+                              "assets/svg/smellsense_logo.svg",
                               width: 50,
                             ),
                             RichText(
@@ -187,7 +186,9 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                                         .textTheme
                                         .headline1!
                                         .merge(
-                                          const TextStyle(color: Colors.blue),
+                                          const TextStyle(
+                                            color: Colors.blue,
+                                          ),
                                         ),
                                   ),
                                 ],

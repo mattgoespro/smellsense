@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,6 @@ import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../router.dart';
 
 class MainMenuScreen extends StatefulWidget {
@@ -165,8 +165,40 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: Center(
-                        child: Image.asset(
-                          'assets/images/logos/smellsense_main_menu_logo.png',
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/svg/smellsense_logo.svg",
+                              width: 50,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Smell',
+                                    style:
+                                        Theme.of(context).textTheme.headline1,
+                                  ),
+                                  TextSpan(
+                                    text: 'Sense',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .merge(
+                                          const TextStyle(
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'The Smell Training App',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            )
+                          ],
                         ),
                       ),
                     ),

@@ -5,7 +5,7 @@ class SmellSenseAppBar extends AppBar {
   SmellSenseAppBar({Key? key})
       : super(
           key: key,
-          toolbarHeight: 40,
+          toolbarHeight: 50,
           leading: const BackButton(color: Colors.black),
           backgroundColor: Colors.white,
           title: SvgPicture.asset(

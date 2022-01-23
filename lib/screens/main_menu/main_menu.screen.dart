@@ -25,7 +25,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
   List<Scent> _scentSelections = [];
 
-  BannerAd? banner;
+  BannerAd? _banner;
+  final SvgPicture _logo = SvgPicture.asset(
+    "assets/svg/smellsense_logo.svg",
+    width: 50,
+  );
 
   _onScentSelectionChanged(List<Scent> selections) {
     setState(() {
@@ -129,7 +133,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     final adState = Provider.of<AdState>(context);
     adState.initialization.then((value) {
       setState(() {
-        banner = BannerAd(
+        _banner = BannerAd(
           size: AdSize.banner,
           adUnitId: adState.bannerAdUnitId,
           listener: adState.adListener,
@@ -141,7 +145,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
 
   @override
   void dispose() {
-    banner!.dispose();
+    _banner!.dispose();
     super.dispose();
   }
 
@@ -168,10 +172,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset(
-                              "assets/svg/smellsense_logo.svg",
-                              width: 50,
-                            ),
+                            _logo,
                             RichText(
                               text: TextSpan(
                                 children: [
@@ -213,11 +214,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                   ],
                 ),
               ),
-              if (banner != null)
+              if (_banner != null)
                 SizedBox(
                   height: 50,
                   child: AdWidget(
-                    ad: banner!,
+                    ad: _banner!,
                   ),
                 )
               else

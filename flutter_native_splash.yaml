@@ -10,7 +10,7 @@ flutter_native_splash:
 
   # This property allows you to specify an image used as branding in the splash screen. It must be
   # a png file. Currently, it is only supported for Android and iOS.
-  # branding: assets/dart.png
+  branding: assets/images/splash_screen/smellsense_splash_icon_sharp.png
 
   # Specify your branding image for dark mode.
   #branding_dark: assets/dart_dark.png
@@ -20,16 +20,15 @@ flutter_native_splash:
   #
   # Make sure this content mode value should not be similar to android_gravity value and ios_content_mode
   # value.
-  # branding_mode: bottom
+  branding_mode: bottom
 
   # The color_dark, background_image_dark, and image_dark are parameters that set the background
   # and image when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above. If the image_dark parameter is specified, color_dark or
   # background_image_dark must be specified.  color_dark and background_image_dark cannot both be
   # set.
+  image_dark: assets/images/splash_screen/smellsense_splash_icon_sharp.png
   color_dark: "#1E1E1E"
-  #background_image_dark: "assets/dark-background.png"
-  image_dark: assets/images/splash_screen/smellsense_splash_icon_darktheme_sharp.png
 
   # Platforms
   android: true

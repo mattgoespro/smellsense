@@ -44,3 +44,4 @@ app.*.map.json
 *.sh
 *.sh
 TODO.md
+external/

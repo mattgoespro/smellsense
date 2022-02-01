@@ -1,5 +1,49 @@
-# Automatically generated on 2022-02-01 UTC from https://codemagic.io/app/61f8fef1933e86600cde2535/settings
-# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+#
+# Shared Workflow Definitions
+#
+definitions:
+  - &code-check
+    name: Performing static code analysis
+    script: |
+      OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
+
+      if  [[ ! -z "$OUTPUT" ]]; then
+        echo "Error: Test ads must be enabled in debug builds.";
+        exit 1;
+      fi
+
+      exit 0;
+  - &flutter-install
+    name: "Installing packages"
+    script: "flutter pub get"
+  - &flutter-lint
+    name: "Linting code"
+    script: flutter analyze
+  - &generate-launcher-icons
+    name: "Generating launcher icons"
+    script: flutter pub run flutter_launcher_icons:main
+  - &generate-splash-screens
+    name: "Generating splash screens"
+    script: flutter pub run flutter_native_splash:create
+  - &cache
+    cache_paths:
+      - $FLUTTER_ROOT/.pub-cache # Dart cache
+      - $HOME/.gradle/caches # Gradle cache
+      - $HOME/Library/Caches/CocoaPods # CocoaPods cache
+  - &env-builders
+    flutter: stable
+    xcode: latest
+    cocoapods: default
+  - &env-max-build-duration
+    60
+  - &artifacts-all
+    - build/**/outputs/bundle/**/*.aab
+    - build/ios/ipa/*.ipa
+    - flutter_drive.log
+  - &publishing
+    email:
+        recipients:
+          - mattyoung305@gmail.com
 
 workflows:
   default-workflow:
@@ -36,13 +80,6 @@ workflows:
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
       - flutter build appbundle --debug
-      - find . -name "Podfile" -execdir pod install \;
-      - keychain initialize
-      - app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT
-        --create
-      - keychain add-certificates
-      - xcode-project use-profiles
-      - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
@@ -64,19 +101,24 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
-    cache:
-      cache_paths: []
+    cache: *cache
     scripts:
-      - |
-        # set up local properties
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - keychain initialize
-      - app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT
-        --create
-      - keychain add-certificates
-      - xcode-project use-profiles
-      - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
+      - *code-check
+      - *flutter-install
+      - *flutter-lint
+      - *generate-launcher-icons
+      - *generate-splash-screens
+      - name: "[iOS] Installing Pod dependencies"
+        script: find . -name "Podfile" -execdir pod install \;
+      - name: "[iOS] Set up code signing"
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT --create
+          keychain add-certificates
+      - name: "[iOS] Configure xcode profile"
+        script: xcode-project use-profiles
+      - name: "[Flutter] Build IPA"
+        script: flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - flutter_drive.log

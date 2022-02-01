@@ -25,6 +25,9 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": false
   },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
 }

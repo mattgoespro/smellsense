@@ -1,6 +1,6 @@
 # To rebuild: flutter pub run flutter_launcher_icons:main
 flutter_icons:
   android: true
-  image_path_android: "assets/images/launch_icons/android-app-icon-nearestneighbour-8bit.png"
+  image_path_android: "assets/images/launch_icons/android_app_icon.png"
   ios: true
-  image_path_ios: "assets/images/launch_icons/ios-app-icon-nearestneighbour-8bit.png"
+  image_path_ios: "assets/images/launch_icons/ios_app_icon.png"

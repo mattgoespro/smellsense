@@ -78,11 +78,9 @@ workflows:
       - xcode-project use-profiles
       - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
     artifacts:
-      - build/**/outputs/apk/**/*.apk
-      - build/**/outputs/bundle/**/*.aab
-      - build/**/outputs/**/mapping.txt
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-      - '*.snap'
-      - build/windows/**/*.msix
       - flutter_drive.log
+    publishing:
+      email: 
+        recipients:
+          - "mattyoung305@gmail.com"

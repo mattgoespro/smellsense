@@ -86,7 +86,12 @@ class SmellSenseApp extends StatelessWidget {
           return MediaQuery(
             //Setting font does not change with system font size
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: widget!,
+            child: Platform.isIOS
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: widget!,
+                  )
+                : widget!,
           );
         },
       ),

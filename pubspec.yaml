@@ -98,5 +98,4 @@ flutter:
     - assets/svg/emojis/big_smile.svg
 
     # Splash screen
-    - assets/images/splash_screen/smellsense_splash_icon_sharp.png
-    - assets/images/splash_screen/smellsense_splash_icon_darktheme_sharp.png
+    - assets/images/splash_screen/smellsense_logo.png

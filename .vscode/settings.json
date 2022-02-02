@@ -30,4 +30,7 @@
   },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
+  "cSpell.words": [
+    "smellsense"
+  ],
 }

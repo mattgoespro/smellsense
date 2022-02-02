@@ -42,7 +42,7 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>UIStatusBarHidden</key>
-		<true/>
+		<false/>
 		<key>GADApplicationIdentifier</key>
 		<string>ca-app-pub-3910471454197021~7599765527</string>
 		<key>SKAdNetworkItems</key>

@@ -84,6 +84,7 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ndk: r21d
     cache: *cache
     scripts:
       - *code-check
@@ -127,6 +128,7 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ndk: r21d
     cache: *cache
     scripts:
       - *code-check

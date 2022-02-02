@@ -82,19 +82,17 @@ class SmellSenseApp extends StatelessWidget {
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
         builder: (context, widget) {
-          ScreenUtil.setContext(context);
-          return MediaQuery(
-            //Setting font does not change with system font size
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: Platform.isIOS
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 5,
-                    ),
-                    child: widget!,
-                  )
-                : widget!,
+          ScreenUtil.init(
+            const BoxConstraints(
+              maxWidth: 1080,
+              maxHeight: 1920,
+            ),
+            designSize: const Size(1080, 1920),
+            context: context,
+            minTextAdapt: true,
+            orientation: Orientation.portrait,
           );
+          return widget!;
         },
       ),
     );

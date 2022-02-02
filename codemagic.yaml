@@ -33,12 +33,6 @@ definitions:
   - &flutter-lint
     name: "Linting code"
     script: flutter analyze
-  - &generate-launcher-icons
-    name: "Generating launcher icons"
-    script: flutter pub run flutter_launcher_icons:main
-  - &generate-splash-screens
-    name: "Generating splash screens"
-    script: flutter pub run flutter_native_splash:create
   - &cache
     cache_paths:
       - $FLUTTER_ROOT/.pub-cache # Dart cache
@@ -81,8 +75,6 @@ workflows:
       - *code-check
       - *flutter-install
       - *flutter-lint
-      - *generate-launcher-icons
-      - *generate-splash-screens
       - name: "[Android] Setting up code signing"
         script: |
           echo $FCI_KEYSTORE | base64 --decode > $FCI_KEYSTORE_PATH
@@ -121,8 +113,6 @@ workflows:
       - *code-check
       - *flutter-install
       - *flutter-lint
-      - *generate-launcher-icons
-      - *generate-splash-screens
       - name: "[iOS] Installing Pod dependencies"
         script: find . -name "Podfile" -execdir pod install \;
       - name: "[iOS] Set up code signing"

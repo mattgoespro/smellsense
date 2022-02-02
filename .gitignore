@@ -41,7 +41,5 @@ app.*.symbols
 app.*.map.json
 
 # Project
-*.sh
-*.sh
 TODO.md
 external/

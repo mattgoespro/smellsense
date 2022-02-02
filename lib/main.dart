@@ -88,7 +88,9 @@ class SmellSenseApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
             child: Platform.isIOS
                 ? Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
+                    padding: const EdgeInsets.only(
+                      bottom: 5,
+                    ),
                     child: widget!,
                   )
                 : widget!,

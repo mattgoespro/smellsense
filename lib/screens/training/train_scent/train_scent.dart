@@ -11,7 +11,8 @@ import 'package:smellsense/shared/widgets/rounded_border_rect.widget.dart';
 import 'package:smellsense/theme/colors.dart';
 
 class TrainScent extends StatefulWidget {
-  // Time in seconds.
+  // Training time in seconds.
+  // static const timerDuration = 15;
   static const timerDuration = 1;
 
   final Scent scent;
@@ -123,6 +124,10 @@ class _TrainScentState extends State<TrainScent>
                 child: RadioListTile(
                   title: Text(
                     option,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                   value: option,
                   groupValue: widget.answers[widget.scent.name],
@@ -168,7 +173,9 @@ class _TrainScentState extends State<TrainScent>
                 child: Text(
                   parosmia ? 'Parosmia' : 'Add a comment',
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w300),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
               const Divider(
@@ -211,6 +218,9 @@ class _TrainScentState extends State<TrainScent>
                   child: RadioListTile(
                     title: Text(
                       Training.severities[i],
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
                     groupValue: _severity,
                     value: Training.severities[i],
@@ -291,6 +301,10 @@ class _TrainScentState extends State<TrainScent>
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: TextFormField(
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                ),
                 decoration: const InputDecoration(
                   hintText: 'Optional',
                   border: OutlineInputBorder(

@@ -9,10 +9,10 @@
 definitions:
   - &code-check-dev
     name: Performing static code analysis
-    script: 'cd /Users/builder/clone/ && sudo ./tools/scripts/static_code_analyze.sh development'
+    script: 'cd /Users/builder/clone/ && chmod 777 ./tools/scripts/static_code_analyze.sh && ./tools/scripts/static_code_analyze.sh development'
   - &code-check-prod
     name: Performing static code analysis
-    script: 'cd /Users/builder/clone/ && sudo ./tools/scripts/static_code_analyze.sh production'
+    script: 'cd /Users/builder/clone/ && chmod 777 ./tools/scripts/static_code_analyze.sh && ./tools/scripts/static_code_analyze.sh production'
   - &flutter-install
     name: "Installing packages"
     script: "flutter pub get"

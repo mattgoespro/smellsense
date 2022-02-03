@@ -7,31 +7,12 @@
 #                                                                                                 
 
 definitions:
-  - &code-check
+  - &code-check-dev
     name: Performing static code analysis
-    script: |
-      #!/bin/bash
-
-      ERRORS="";
-      EXIT=0;
-
-      OUTPUT=$(grep -r "//String get bannerAdUnitId => BannerAd.testAdUnitId");
-
-      if [[ -n "$OUTPUT" ]]; then
-          ERRORS="$ERRORS\nError: Test ads must be enabled in debug builds.";
-          EXIT=1;
-      fi
-
-      OUTPUT=$(grep -r "static const timerDuration = 1;");
-
-      if [[ -n "$OUTPUT" ]]; then
-          ERRORS="$ERRORS\nError: Training timer time is in debug mode.";
-          EXIT=1;
-      fi
-
-      printf "$ERRORS";
-
-      exit $EXIT;
+    script: './tools/scripts/static_code_analyze.sh development'
+  - &code-check-prod
+    name: Performing static code analysis
+    script: './tools/scripts/static_code_analyze.sh production'
   - &flutter-install
     name: "Installing packages"
     script: "flutter pub get"
@@ -86,7 +67,7 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check
+      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[Android] Setting up code signing"
@@ -130,7 +111,7 @@ workflows:
       ndk: 22.0.7026061
     cache: *cache
     scripts:
-      - *code-check
+      - *code-check-prod
       - *flutter-install
       - *flutter-lint
       - name: "[Android] Setting up code signing"
@@ -172,7 +153,7 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check
+      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"
@@ -212,7 +193,7 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check
+      - *code-check-prod
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"
@@ -257,7 +238,7 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check
+      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"
@@ -288,7 +269,6 @@ workflows:
       - build/**/outputs/apk/**/*.apk
       - build/**/outputs/bundle/**/*.aab
       - build/ios/ipa/*.ipa
-      - flutter_drive.log
     publishing:
       email: 
         recipients:

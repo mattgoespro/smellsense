@@ -217,6 +217,12 @@ workflows:
       email: 
         recipients:
           - "mattyoung305@gmail.com"
+      app_store_connect:
+        api_key: Encrypted(Z0FBQUFBQmgtcGQ3akJzZzA0aHVVNVh6Xzd6ZFlRSUo1SFpRSF9WS3hydWV1eE1qZVJpajJqLXRhajhtUk1uUHVQUzFMS29RZzdxWE9nd0Q5SHZJU1ZFb2F0QjYzS01xXzBoR1o5UDBFcGpvTUtpLUYxR2tCS1p1LWxnQ3otNkloYkd6ZmpEeUxMMmxMUlY5MGdjenVyaWVBZW0xYkJxMm9iN3dHUDBVUzBkdzVGV0hQanZ4WkIxUVlBQXVDMDNyb244SjJzR1dvS3Y5WjY4OUVyOGk4VlhBRDZvd3QwdTdRa3RWSkFOZ210b0JGWTlfckdtZHNlQUJpb0JnVkc2M0Y4U3lXNDdqdVQ3WnFnUkZBTjVtMlpYNjhRNzhkQ0VWelRpSUNDaTFPbTg4bXZDMmo2bkNycDI2em9pNDQzMF80Vk5YU19peWc5MFVvQ05TZHl0Um9FNzdleERsZ1NhWGdhdkwtMXc4MklMY0VKY1M1QldMM3lJa2ZneGZWVEFHX1VCVFRHZDNrV3d6VXRXQ3NzWi1pU3g5RUZ2SFZjNE5mNUJHSW8zYzdoQ2Q4dEZ0WVhYLUY4ST0=)
+        key_id: 4J64ACYXB7
+        issuer_id: 904d6bcc-e5a1-4213-90c4-7ff8cf5d303e
+        submit_to_testflight: true
+        submit_to_app_store: false
 
   #      _     _      _                ___    ___  __   __
   #     /_\   | |    | |       ___    |   \  | __| \ \ / /

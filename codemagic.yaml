@@ -108,7 +108,6 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
-      ndk: 22.0.7026061
     cache: *cache
     scripts:
       - *code-check-prod

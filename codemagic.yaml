@@ -54,6 +54,7 @@ workflows:
 
   android-dev:
     name: '[Dev] Build for Android'
+    instance_type: mac_pro
     max_build_duration: *env-max-build-duration
     environment:
       vars:
@@ -97,6 +98,7 @@ workflows:
                                                                                       
   android-prod:
     name: '[Prod] Build for Android'
+    instance_type: mac_pro
     max_build_duration: *env-max-build-duration
     environment:
       vars:
@@ -140,6 +142,7 @@ workflows:
 
   ios-dev:
     name: '[Dev] Build for iOS'
+    instance_type: mac_pro
     max_build_duration: *env-max-build-duration
     environment:
       vars:
@@ -180,6 +183,7 @@ workflows:
 
   ios-prod:
     name: '[Prod] Build for iOS'
+    instance_type: mac_pro
     max_build_duration: *env-max-build-duration
     environment:
       vars:
@@ -220,6 +224,7 @@ workflows:
 
   build-all-dev:
     name: '[Dev] Build for Android & iOS'
+    instance_type: mac_pro
     max_build_duration: *env-max-build-duration
     environment:
       vars:

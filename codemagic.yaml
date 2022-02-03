@@ -110,6 +110,7 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ndk: default
     cache: *cache
     scripts:
       - *code-check-prod
@@ -240,6 +241,7 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ndk: default
     cache: *cache
     scripts:
       - *code-check-dev

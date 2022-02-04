@@ -205,7 +205,7 @@ workflows:
       - name: "[iOS] Set up code signing"
         script: |
           keychain initialize
-          app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_STORE
+          app-store-connect fetch-signing-files "za.co.smellsense" --type IOS_APP_DEVELOPMENT --create
           keychain add-certificates
       - name: "[iOS] Configure xcode profile"
         script: xcode-project use-profiles

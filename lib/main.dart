@@ -92,7 +92,12 @@ class SmellSenseApp extends StatelessWidget {
             minTextAdapt: true,
             orientation: Orientation.portrait,
           );
-          return widget!;
+          return Platform.isIOS
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: widget!,
+                )
+              : widget!;
         },
       ),
     );

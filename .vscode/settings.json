@@ -28,6 +28,9 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
   "cSpell.words": [

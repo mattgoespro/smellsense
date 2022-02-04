@@ -47,7 +47,6 @@ class _TrainScentState extends State<TrainScent>
   @override
   bool get wantKeepAlive => true;
 
-  // TODO: Move to new file
   Widget get _timerWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),

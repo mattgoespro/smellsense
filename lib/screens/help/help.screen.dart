@@ -5,7 +5,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 class HelpScreen extends StatelessWidget {
   const HelpScreen({Key? key}) : super(key: key);
 
-  // TODO: Load from separate file.
   final String _helpInfo = """
   <div style="font-family: Roboto">
     <h1 style="font-size: 24px; font-weight: 200">What is smell training?</h1>

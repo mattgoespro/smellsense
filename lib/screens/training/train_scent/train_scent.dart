@@ -12,8 +12,8 @@ import 'package:smellsense/theme/colors.dart';
 
 class TrainScent extends StatefulWidget {
   // Training time in seconds.
-  // static const timerDuration = 15;
-  static const timerDuration = 1;
+  static const timerDuration = 15;
+  // static const timerDuration = 1;
 
   final Scent scent;
   final Function onAnswer;

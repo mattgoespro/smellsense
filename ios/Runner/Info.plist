@@ -46,7 +46,7 @@
 		<key>NSMicrophoneUsageDescription</key>
 		<string>SmellSense relies on third-party packages. It does not, in any capacity, for any reason, use the microphone directly.</string>
 		<key>GADApplicationIdentifier</key>
-		<string>ca-app-pub-3910471454197021~7599765527</string>
+		<string>ca-app-pub-3910471454197021~4816168944</string>
 		<key>SKAdNetworkItems</key>
 		<array>
 			<dict>

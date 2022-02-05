@@ -42,4 +42,4 @@ app.*.map.json
 
 # Project
 TODO.md
-external/
+external/dev

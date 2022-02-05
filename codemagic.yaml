@@ -7,12 +7,6 @@
 #                                                                                                 
 
 definitions:
-  - &code-check-dev
-    name: Performing static code analysis
-    script: 'cd /Users/builder/clone/ && chmod 777 ./tools/scripts/static_code_analyze.sh && ./tools/scripts/static_code_analyze.sh development'
-  - &code-check-prod
-    name: Performing static code analysis
-    script: 'cd /Users/builder/clone/ && chmod 777 ./tools/scripts/static_code_analyze.sh && ./tools/scripts/static_code_analyze.sh production'
   - &flutter-install
     name: "Installing packages"
     script: "flutter pub get"
@@ -68,7 +62,6 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[Android] Setting up code signing"
@@ -113,7 +106,6 @@ workflows:
       ndk: default
     cache: *cache
     scripts:
-      - *code-check-prod
       - *flutter-install
       - *flutter-lint
       - name: "[Android] Setting up code signing"
@@ -156,7 +148,6 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"
@@ -197,7 +188,6 @@ workflows:
       cocoapods: default
     cache: *cache
     scripts:
-      - *code-check-prod
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"
@@ -250,7 +240,6 @@ workflows:
       ndk: default
     cache: *cache
     scripts:
-      - *code-check-dev
       - *flutter-install
       - *flutter-lint
       - name: "[iOS] Installing Pod dependencies"

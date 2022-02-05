@@ -32,7 +32,7 @@ flutter_native_splash:
 
   # Platforms
   android: true
-  ios: false
+  ios: true
 
   # The position of the splash image can be set with android_gravity, ios_content_mode, and
   # web_image_mode parameters.  All default to center.

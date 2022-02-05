@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -137,9 +138,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
       setState(() {
         _banner = BannerAd(
           size: AdSize.banner,
-          adUnitId: Platform.isAndroid
-              ? adState.mainScreenBannerAndroid
-              : adState.mainScreenBannerIOS,
+          adUnitId: !kDebugMode
+              ? (Platform.isAndroid
+                  ? adState.mainScreenBannerAds["android"]
+                  : adState.mainScreenBannerAds["ios"])
+              : BannerAd.testAdUnitId,
           listener: adState.adListener,
           request: const AdRequest(),
         )..load();

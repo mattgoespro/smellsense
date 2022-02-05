@@ -124,8 +124,8 @@ workflows:
         script: | 
           echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
           echo "ndk.dir=/usr/local/share/android-sdk/ndk/23.1.7779620" > "$FCI_BUILD_DIR/android/local.properties"
-          echo "Local properties:"
-          echo "$FCI_BUILD_DIR/android/local.properties"
+          echo "Local Android properties..."
+          cat "$FCI_BUILD_DIR/android/local.properties"
       - name: "[Flutter] Building app bundle"
         script: flutter build appbundle --release
     artifacts:

@@ -121,7 +121,11 @@ workflows:
           storeFile=/tmp/keystore.keystore
           EOF
       - name: "[Flutter] Setting up SDK paths"
-        script: echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+        script: | 
+          echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+          echo "ndk.dir=/usr/local/share/android-sdk/ndk/23.1.7779620" > "$FCI_BUILD_DIR/android/local.properties"
+          echo "Local properties:"
+          echo "$FCI_BUILD_DIR/android/local.properties"
       - name: "[Flutter] Building app bundle"
         script: flutter build appbundle --release
     artifacts:

@@ -1,5 +1,37 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
   "yaml.schemas": {
     "https://static.codemagic.io/codemagic-schema.json": "file:///c%3A/Users/Matt/Desktop/Code/Dart/smellsense/codemagic.yaml"
-  }
+  },
+  "files.exclude": {
+    ".dart_tool": true,
+    ".flutter-plugins": true,
+    ".flutter-plugins-dependencies": true,
+    ".packages": true,
+    "pubspec.lock": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    ".idea": true,
+  },
+  "[dart]": {
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "dart.debugExternalPackageLibraries": true,
+  "dart.debugSdkLibraries": true,
 }

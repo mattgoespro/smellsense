@@ -6,73 +6,73 @@ class Scent {
   Color color;
   String image;
 
-  Scent({this.color, this.name, this.image});
+  Scent(this.name, this.color, this.image);
 
   static final List<Scent> scents = [
     Scent(
-      name: 'Lemon',
-      color: ScentColors.lime,
-      image: 'assets/images/scents/lemon_1.png',
+      'Lemon',
+      ScentColors.lime,
+      'assets/images/scents/lemon_1.png',
     ),
     Scent(
-      name: 'Rose',
-      color: ScentColors.pink,
-      image: 'assets/images/scents/rose_1.png',
+      'Rose',
+      ScentColors.pink,
+      'assets/images/scents/rose_1.png',
     ),
     Scent(
-      name: 'Eucalyptus',
-      color: ScentColors.greenDark,
-      image: 'assets/images/scents/eucalyptus_1.png',
+      'Eucalyptus',
+      ScentColors.greenDark,
+      'assets/images/scents/eucalyptus_1.png',
     ),
     Scent(
-      name: 'Clove',
-      color: ScentColors.brownLight,
-      image: 'assets/images/scents/clove_1.png',
+      'Clove',
+      ScentColors.brownLight,
+      'assets/images/scents/clove_1.png',
     ),
     Scent(
-      name: 'Orange',
-      color: ScentColors.orange,
-      image: 'assets/images/scents/orange_1.png',
+      'Orange',
+      ScentColors.orange,
+      'assets/images/scents/orange_1.png',
     ),
     Scent(
-      name: 'Grapefruit',
-      color: ScentColors.red,
-      image: 'assets/images/scents/grapefruit_1.png',
+      'Grapefruit',
+      ScentColors.red,
+      'assets/images/scents/grapefruit_1.png',
     ),
     Scent(
-      name: 'Cinnamon',
-      color: ScentColors.brown,
-      image: 'assets/images/scents/cinnamon_1.png',
+      'Cinnamon',
+      ScentColors.brown,
+      'assets/images/scents/cinnamon_1.png',
     ),
     Scent(
-      name: 'Mint',
-      color: ScentColors.green,
-      image: 'assets/images/scents/mint_1.png',
+      'Mint',
+      ScentColors.green,
+      'assets/images/scents/mint_1.png',
     ),
     Scent(
-      name: 'Lavendar',
-      color: ScentColors.purpleDark,
-      image: 'assets/images/scents/lavender_1.png',
+      'Lavendar',
+      ScentColors.purpleDark,
+      'assets/images/scents/lavender_1.png',
     ),
     Scent(
-      name: 'Citronella',
-      color: ScentColors.limeLight,
-      image: 'assets/images/scents/citronella_1.png',
+      'Citronella',
+      ScentColors.limeLight,
+      'assets/images/scents/citronella_1.png',
     ),
     Scent(
-      name: 'Rosemary',
-      color: ScentColors.purpleLight,
-      image: 'assets/images/scents/rosemary_1.png',
+      'Rosemary',
+      ScentColors.purpleLight,
+      'assets/images/scents/rosemary_1.png',
     ),
     Scent(
-      name: 'Chamomile',
-      color: ScentColors.orangeLight,
-      image: 'assets/images/scents/chamomile_1.png',
+      'Chamomile',
+      ScentColors.orangeLight,
+      'assets/images/scents/chamomile_1.png',
     ),
     Scent(
-      name: 'Tea Tree',
-      color: ScentColors.turquoise,
-      image: 'assets/images/scents/teatree_1.png',
+      'Tea Tree',
+      ScentColors.turquoise,
+      'assets/images/scents/teatree_1.png',
     ),
   ];
 }

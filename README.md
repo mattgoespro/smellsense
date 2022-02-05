@@ -1,3 +1,5 @@
 # SmellSense - The Smell Training App
 
-![SmellSense Banner](https://github.com/mattgoespro/public-resources/blob/master/images/SmellSense/smellsense-banner-transparent.png?raw=true)
+## What is SmellSense?
+
+SmellSense is a mobile application developed to facilitate retraining of one's sense of smell. There is a plethora of conditions and causes for loss of smell.

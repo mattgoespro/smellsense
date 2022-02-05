@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +12,10 @@ import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../router.dart';
 
 class MainMenuScreen extends StatefulWidget {
-  const MainMenuScreen({Key key}) : super(key: key);
+  const MainMenuScreen({Key? key}) : super(key: key);
 
   @override
   _MainMenuScreenState createState() => _MainMenuScreenState();
@@ -23,9 +26,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   bool _isFirstAppStart = false;
   final ScentProvider _scentProvider = GetIt.I<ScentProvider>();
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
-  List<Scent> _scentSelections;
+  List<Scent> _scentSelections = [];
 
-  BannerAd banner;
+  BannerAd? _banner;
+  final SvgPicture _logo = SvgPicture.asset(
+    "assets/svg/smellsense_logo.svg",
+    width: 50,
+  );
 
   _onScentSelectionChanged(List<Scent> selections) {
     setState(() {
@@ -129,9 +136,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     final adState = Provider.of<AdState>(context);
     adState.initialization.then((value) {
       setState(() {
-        banner = BannerAd(
+        _banner = BannerAd(
           size: AdSize.banner,
-          adUnitId: adState.bannerAdUnitId,
+          adUnitId: !kDebugMode
+              ? (Platform.isAndroid
+                  ? adState.mainScreenBannerAds["android"]
+                  : adState.mainScreenBannerAds["ios"])
+              : BannerAd.testAdUnitId,
           listener: adState.adListener,
           request: const AdRequest(),
         )..load();
@@ -141,7 +152,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
 
   @override
   void dispose() {
-    banner.dispose();
+    _banner!.dispose();
     super.dispose();
   }
 
@@ -165,8 +176,37 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: Center(
-                        child: Image.asset(
-                          'assets/images/logos/smellsense_main_menu_logo.png',
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _logo,
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Smell',
+                                    style:
+                                        Theme.of(context).textTheme.headline1,
+                                  ),
+                                  TextSpan(
+                                    text: 'Sense',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .merge(
+                                          const TextStyle(
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'The Smell Training App',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -181,11 +221,11 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                   ],
                 ),
               ),
-              if (banner != null)
+              if (_banner != null)
                 SizedBox(
                   height: 50,
                   child: AdWidget(
-                    ad: banner,
+                    ad: _banner!,
                   ),
                 )
               else

@@ -11,6 +11,10 @@ import 'package:smellsense/shared/widgets/rounded_border_rect.widget.dart';
 import 'package:smellsense/theme/colors.dart';
 
 class TrainScent extends StatefulWidget {
+  // Training time in seconds.
+  static const timerDuration = 15;
+  // static const timerDuration = 1;
+
   final Scent scent;
   final Function onAnswer;
   final Function onTimerStatusChange;
@@ -18,10 +22,10 @@ class TrainScent extends StatefulWidget {
 
   const TrainScent(
     Key key, {
-    this.scent,
-    this.answers,
-    this.onAnswer,
-    this.onTimerStatusChange,
+    required this.scent,
+    required this.answers,
+    required this.onAnswer,
+    required this.onTimerStatusChange,
   }) : super(key: key);
 
   @override
@@ -35,77 +39,79 @@ class _TrainScentState extends State<TrainScent>
   bool _firstStart = true;
   bool _encouragementVisible = false;
   int _encouragement = 0;
-  String _answer;
-  String _comment;
-  String _severity;
-  int _feelingIndex;
+  String? _answer;
+  String? _comment;
+  String? _severity;
+  int? _feelingIndex;
 
   @override
   bool get wantKeepAlive => true;
 
-  Widget get _timerWidget => Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            if (_trainingTimerDone)
-              SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                        return AppColors.buttonPrimary;
-                      },
-                    ),
-                    shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                      (states) => const CircleBorder(),
-                    ),
-                    padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                      (states) => const EdgeInsets.all(15.0),
-                    ),
+  Widget get _timerWidget {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (_trainingTimerDone)
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      return AppColors.buttonPrimary;
+                    },
                   ),
-                  child: const Text(
-                    'Start',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w200,
-                      fontSize: 50,
-                    ),
+                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                    (states) => const CircleBorder(),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _trainingTimerDone = false;
-                      _firstStart = false;
-                      _encouragementVisible = true;
-                    });
-
-                    widget.onTimerStatusChange(_trainingTimerDone);
-                  },
+                  padding: MaterialStateProperty.resolveWith<EdgeInsets>(
+                    (states) => const EdgeInsets.all(15.0),
+                  ),
                 ),
-              )
-            else
-              CircularCountDownTimer(
-                controller: _controller,
-                duration: 20,
-                width: double.infinity,
-                height: double.infinity,
-                fillColor: Colors.white,
-                ringColor: Colors.blue,
-                textFormat: CountdownTextFormat.SS,
-                isReverse: true,
-                onComplete: () {
+                child: const Text(
+                  'Start',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w200,
+                    fontSize: 50,
+                  ),
+                ),
+                onPressed: () {
                   setState(() {
-                    _trainingTimerDone = true;
+                    _trainingTimerDone = false;
+                    _firstStart = false;
+                    _encouragementVisible = true;
                   });
 
                   widget.onTimerStatusChange(_trainingTimerDone);
                 },
               ),
-          ],
-        ),
-      );
+            )
+          else
+            CircularCountDownTimer(
+              controller: _controller,
+              duration: TrainScent.timerDuration,
+              width: double.infinity,
+              height: double.infinity,
+              fillColor: Colors.white,
+              ringColor: Colors.blue,
+              textFormat: CountdownTextFormat.SS,
+              isReverse: true,
+              onComplete: () {
+                setState(() {
+                  _trainingTimerDone = true;
+                });
+
+                widget.onTimerStatusChange(_trainingTimerDone);
+              },
+            ),
+        ],
+      ),
+    );
+  }
 
   Widget get _answersWidget => FadeAnimation(
         const Key('fade-answers'),
@@ -117,16 +123,20 @@ class _TrainScentState extends State<TrainScent>
                 child: RadioListTile(
                   title: Text(
                     option,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                   value: option,
                   groupValue: widget.answers[widget.scent.name],
                   onChanged: !_trainingTimerDone
                       ? null
-                      : (answer) {
+                      : (dynamic answer) {
                           _answer = answer;
-                          _comment = null;
-                          _severity = null;
-                          _feelingIndex = null;
+                          _comment = '';
+                          _severity = '';
+                          _feelingIndex = -1;
 
                           setState(() {
                             widget.onAnswer(
@@ -162,7 +172,9 @@ class _TrainScentState extends State<TrainScent>
                 child: Text(
                   parosmia ? 'Parosmia' : 'Add a comment',
                   style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w300),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
               const Divider(
@@ -182,7 +194,7 @@ class _TrainScentState extends State<TrainScent>
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
                         fontSize:
-                            Theme.of(context).textTheme.headline6.fontSize,
+                            Theme.of(context).textTheme.headline6!.fontSize,
                       ),
                       children: [
                         TextSpan(
@@ -191,7 +203,7 @@ class _TrainScentState extends State<TrainScent>
                             color: AppColors.error,
                             fontWeight: FontWeight.w300,
                             fontSize:
-                                Theme.of(context).textTheme.headline6.fontSize,
+                                Theme.of(context).textTheme.headline6!.fontSize,
                           ),
                         )
                       ],
@@ -205,10 +217,13 @@ class _TrainScentState extends State<TrainScent>
                   child: RadioListTile(
                     title: Text(
                       Training.severities[i],
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
                     groupValue: _severity,
                     value: Training.severities[i],
-                    onChanged: (value) {
+                    onChanged: (dynamic value) {
                       setState(() => _severity = value);
                     },
                   ),
@@ -223,7 +238,7 @@ class _TrainScentState extends State<TrainScent>
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                     ),
                     children: [
                       TextSpan(
@@ -232,7 +247,7 @@ class _TrainScentState extends State<TrainScent>
                           color: AppColors.error,
                           fontWeight: FontWeight.w300,
                           fontSize:
-                              Theme.of(context).textTheme.headline6.fontSize,
+                              Theme.of(context).textTheme.headline6!.fontSize,
                         ),
                       )
                     ],
@@ -251,12 +266,12 @@ class _TrainScentState extends State<TrainScent>
                               () => _feelingIndex = i,
                             ),
                             icon: SvgPicture.asset(
-                              Feeling.feelings[i].emoji,
+                              Feeling.feelings[i].emoji!,
                             ),
                           ),
                           if (_feelingIndex == i)
                             SvgPicture.asset(
-                              "assets/images/other/checkmark.svg",
+                              "assets/svg/icons/checkmark.svg",
                               width: 20,
                               height: 20,
                             ),
@@ -276,7 +291,7 @@ class _TrainScentState extends State<TrainScent>
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
-                      fontSize: Theme.of(context).textTheme.headline6.fontSize,
+                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                     ),
                   ),
                 ),
@@ -285,6 +300,10 @@ class _TrainScentState extends State<TrainScent>
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: TextFormField(
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                ),
                 decoration: const InputDecoration(
                   hintText: 'Optional',
                   border: OutlineInputBorder(
@@ -316,7 +335,7 @@ class _TrainScentState extends State<TrainScent>
                         onPressed: () {
                           if (parosmia &&
                               (_severity == null ||
-                                  _severity.isEmpty ||
+                                  _severity!.isEmpty ||
                                   _feelingIndex == null)) {
                             Fluttertoast.showToast(
                                 msg: 'Please fill in the required fields.');
@@ -327,7 +346,7 @@ class _TrainScentState extends State<TrainScent>
                                 _answer,
                                 _comment,
                                 _severity,
-                                _feelingIndex != null ? _feelingIndex + 1 : -1,
+                                _feelingIndex != null ? _feelingIndex! + 1 : -1,
                               );
                             });
                             Navigator.of(context).pop();
@@ -348,7 +367,7 @@ class _TrainScentState extends State<TrainScent>
         style: TextStyle(
           color: widget.scent.color,
           fontWeight: FontWeight.w100,
-          fontSize: Theme.of(context).textTheme.headline3.fontSize,
+          fontSize: Theme.of(context).textTheme.headline3!.fontSize,
         ),
       );
 

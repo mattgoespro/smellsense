@@ -1,0 +1,24 @@
+# App Store Listing Details
+
+## Short Description
+
+Play Store (80 limit): SmellSense is a training & tracking app to help regain a sense of smell quickly.
+
+SmellSense is a productivity application used to help regain a sense of smell quickly.
+
+## Long Description
+
+Smell training is a little-known but scientifically proven method of quickly regaining one's sense of smell by utilizing a complex mechanism of the brain called 'Neuroplasticity', instead of waiting for long periods for your smell to naturally return to normal.
+
+This application has been designed to:
+
+    A. Facilitate the process of smell training as an aid to recovery for those suffering the loss of their sense of smell (Anosmia) or an altered sense of smell (Parosmia).
+    B. Guide the user through the smell training progress through encouragements and timing.
+    C. Maintain a record/diary of your training progress over time.
+    D. Provide you with resources to understand what has happened to your smell and how to regain it in a controlled but efficient manner.
+
+We wish you well on your speedy journey to recovery!
+
+## Tags/Keywords
+
+App Store (100 limit) - anosmia,parosmia,nose,smell,training,train,help,scents,sense,loss,guide,graph,timeline,diary,help

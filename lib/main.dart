@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:smellsense/providers/scent.provider.dart';
 import 'package:smellsense/router.dart';
 import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/storage/storage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final getIt = GetIt.instance;
 
@@ -40,7 +40,7 @@ void main() async {
 }
 
 class SmellSenseApp extends StatelessWidget {
-  const SmellSenseApp({Key key}) : super(key: key);
+  const SmellSenseApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +49,57 @@ class SmellSenseApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      title: 'SmellSense',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          color: Colors.white,
+    return ScreenUtilInit(
+      builder: () => MaterialApp(
+        title: 'SmellSense',
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            color: Colors.white,
+          ),
+          fontFamily: 'Roboto',
+          textTheme: const TextTheme(
+            headline1: TextStyle(
+              color: Colors.black,
+              fontSize: 54,
+            ),
+            headline2: TextStyle(
+              color: Colors.black,
+              fontSize: 36,
+            ),
+            subtitle1: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w200,
+            ),
+            subtitle2: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontWeight: FontWeight.w200,
+            ),
+          ),
         ),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
+        builder: (context, widget) {
+          ScreenUtil.init(
+            const BoxConstraints(
+              maxWidth: 1080,
+              maxHeight: 1920,
+            ),
+            designSize: const Size(1080, 1920),
+            context: context,
+            minTextAdapt: true,
+            orientation: Orientation.portrait,
+          );
+          return Platform.isIOS
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: widget!,
+                )
+              : widget!;
+        },
       ),
-      initialRoute: '/',
-      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

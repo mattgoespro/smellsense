@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class RoundedBorderRect extends StatelessWidget {
-  final Color borderColor;
-  final Widget child;
+  final Color? borderColor;
+  final Widget? child;
 
-  const RoundedBorderRect(Key key, {this.borderColor, this.child}) : super(key: key);
+  const RoundedBorderRect(Key key, {this.borderColor, this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class RoundedBorderRect extends StatelessWidget {
           color: borderColor,
           border: Border.all(
             width: 1,
-            color: borderColor,
+            color: borderColor!,
           ),
           shape: BoxShape.rectangle,
         ),

@@ -1,67 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:smellsense/shared/widgets/app_bar.widget.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class HelpScreen extends StatelessWidget {
+  const HelpScreen({Key? key}) : super(key: key);
+
   final String _helpInfo = """
-  <h1>What is smell training?</h1>
-  <p>
-    Smell training uses the ability of the brain known as <i>neuroplasticity</i> - the capacity to reassign brain cells to relearn
-    lost functions, in this case the loss of sense of smell. One can look at smell training as being similar to occupational therapy
-    or physiotherapy for the brain to help recover a lost, weak or altered sense of smell.
-  </p>
-  <h1>How is it done?</h1>
-  <p>
-    A set of four familiar smells - typically rose, clove, lemon and eucalyptus - is smelt in turn for a period of twenty to thirty 
-    seconds twice a day, while visualising and remembering how each substance smelt, for a period of several months.
-  </p>
-  <h1>How long do I need to train?</h1>
-  <p>
-    Like the recovery process from any neurological injury, smell training takes time, and persistent effort sees results. Research
-    suggests that the minimum period should be a session of twenty to thirty seconds of smell training dedicated to each smell twice a
-    day for a minimum of three months. When added up, the total time and effort spent may be as little as 6 hours.
-  </p>
-  <h1>I don't have the official <i>SmellSense</i> kit, so how can I train?</h1>
-  <p>
-    Yes. You can make up your own set of scents on which to smell train. Any consistently strong set of recognisable smells will suffice.
-    The selection we have chosen is that on which most research to date has been based, using a representative from each of the ‘notes’
-    of smell: floral = rose, fruity = lemon, spicy = clove, aromatic = eucalyptus. But any set of smells will do if they remain consistently
-    strong over the period of training.
-
-    The SmellSense kit in particular has been designed to minimize the amount of time spent looking for and reaching for separate smell
-    containers - it is a purely practical application to make it easier for people to train consistently.
-  </p>
-  <h1>How long will it take for my sense of smell to recover?</h1>
-  <p>
-    There is no uniform answer to this question unfortunately. Much depends on the underlying cause of your loss of smell, the severity thereof,
-    and the amount of effort put into smell training, using the associative modalities provided in this app.
-
-    Most people will become aware of positive changes within three months of starting smell training. Initially the sense of smell might recover
-    as being the ‘incorrect’ smell for a substance, but this is a positive sign that recovery is under way, and that one should ‘push through’
-    with the training.
-  </p>
+  <div style="font-family: Roboto">
+    <h1 style="font-size: 24px; font-weight: 200">What is smell training?</h1>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      Smell training engages an innate property of the brain known as
+      <span style="font-weight: 300">Neuroplasticity</span>: 'the ability of the
+      brain to form and reorganize synaptic connections, especially in response to
+      learning or experience or following injury.' - <i>Google Dictionary</i>.
+    </p>
+    <h1 style="font-size: 24px; font-weight: 200">
+      I'm ready to begin my training. What do I do?
+    </h1>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      In a training session, a set of four familiar smells (typically
+      <span style="color: #f18db0; font-weight: 400">Rose</span>,
+      <span style="color: #a0877f; font-weight: 400">Clove</span>,
+      <span style="color: #d6e063; font-weight: 400">Lemon</span>, and
+      <span style="color: #56af57; font-weight: 400">Eucalyptus</span>) are
+      smelled, in turn, for a period of 20-30 seconds, whilst mindfully
+      visualizing and remembering how each substance would have smelled prior to
+      the smell loss.
+    </p>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      Repeat the training twice daily for better results.
+    </p>
+    <h1 style="font-size: 24px; font-weight: 200">
+      Over how long a period do I need to smell train in order to recover fully?
+    </h1>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      Recovery periods naturally differ from person to person, but research
+      suggests that the average treatment would last for ~3 months.
+    </p>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      Much depends on the underlying cause of your loss of smell and the severity
+      thereof. Most people will become aware of positive changes within 3 months
+      of starting smell training. Occasionally, it is possible that you may regain
+      the smell of a desired scent, but it does not feel 'correct'. Do not be
+      concerned -
+      <span style="font-weight: 300">
+        this is a positive sign that recovery is underway, and that you should
+        continue your training as per usual.
+      </span>
+    </p>
+    <h1 style="font-size: 24px; font-weight: 200">
+      I don't have the official Smell<span style="color: #2499f0">Sense</span>
+      kit, so am I still able to use this app?
+    </h1>
+    <p style="font-size: 20px; font-weight: 300; padding-bottom: 5px">Yes!</p>
+    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
+      The Smell<span style="color: #2499f0">Sense</span> kit is built simply for
+      convenience, and the scents supplied are the most effective for retraining,
+      according to most research up-to-date.
+    </p>
+    <p style="font-size: 14px; font-weight: 200">
+      Otherwise, you can make up your own set of scents on which to smell train.
+      Be sure to use a set of recognizable smells that remain consistently strong
+      over the period of training. Typically, studies use a representative
+      substance from each of the 'notes' of smell:
+    </p>
+    <ul style="font-size: 14px; font-weight: 200; padding-left: 25px">
+      <li style="padding: 3px">
+        Floral - eg. <span style="color: #f18db0; font-weight: 400">Rose</span>
+      </li>
+      <li style="padding: 3px">
+        Fruity - eg. <span style="color: #d6e063; font-weight: 400">Lemon</span>
+      </li>
+      <li style="padding: 3px">
+        Spicy - eg. <span style="color: #a0877f; font-weight: 400">Clove</span>
+      </li>
+      <li style="padding: 3px">
+        Aromatic - eg.
+        <span style="color: #56af57; font-weight: 400"> Eucalyptus</span>
+      </li>
+    </ul>
+    <p style="font-size: 14px; font-weight: 200">
+      We wish you all the best with your recovery!
+    </p>
+    <p>
+      For more information and resources, refer to the
+      <span style="color: #054a9e; font-weight: 600">About</span> screen from the
+      main menu.
+    </p>
+  </div>
   """;
 
-  const HelpScreen({Key key}) : super(key: key);
+  static const headerStyle = TextStyle(
+    fontFamily: 'Roboto',
+    color: Colors.black,
+    fontSize: 24,
+    fontWeight: FontWeight.w200,
+  );
+
+  static const bodyStyle = TextStyle(
+    fontFamily: 'Roboto',
+    color: Colors.black,
+    fontSize: 14,
+    fontWeight: FontWeight.w200,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SmellSenseAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Html(
-            data: _helpInfo,
-            style: {
-              "h1": Style(
-                fontWeight: FontWeight.w100,
-              ),
-              "p": Style(
-                margin: const EdgeInsets.only(left: 10),
-                fontWeight: FontWeight.w100,
-                color: Colors.black,
-              )
-            },
+          child: HtmlWidget(
+            _helpInfo,
           ),
         ),
       ),

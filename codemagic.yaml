@@ -32,7 +32,7 @@ definitions:
     flutter: stable
     xcode: latest
     cocoapods: default
-    ndk: 23.1.7779620
+    ndk: r23b
   - &env-max-build-duration
     60
   - &artifacts-all

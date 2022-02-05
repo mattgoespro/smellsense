@@ -123,7 +123,7 @@ workflows:
       - name: "[Flutter] Setting up SDK paths"
         script: echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - name: "[Flutter] Building app bundle"
-        script: flutter build appbundle
+        script: flutter build appbundle --release
     artifacts:
       - build/**/outputs/bundle/**/*.aab
     publishing:

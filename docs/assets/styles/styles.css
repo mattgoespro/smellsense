@@ -1,0 +1,118 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: "Roboto", "Arial", sans-serif;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #074166;
+  width: 100%;
+  box-shadow: #00000029 0px 3px 6px, #0000003b 0px 3px 6px;
+  z-index: 1;
+  height: 50px;
+}
+
+.nav-text {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 200;
+  text-shadow: 2px 2px rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+img {
+  width: 80px;
+  height: 80px;
+}
+
+.content-wrapper {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  min-height: 200px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.availability {
+  font-family: "Roboto";
+  padding-top: 50px;
+  margin-top: 10px;
+}
+
+.availability-text {
+  font-weight: 200;
+  text-align: center;
+  font-size: 42px;
+  text-shadow: 2px 2px 4px #7e7d7d;
+}
+
+.platforms {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.platform-title {
+  font-size: 30px;
+  font-weight: 200;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px #7e7d7d;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-divider {
+  height: 1px;
+  border-bottom: 1px solid gray;
+  width: 80%;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 96px;
+  font-weight: 200;
+  margin: 0;
+}
+
+h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 200;
+  margin-top: 0;
+}
+
+.external-links {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.external-link {
+  width: 25px;
+  height: 25px;
+  margin: 0 10px;
+}

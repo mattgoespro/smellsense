@@ -43,3 +43,5 @@ app.*.map.json
 # Project
 TODO.md
 external/dev
+
+docs/node_modules

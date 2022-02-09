@@ -32,6 +32,9 @@
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
 }

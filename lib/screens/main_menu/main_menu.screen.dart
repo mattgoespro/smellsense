@@ -1,14 +1,8 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 import 'package:smellsense/model/scent.dart';
 import 'package:smellsense/providers/scent.provider.dart';
-import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/shared/widgets/button.widget.dart';
 import 'package:smellsense/storage/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -28,7 +22,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
   List<Scent> _scentSelections = [];
 
-  BannerAd? _banner;
   final SvgPicture _logo = SvgPicture.asset(
     "assets/svg/smellsense_logo.svg",
     width: 50,
@@ -130,33 +123,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final adState = Provider.of<AdState>(context);
-    adState.initialization.then((value) {
-      setState(() {
-        _banner = BannerAd(
-          size: AdSize.banner,
-          adUnitId: !kDebugMode
-              ? (Platform.isAndroid
-                  ? adState.mainScreenBannerAds["android"]
-                  : adState.mainScreenBannerAds["ios"])
-              : BannerAd.testAdUnitId,
-          listener: adState.adListener,
-          request: const AdRequest(),
-        )..load();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _banner!.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     _initMenu();
 
@@ -221,17 +187,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                   ],
                 ),
               ),
-              if (_banner != null)
-                SizedBox(
-                  height: 50,
-                  child: AdWidget(
-                    ad: _banner!,
-                  ),
-                )
-              else
-                const SizedBox(
-                  height: 50,
-                )
             ],
           );
         },

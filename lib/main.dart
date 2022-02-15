@@ -3,11 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:provider/provider.dart';
 import 'package:smellsense/providers/scent.provider.dart';
 import 'package:smellsense/router.dart';
-import 'package:smellsense/shared/ad_state.dart';
 import 'package:smellsense/storage/storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,8 +18,6 @@ Future<void> setup() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final initFuture = MobileAds.instance.initialize();
-  final adState = AdState(initFuture);
 
   await setup();
 
@@ -31,12 +26,7 @@ void main() async {
     if (kReleaseMode) exit(1);
   };
 
-  runApp(
-    Provider.value(
-      value: adState,
-      builder: (context, child) => const SmellSenseApp(),
-    ),
-  );
+  runApp(const SmellSenseApp());
 }
 
 class SmellSenseApp extends StatelessWidget {

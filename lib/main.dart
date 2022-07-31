@@ -40,7 +40,7 @@ class SmellSenseApp extends StatelessWidget {
     ]);
 
     return ScreenUtilInit(
-      builder: () => MaterialApp(
+      builder: (context, widget) => MaterialApp(
         title: 'SmellSense',
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
@@ -73,14 +73,9 @@ class SmellSenseApp extends StatelessWidget {
         onGenerateRoute: RouteGenerator.generateRoute,
         builder: (context, widget) {
           ScreenUtil.init(
-            const BoxConstraints(
-              maxWidth: 1080,
-              maxHeight: 1920,
-            ),
+            context,
             designSize: const Size(1080, 1920),
-            context: context,
             minTextAdapt: true,
-            orientation: Orientation.portrait,
           );
           return Platform.isIOS
               ? Padding(

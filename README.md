@@ -1,3 +1,38 @@
+<div align="center">
+  <div align="center">
+    <img
+      align="center"
+      src="https://github.com/mattgoespro/public-resources/blob/master/images/SmellSense/smellsense-banner-transparent.png?raw=true"
+      width="500px"
+    />
+    <br />
+    <br />
+    <div align="center">
+      <a
+        title="View on Google Play"
+        href="https://play.google.com/store/apps/details?id=za.co.smellsense"
+        target="_blank"
+        rel="noreferrer"
+        ><img
+          src="https://github.com/mattgoespro/public-resources/blob/master/images/logos/png/google-play.png?raw=true"
+          width="30px"
+      /></a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a
+        title="View on App Store"
+        href="https://apps.apple.com/us/app/smellsense-smell-training/id1594343545"
+        target="_blank"
+        rel="noreferrer"
+        ><img
+          src="https://github.com/mattgoespro/public-resources/blob/master/images/logos/png/ios-app-store.png?raw=true"
+          width="30px"
+      /></a>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+
 # SmellSense - The Smell Training App
 
 SmellSense is a mobile application used to aid the recovery of sense of taste and smell.

@@ -12,10 +12,10 @@ class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({Key? key}) : super(key: key);
 
   @override
-  _MainMenuScreenState createState() => _MainMenuScreenState();
+  MainMenuScreenState createState() => MainMenuScreenState();
 }
 
-class _MainMenuScreenState extends State<MainMenuScreen> {
+class MainMenuScreenState extends State<MainMenuScreen> {
   final double _menuButtonSize = 140;
   bool _isFirstAppStart = false;
   final ScentProvider _scentProvider = GetIt.I<ScentProvider>();
@@ -102,7 +102,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
         width: _menuButtonSize,
         child: Button.primary(
           text: 'Shop',
-          onPressed: () => launch('https://smellsense.myshopify.com/'),
+          onPressed: () => launchUrl(Uri(path: 'https://smellsense.myshopify.com/')),
         ),
       ),
       SizedBox(
@@ -152,13 +152,13 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                                   TextSpan(
                                     text: 'Smell',
                                     style:
-                                        Theme.of(context).textTheme.headline1,
+                                        Theme.of(context).textTheme.displayLarge,
                                   ),
                                   TextSpan(
                                     text: 'Sense',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .merge(
                                           const TextStyle(
                                             color: Colors.blue,
@@ -170,7 +170,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                             ),
                             Text(
                               'The Smell Training App',
-                              style: Theme.of(context).textTheme.subtitle2,
+                              style: Theme.of(context).textTheme.titleSmall,
                             )
                           ],
                         ),

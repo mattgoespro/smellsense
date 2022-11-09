@@ -19,10 +19,10 @@ class SmellTrainingScreen extends StatefulWidget {
   const SmellTrainingScreen(Key key, this.scents) : super(key: key);
 
   @override
-  _SmellTrainingScreenState createState() => _SmellTrainingScreenState();
+  SmellTrainingScreenState createState() => SmellTrainingScreenState();
 }
 
-class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
+class SmellTrainingScreenState extends State<SmellTrainingScreen> {
   int _activeStep = 0;
   bool _timerActive = true;
 
@@ -121,7 +121,7 @@ class _SmellTrainingScreenState extends State<SmellTrainingScreen> {
                 );
               }
 
-              await _storage.storeDatedScentRatings(
+              _storage.storeDatedScentRatings(
                 dateString,
                 ScentRatings(ratings),
               );

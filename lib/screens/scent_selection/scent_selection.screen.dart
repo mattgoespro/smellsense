@@ -14,10 +14,10 @@ class ScentSelectionScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ScentSelectionScreenState createState() => _ScentSelectionScreenState();
+  ScentSelectionScreenState createState() => ScentSelectionScreenState();
 }
 
-class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
+class ScentSelectionScreenState extends State<ScentSelectionScreen> {
   List<String?> _selectedScents = [];
 
   @override
@@ -51,7 +51,7 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w100,
-                  fontSize: Theme.of(context).textTheme.headline5!.fontSize,
+                  fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -99,8 +99,8 @@ class _ScentSelectionScreenState extends State<ScentSelectionScreen> {
                 child: Button.primary(
                   text: '(${_selectedScents.length}/4) Done',
                   onPressed: _selectedScents.length == 4
-                      ? () async {
-                          await _onWriteScentSelections();
+                      ? () {
+                          _onWriteScentSelections();
                           widget._onScentsSelected(_selectedScents
                               .map((scent) => Scent.scents
                                   .firstWhere((s) => s.name == scent))

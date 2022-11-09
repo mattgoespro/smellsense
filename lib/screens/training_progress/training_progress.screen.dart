@@ -15,11 +15,11 @@ class ViewTrainingProgressScreen extends StatefulWidget {
   const ViewTrainingProgressScreen({Key? key}) : super(key: key);
 
   @override
-  _ViewTrainingProgressScreenState createState() =>
-      _ViewTrainingProgressScreenState();
+  ViewTrainingProgressScreenState createState() =>
+      ViewTrainingProgressScreenState();
 }
 
-class _ViewTrainingProgressScreenState
+class ViewTrainingProgressScreenState
     extends State<ViewTrainingProgressScreen> {
   final SmellSenseStorage _storage = GetIt.I<SmellSenseStorage>();
   late Map<String, List<ScentRatings>> _trainingRatings;
@@ -323,7 +323,7 @@ class _ViewTrainingProgressScreenState
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w100,
-                  fontSize: Theme.of(context).textTheme.headline5!.fontSize,
+                  fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
                 ),
               ),
             ),
@@ -336,7 +336,7 @@ class _ViewTrainingProgressScreenState
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w100,
-                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
               ),
             ),
             Flexible(
@@ -351,7 +351,7 @@ class _ViewTrainingProgressScreenState
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w100,
-                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
               ),
             )
         ],
@@ -375,11 +375,11 @@ class GroupedFillColorBarChart extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GroupedFillColorBarChartState createState() =>
-      _GroupedFillColorBarChartState();
+  GroupedFillColorBarChartState createState() =>
+      GroupedFillColorBarChartState();
 }
 
-class _GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
+class GroupedFillColorBarChartState extends State<GroupedFillColorBarChart> {
   @override
   Widget build(BuildContext context) {
     return charts.BarChart(

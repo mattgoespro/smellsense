@@ -25,7 +25,7 @@ class ScentRatings extends HiveObject {
     String string = "";
 
     for (ScentRating rating in ratings) {
-      string += rating.toString() + '\n';
+      string += "${rating.toString()}\n";
     }
 
     return string;

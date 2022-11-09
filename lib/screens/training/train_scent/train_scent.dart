@@ -29,10 +29,10 @@ class TrainScent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TrainScentState createState() => _TrainScentState();
+  TrainScentState createState() => TrainScentState();
 }
 
-class _TrainScentState extends State<TrainScent>
+class TrainScentState extends State<TrainScent>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final CountDownController _controller = CountDownController();
   bool _trainingTimerDone = true;
@@ -194,7 +194,7 @@ class _TrainScentState extends State<TrainScent>
                         color: Colors.black,
                         fontWeight: FontWeight.w300,
                         fontSize:
-                            Theme.of(context).textTheme.headline6!.fontSize,
+                            Theme.of(context).textTheme.titleLarge!.fontSize,
                       ),
                       children: [
                         TextSpan(
@@ -203,7 +203,7 @@ class _TrainScentState extends State<TrainScent>
                             color: AppColors.error,
                             fontWeight: FontWeight.w300,
                             fontSize:
-                                Theme.of(context).textTheme.headline6!.fontSize,
+                                Theme.of(context).textTheme.titleLarge!.fontSize,
                           ),
                         )
                       ],
@@ -238,7 +238,7 @@ class _TrainScentState extends State<TrainScent>
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
-                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                      fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                     ),
                     children: [
                       TextSpan(
@@ -247,7 +247,7 @@ class _TrainScentState extends State<TrainScent>
                           color: AppColors.error,
                           fontWeight: FontWeight.w300,
                           fontSize:
-                              Theme.of(context).textTheme.headline6!.fontSize,
+                              Theme.of(context).textTheme.titleLarge!.fontSize,
                         ),
                       )
                     ],
@@ -291,7 +291,7 @@ class _TrainScentState extends State<TrainScent>
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w300,
-                      fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                      fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                     ),
                   ),
                 ),
@@ -367,7 +367,7 @@ class _TrainScentState extends State<TrainScent>
         style: TextStyle(
           color: widget.scent.color,
           fontWeight: FontWeight.w100,
-          fontSize: Theme.of(context).textTheme.headline3!.fontSize,
+          fontSize: Theme.of(context).textTheme.displaySmall!.fontSize,
         ),
       );
 
@@ -413,14 +413,6 @@ class _TrainScentState extends State<TrainScent>
                 child: Center(
                   child: FadeAnimation(
                     const Key('fade-encouragement'),
-                    child: Text(
-                      Training.encouragements[_encouragement],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w200,
-                        fontSize: 24,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                     reverse: true,
                     waitSecondsBetween: 3,
                     onComplete: () {
@@ -430,6 +422,14 @@ class _TrainScentState extends State<TrainScent>
                             Training.encouragements.length;
                       });
                     },
+                    child: Text(
+                      Training.encouragements[_encouragement],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 24,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               )

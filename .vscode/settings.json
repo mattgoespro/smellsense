@@ -40,5 +40,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "dart.debugExternalPackageLibraries": true,
-  "dart.debugSdkLibraries": true
+  "dart.debugSdkLibraries": true,
+  "cSpell.words": [
+    "Abscent",
+    "fluttertoast",
+    "parosmia",
+    "smellsense"
+  ]
 }

@@ -49,20 +49,20 @@ class SmellSenseApp extends StatelessWidget {
           ),
           fontFamily: 'Roboto',
           textTheme: const TextTheme(
-            headline1: TextStyle(
+            displayLarge: TextStyle(
               color: Colors.black,
               fontSize: 54,
             ),
-            headline2: TextStyle(
+            displayMedium: TextStyle(
               color: Colors.black,
               fontSize: 36,
             ),
-            subtitle1: TextStyle(
+            titleMedium: TextStyle(
               color: Colors.black,
               fontSize: 24,
               fontWeight: FontWeight.w200,
             ),
-            subtitle2: TextStyle(
+            titleSmall: TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.w200,

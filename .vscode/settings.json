@@ -1,34 +1,11 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  },
-  "prettier.useEditorConfig": true,
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "yaml.schemas": {
-    "https://static.codemagic.io/codemagic-schema.json": "file://codemagic.yaml"
-  },
-  "files.exclude": {
-    ".dart_tool": true,
-    ".flutter-plugins": true,
-    ".flutter-plugins-dependencies": true,
-    ".packages": true,
-    "pubspec.lock": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    ".idea": true
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[dart]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnType": true,
-    "editor.rulers": [80],
-    "editor.selectionHighlight": false,
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.suggestSelection": "first",
-    "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": false
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -36,15 +13,27 @@
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
-  "cSpell.words": [
-    "Abscent",
-    "fluttertoast",
-    "parosmia",
-    "smellsense"
-  ]
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.factorypath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    ".dart_tool": true,
+    ".flutter-plugins": true,
+    ".flutter-plugins-dependencies": true,
+    ".idea": true,
+    ".packages": true,
+    "pubspec.lock": true
+  },
+  "yaml.schemas": {
+    "https://static.codemagic.io/codemagic-schema.json": "file://codemagic.yaml"
+  },
+  "dart.renameFilesWithClasses": "prompt"
 }

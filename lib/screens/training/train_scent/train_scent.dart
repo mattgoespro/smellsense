@@ -59,16 +59,10 @@ class TrainScentState extends State<TrainScent>
               height: double.infinity,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      return AppColors.buttonPrimary;
-                    },
-                  ),
-                  shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-                    (states) => const CircleBorder(),
-                  ),
-                  padding: MaterialStateProperty.resolveWith<EdgeInsets>(
-                    (states) => const EdgeInsets.all(15.0),
+                  backgroundColor: WidgetStatePropertyAll(AppColors.buttonPrimary),
+                  shape: const WidgetStatePropertyAll(CircleBorder()),
+                  padding: const WidgetStatePropertyAll(
+                    EdgeInsets.all(15),
                   ),
                 ),
                 child: const Text(

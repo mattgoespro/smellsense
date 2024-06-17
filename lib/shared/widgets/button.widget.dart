@@ -6,14 +6,14 @@ class Button extends ElevatedButton {
       : super(
           key: key,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-              (Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled)
+            backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+              (Set<WidgetState> states) {
+                return states.contains(WidgetState.disabled)
                     ? AppColors.buttonPrimaryDisabled
                     : AppColors.buttonPrimary;
               },
             ),
-            shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+            shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
               (states) => RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(3),
               ),
@@ -34,9 +34,9 @@ class Button extends ElevatedButton {
       : super(
           key: key,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                (Set<MaterialState> states) => Colors.white),
-            shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+            backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) => Colors.white),
+            shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
               (states) => RoundedRectangleBorder(
                 side: BorderSide(color: AppColors.blue, width: 2),
                 borderRadius: BorderRadius.circular(3),

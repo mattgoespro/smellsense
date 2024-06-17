@@ -246,8 +246,8 @@ class ViewTrainingProgressScreenState
 
         return SimpleDialog(
           titlePadding: const EdgeInsets.all(10),
-          title: Column(
-            children: const [
+          title: const Column(
+            children: [
               Center(
                 child: Text(
                   'Details',

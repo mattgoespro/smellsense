@@ -1,8 +1,18 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "Dart-Code.dart-code",
     "Dart-Code.flutter",
-    "redhat.vscode-xml"
+    "redhat.vscode-xml",
+    "usernamehw.errorlens",
+    "felipecaputo.git-project-manager",
+    "github.copilot",
+    "github.copilot-chat",
+    "eamodio.gitlens",
+    "pkief.material-icon-theme",
+    "richie5um2.vscode-sort-json",
+    "meganrogge.template-string-converter",
+    "markosth09.color-picker",
+    "redhat.vscode-yaml",
+    "dart-code.dart-code"
   ]
 }

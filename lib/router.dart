@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/screens/about/about.screen.dart';
-import 'package:smellsense/screens/help/help.screen.dart';
-import 'package:smellsense/screens/main_menu/main_menu.screen.dart';
-import 'package:smellsense/screens/scent_selection/scent_selection.screen.dart';
-import 'package:smellsense/screens/training/training.screen.dart';
-import 'package:smellsense/screens/training_progress/training_progress.screen.dart';
+import 'package:smellsense/model/scent.dart' show Scent;
+import 'package:smellsense/screens/about/about.screen.dart' show AboutScreen;
+import 'package:smellsense/screens/help/help.screen.dart' show HelpScreen;
+import 'package:smellsense/screens/main_menu/main_menu.screen.dart' show MainMenuScreen;
+import 'package:smellsense/screens/scent_selection/scent_selection.screen.dart' show ScentSelectionScreen;
+import 'package:smellsense/screens/training/training.screen.dart' show SmellTrainingScreen;
+import 'package:smellsense/screens/training_progress/training_progress.screen.dart' show ViewTrainingProgressScreen;
 
 class ScentSelectionRouteArguments {
   List<Scent> scentSelections;

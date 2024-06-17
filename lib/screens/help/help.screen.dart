@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smellsense/shared/widgets/app_bar.widget.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart' show HtmlWidget;
 
 class HelpScreen extends StatelessWidget {
-  const HelpScreen({Key? key}) : super(key: key);
+  const HelpScreen({super.key});
 
   final String _helpInfo = """
   <div style="font-family: Roboto">

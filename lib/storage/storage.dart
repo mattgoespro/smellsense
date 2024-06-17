@@ -1,8 +1,8 @@
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:smellsense/storage/model/scent_rating.model.dart';
-import 'package:smellsense/storage/model/scent_ratings.model.dart';
-import 'package:smellsense/storage/model/training_rating.model.dart';
+import 'package:hive/hive.dart' show Hive, Box;
+import  'package:path_provider/path_provider.dart' show getApplicationDocumentsDirectory;
+import 'package:smellsense/storage/model/scent_rating.model.dart' show  ScentRatingAdapter;
+import 'package:smellsense/storage/model/scent_ratings.model.dart'  show ScentRatings, ScentRatingsAdapter;
+import 'package:smellsense/storage/model/training_rating.model.dart'  show TrainingRating, TrainingRatingAdapter;
 
 class SmellSenseStorage {
   late Box storage;

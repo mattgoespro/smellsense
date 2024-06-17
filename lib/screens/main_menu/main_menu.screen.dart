@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
-import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/providers/scent.provider.dart';
-import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/storage/storage.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../router.dart';
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
+import 'package:get_it/get_it.dart' show GetIt;
+import 'package:smellsense/model/scent.dart' show Scent;
+import 'package:smellsense/providers/scent.provider.dart' show ScentProvider;
+import 'package:smellsense/shared/widgets/button.widget.dart' show Button;
+import 'package:smellsense/storage/storage.dart' show SmellSenseStorage;
+import 'package:url_launcher/url_launcher.dart' show launchUrl;
+import '../../router.dart' show ScentSelectionRouteArguments, SmellTrainingRouteArguments;
 
 class MainMenuScreen extends StatefulWidget {
-  const MainMenuScreen({Key? key}) : super(key: key);
+  const MainMenuScreen({super.key});
 
   @override
   MainMenuScreenState createState() => MainMenuScreenState();

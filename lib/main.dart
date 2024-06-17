@@ -1,12 +1,12 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'dart:io' show Platform, exit;
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
-import 'package:smellsense/providers/scent.provider.dart';
-import 'package:smellsense/router.dart';
-import 'package:smellsense/storage/storage.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
+import 'package:get_it/get_it.dart' show GetIt;
+import 'package:smellsense/providers/scent.provider.dart' show ScentProvider;
+import 'package:smellsense/router.dart' show RouteGenerator;
+import 'package:smellsense/storage/storage.dart' show SmellSenseStorage;
+import 'package:flutter_screenutil/flutter_screenutil.dart' show ScreenUtil, ScreenUtilInit;
 
 final getIt = GetIt.instance;
 
@@ -30,7 +30,7 @@ void main() async {
 }
 
 class SmellSenseApp extends StatelessWidget {
-  const SmellSenseApp({Key? key}) : super(key: key);
+  const SmellSenseApp({super.key});
 
   @override
   Widget build(BuildContext context) {

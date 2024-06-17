@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get_it/get_it.dart';
-import 'package:im_stepper/stepper.dart';
-import 'package:smellsense/model/scent_training_rating.dart';
-import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/model/training.dart';
-import 'package:smellsense/providers/scent.provider.dart';
-import 'package:smellsense/screens/training/train_scent/train_scent.dart';
-import 'package:smellsense/shared/widgets/app_bar.widget.dart';
-import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/storage/model/scent_rating.model.dart';
-import 'package:smellsense/storage/model/scent_ratings.model.dart';
-import 'package:smellsense/storage/storage.dart';
+import 'package:fluttertoast/fluttertoast.dart' show Fluttertoast;
+import 'package:get_it/get_it.dart' show GetIt;
+import 'package:im_stepper/stepper.dart' show DotStepper, Indicator, LineConnectorDecoration, FixedDotDecoration, IndicatorDecoration;
+import 'package:smellsense/model/scent_training_rating.dart' show ScentTrainingRating;
+import 'package:smellsense/model/scent.dart' show Scent;
+import 'package:smellsense/model/training.dart' show Training;
+import 'package:smellsense/providers/scent.provider.dart' show ScentProvider;
+import 'package:smellsense/screens/training/train_scent/train_scent.dart' show TrainScent;
+import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
+import 'package:smellsense/shared/widgets/button.widget.dart' show Button;
+import 'package:smellsense/storage/model/scent_rating.model.dart' show ScentRating;
+import 'package:smellsense/storage/model/scent_ratings.model.dart' show ScentRatings;
+import 'package:smellsense/storage/storage.dart' show SmellSenseStorage;
 
 class SmellTrainingScreen extends StatefulWidget {
   final List<Scent> scents;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:smellsense/theme/colors.dart';
+import 'package:smellsense/theme/colors.dart' show AppColors;
 
 class Button extends ElevatedButton {
-  Button.primary({Key? key, required text, onPressed})
+  Button.primary({super.key, required text, super.onPressed})
       : super(
-          key: key,
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color?>(
               (Set<WidgetState> states) {
@@ -27,12 +26,10 @@ class Button extends ElevatedButton {
               fontWeight: FontWeight.w500,
             ),
           ),
-          onPressed: onPressed,
         );
 
-  Button.secondary({Key? key, required text, onPressed})
+  Button.secondary({super.key, required text, super.onPressed})
       : super(
-          key: key,
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color>(
                 (Set<WidgetState> states) => Colors.white),
@@ -50,6 +47,5 @@ class Button extends ElevatedButton {
               fontWeight: FontWeight.w500,
             ),
           ),
-          onPressed: onPressed,
         );
 }

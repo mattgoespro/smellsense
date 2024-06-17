@@ -1,11 +1,11 @@
-import 'package:flutter/gestures.dart';
+import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
-import 'package:smellsense/shared/widgets/app_bar.widget.dart';
-import 'package:smellsense/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
+import 'package:smellsense/theme/colors.dart' show AppColors;
+import 'package:url_launcher/url_launcher.dart' show launchUrl;
 
 class AboutScreen extends StatefulWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   AboutScreenState createState() => AboutScreenState();

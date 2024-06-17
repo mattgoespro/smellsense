@@ -1,14 +1,14 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart' show CircularCountDownTimer, CountDownController, CountdownTextFormat;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:smellsense/model/feeling.dart';
-import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/model/training.dart';
-import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/shared/widgets/fade.widget.dart';
-import 'package:smellsense/shared/widgets/rounded_border_rect.widget.dart';
-import 'package:smellsense/theme/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
+import 'package:fluttertoast/fluttertoast.dart' show Fluttertoast;
+import 'package:smellsense/model/feeling.dart' show Feeling;
+import 'package:smellsense/model/scent.dart' show Scent;
+import 'package:smellsense/model/training.dart' show Training;
+import 'package:smellsense/shared/widgets/button.widget.dart' show Button;
+import 'package:smellsense/shared/widgets/fade.widget.dart' show FadeAnimation;
+import 'package:smellsense/shared/widgets/rounded_border_rect.widget.dart' show RoundedBorderRect;
+import 'package:smellsense/theme/colors.dart' show AppColors;
 
 class TrainScent extends StatefulWidget {
   // Training time in seconds.

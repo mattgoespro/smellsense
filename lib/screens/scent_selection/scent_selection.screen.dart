@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:smellsense/model/scent.dart';
-import 'package:smellsense/shared/widgets/app_bar.widget.dart';
-import 'package:smellsense/shared/widgets/button.widget.dart';
-import 'package:smellsense/storage/storage.dart';
+import 'package:get_it/get_it.dart' show GetIt;
+import 'package:smellsense/model/scent.dart' show Scent;
+import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
+import 'package:smellsense/shared/widgets/button.widget.dart' show Button;
+import 'package:smellsense/storage/storage.dart' show SmellSenseStorage;
 
 class ScentSelectionScreen extends StatefulWidget {
   final List<Scent>? _scentSelections;

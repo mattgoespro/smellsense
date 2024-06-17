@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 
 class SmellSenseAppBar extends AppBar {
-  SmellSenseAppBar({Key? key})
+  SmellSenseAppBar({super.key})
       : super(
-          key: key,
           toolbarHeight: 50,
           leading: const BackButton(color: Colors.black),
           backgroundColor: Colors.white,

@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate SmellSense Database",
+      "detail": "Use the `floor` package to generate the SmellSense database.",
+      "command": ". \"${workspaceFolder}\\scripts\\generate_db.sh\"",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    }
+  ]
+}

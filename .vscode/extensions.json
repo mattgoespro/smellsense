@@ -13,6 +13,15 @@
     "meganrogge.template-string-converter",
     "markosth09.color-picker",
     "redhat.vscode-yaml",
-    "dart-code.dart-code"
+    "mads-hartmann.bash-ide-vscode",
+    "shakram02.bash-beautify",
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+    "formulahendry.code-runner",
+    "wayou.vscode-todo-highlight",
+    "gruntfuggly.todo-tree",
+    "simonsiefke.svg-preview",
+    "dart-code.dart-code",
+    "gmlewis-vscode.flutter-stylizer"
   ]
 }

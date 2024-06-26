@@ -1,39 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart' show GetIt;
-import 'package:smellsense/model/scent.dart' show Scent;
-import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
-import 'package:smellsense/shared/widgets/button.widget.dart' show Button;
-import 'package:smellsense/storage/storage.dart' show SmellSenseStorage;
+import 'package:smellsense/screens/scent_selection/scent_selection_checkbox_group.widget.dart';
+import 'package:smellsense/shared/widgets/app_bar.widget.dart'
+    show SmellSenseAppBar;
+import 'package:smellsense/shared/widgets/button.widget.dart'
+    show ActionButton, ActionButtonType;
 
-class ScentSelectionScreen extends StatefulWidget {
-  final List<Scent>? _scentSelections;
-  final Function _onScentsSelected;
+class SmellSenseScentSelectionScreenWidget extends StatefulWidget {
+  static int maxSelectionCount = 4;
 
-  const ScentSelectionScreen(
-      Key key, this._scentSelections, this._onScentsSelected)
-      : super(key: key);
+  const SmellSenseScentSelectionScreenWidget({super.key});
 
   @override
-  ScentSelectionScreenState createState() => ScentSelectionScreenState();
+  SmellSenseScentSelectionScreenWidgetState createState() =>
+      SmellSenseScentSelectionScreenWidgetState();
 }
 
-class ScentSelectionScreenState extends State<ScentSelectionScreen> {
-  List<String?> _selectedScents = [];
+class SmellSenseScentSelectionScreenWidgetState
+    extends State<SmellSenseScentSelectionScreenWidget> {
+  Set<String> selectedScents = {};
 
-  @override
-  initState() {
-    super.initState();
+  isSelectionComplete() =>
+      selectedScents.length ==
+      ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
-    if (widget._scentSelections != null) {
-      _selectedScents = widget._scentSelections!.map((e) => e.name).toList();
-    } else {
-      _selectedScents = ['Lemon', 'Rose', 'Eucalyptus', 'Clove'];
-    }
-  }
-
-  Future<void> _onWriteScentSelections() async {
-    SmellSenseStorage storage = GetIt.instance<SmellSenseStorage>();
-    return storage.updateScentSelections(_selectedScents);
+  storeScentSelections() {
+    // Store selected scents in shared preferences
   }
 
   @override
@@ -47,7 +38,7 @@ class ScentSelectionScreenState extends State<ScentSelectionScreen> {
             padding: const EdgeInsets.only(top: 30, bottom: 10),
             child: Center(
               child: Text(
-                'Select 4 smell training \nscents',
+                'Select your training scents',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w100,
@@ -58,30 +49,12 @@ class ScentSelectionScreenState extends State<ScentSelectionScreen> {
             ),
           ),
           Expanded(
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                for (Scent scent in Scent.scents)
-                  CheckboxListTile(
-                    title: Text(
-                      scent.name,
-                      style: TextStyle(
-                        color: scent.color,
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        if (value! && _selectedScents.length < 4) {
-                          _selectedScents.add(scent.name);
-                        } else {
-                          _selectedScents.remove(scent.name);
-                        }
-                      });
-                    },
-                    value: _selectedScents.contains(scent.name),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-              ],
+            child: ScentSelectionCheckboxGroupWidget(
+              onSelectionChangeFn: (Set<String> scents) {
+                setState(() {
+                  selectedScents = scents;
+                });
+              },
             ),
           ),
           const Divider(
@@ -96,15 +69,12 @@ class ScentSelectionScreenState extends State<ScentSelectionScreen> {
                 bottom: 40,
               ),
               child: SizedBox(
-                child: Button.primary(
-                  text: '(${_selectedScents.length}/4) Done',
-                  onPressed: _selectedScents.length == 4
+                child: ActionButton(
+                  type: ActionButtonType.primary,
+                  text: 'Next',
+                  onPressed: selectedScents.length ==
+                          SmellSenseScentSelectionScreenWidget.maxSelectionCount
                       ? () {
-                          _onWriteScentSelections();
-                          widget._onScentsSelected(_selectedScents
-                              .map((scent) => Scent.scents
-                                  .firstWhere((s) => s.name == scent))
-                              .toList());
                           Navigator.of(context).pop();
                         }
                       : null,

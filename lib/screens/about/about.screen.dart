@@ -1,17 +1,18 @@
 import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
-import 'package:smellsense/shared/widgets/app_bar.widget.dart' show SmellSenseAppBar;
-import 'package:smellsense/theme/colors.dart' show AppColors;
+import 'package:smellsense/shared/widgets/app_bar.widget.dart'
+    show SmellSenseAppBar;
+import 'package:smellsense/theme.dart';
 import 'package:url_launcher/url_launcher.dart' show launchUrl;
 
-class AboutScreen extends StatefulWidget {
-  const AboutScreen({super.key});
+class AboutScreenWidget extends StatefulWidget {
+  const AboutScreenWidget({super.key});
 
   @override
-  AboutScreenState createState() => AboutScreenState();
+  AboutScreenWidgetState createState() => AboutScreenWidgetState();
 }
 
-class AboutScreenState extends State<AboutScreen> {
+class AboutScreenWidgetState extends State<AboutScreenWidget> {
   Widget createTextInput(
     String text,
     bool required,
@@ -36,7 +37,7 @@ class AboutScreenState extends State<AboutScreen> {
                 if (required)
                   TextSpan(
                     text: ' *',
-                    style: TextStyle(color: AppColors.error),
+                    style: TextStyle(color: AppTheme.colors().error),
                   ),
               ],
             ),
@@ -81,8 +82,10 @@ class AboutScreenState extends State<AboutScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
-                          fontSize:
-                              Theme.of(context).textTheme.headlineSmall!.fontSize,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .fontSize,
                         ),
                       ),
                     ),
@@ -102,8 +105,10 @@ class AboutScreenState extends State<AboutScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
-                          fontSize:
-                              Theme.of(context).textTheme.headlineSmall!.fontSize,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .fontSize,
                         ),
                       ),
                     ),
@@ -121,8 +126,9 @@ class AboutScreenState extends State<AboutScreen> {
                                 fontSize: 14,
                               ),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => launchUrl(
-                                    Uri(path: 'https://www.facebook.com/SmellSense-345235540113222/')),
+                                ..onTap = () => launchUrl(Uri(
+                                    path:
+                                        'https://www.facebook.com/SmellSense-345235540113222/')),
                             ),
                           ],
                           style: const TextStyle(
@@ -163,8 +169,10 @@ class AboutScreenState extends State<AboutScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
-                          fontSize:
-                              Theme.of(context).textTheme.headlineSmall!.fontSize,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .fontSize,
                         ),
                       ),
                     ),
@@ -179,8 +187,8 @@ class AboutScreenState extends State<AboutScreen> {
                             fontSize: 14,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap =
-                                () => launchUrl(Uri(path: 'https://www.fifthsense.org.uk/')),
+                            ..onTap = () => launchUrl(
+                                Uri(path: 'https://www.fifthsense.org.uk/')),
                         ),
                       ),
                     ),
@@ -195,7 +203,8 @@ class AboutScreenState extends State<AboutScreen> {
                             fontSize: 14,
                           ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => launchUrl(Uri(path: 'https://abscent.org/')),
+                            ..onTap = () =>
+                                launchUrl(Uri(path: 'https://abscent.org/')),
                         ),
                       ),
                     ),

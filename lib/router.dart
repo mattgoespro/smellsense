@@ -1,63 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:smellsense/model/scent.dart' show Scent;
-import 'package:smellsense/screens/about/about.screen.dart' show AboutScreen;
-import 'package:smellsense/screens/help/help.screen.dart' show HelpScreen;
-import 'package:smellsense/screens/main_menu/main_menu.screen.dart' show MainMenuScreen;
-import 'package:smellsense/screens/scent_selection/scent_selection.screen.dart' show ScentSelectionScreen;
-import 'package:smellsense/screens/training/training.screen.dart' show SmellTrainingScreen;
-import 'package:smellsense/screens/training_progress/training_progress.screen.dart' show ViewTrainingProgressScreen;
-
-class ScentSelectionRouteArguments {
-  List<Scent> scentSelections;
-  Function onScentSelectionChanged;
-
-  ScentSelectionRouteArguments(
-    this.scentSelections,
-    this.onScentSelectionChanged,
-  );
-}
-
-class SmellTrainingRouteArguments {
-  List<Scent> scents;
-
-  SmellTrainingRouteArguments(this.scents);
-}
+import 'package:smellsense/screens/about/about.screen.dart'
+    show AboutScreenWidget;
+import 'package:smellsense/screens/help/help.screen.dart' show HelpScreenWidget;
+import 'package:smellsense/screens/main_menu/main_menu.screen.dart'
+    show MainMenuScreenWidget;
+import 'package:smellsense/screens/scent_selection/scent_selection.screen.dart'
+    show SmellSenseScentSelectionScreenWidget;
+import 'package:smellsense/screens/training_session/training_session.screen.dart'
+    show TrainingSessionScreenWidget;
+import 'package:smellsense/screens/training_session_history/training_session_history.screen.dart'
+    show TrainingSessionHistoryScreenWidget;
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const MainMenuScreen(),
+          builder: (context) => const MainMenuScreenWidget(),
         );
       case '/training':
-        var scentArgs = args as SmellTrainingRouteArguments;
         return MaterialPageRoute(
-          builder: (context) => SmellTrainingScreen(
-              Key(scentArgs.scents.join()), scentArgs.scents),
+          // TODO: Retrieve scent list from database and pass it to the TrainingSessionScreenWidget
+          builder: (context) => const TrainingSessionScreenWidget(
+            children: [],
+          ),
         );
       case '/select-scents':
-        var scentArgs = args as ScentSelectionRouteArguments;
         return MaterialPageRoute(
-          builder: (context) => ScentSelectionScreen(
-            const Key("select-scents"),
-            scentArgs.scentSelections,
-            scentArgs.onScentSelectionChanged,
-          ),
+          builder: (context) => const SmellSenseScentSelectionScreenWidget(),
         );
       case '/training-progress':
         return MaterialPageRoute(
-          builder: (context) => const ViewTrainingProgressScreen(),
+          builder: (context) => const TrainingSessionHistoryScreenWidget(),
         );
       case '/about':
         return MaterialPageRoute(
-          builder: (context) => const AboutScreen(),
+          builder: (context) => const AboutScreenWidget(),
         );
       case '/help':
         return MaterialPageRoute(
-          builder: (context) => const HelpScreen(),
+          builder: (context) => const HelpScreenWidget(),
         );
       default:
         return _errorRoute();

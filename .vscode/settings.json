@@ -3,21 +3,35 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[dart]": {
-    "editor.defaultFormatter": "Dart-Code.flutter",
+    "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
+  "code-runner.cwd": "${workspaceFolder}",
+  "code-runner.defaultLanguage": "shellscript",
+  "code-runner.executorMap": {
+    "shellscript": "bash"
+  },
+  "code-runner.runInTerminal": true,
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
+  "dart.renameFilesWithClasses": "prompt",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
+    "source.organizeImports": "always"
   },
+  // "flutterStylizer": null,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.exclude": {
@@ -34,6 +48,5 @@
   },
   "yaml.schemas": {
     "https://static.codemagic.io/codemagic-schema.json": "file://codemagic.yaml"
-  },
-  "dart.renameFilesWithClasses": "prompt"
+  }
 }

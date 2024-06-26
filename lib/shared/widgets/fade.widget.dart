@@ -8,12 +8,12 @@ class FadeAnimation extends StatefulWidget {
   final int? waitSecondsBetween;
   final Function? onComplete;
 
-  const FadeAnimation(Key key,
-      {this.child,
+  const FadeAnimation(
+      {super.key,
+      this.child,
       required this.reverse,
       this.waitSecondsBetween,
-      this.onComplete})
-      : super(key: key);
+      this.onComplete});
 
   @override
   FadeAnimationState createState() => FadeAnimationState();

@@ -14,6 +14,29 @@
       "options": {
         "cwd": "${workspaceFolder}"
       }
+    },
+    {
+      "label": "ADB: Connect to wireless device",
+      "detail": "Connect to a wireless device using ADB.",
+      "command": "/c/Users/Matt/AppData/Local/Android/Sdk/platform-tools/adb.exe",
+      "args": ["connect", "192.168.8.122:45507"],
+      "isBackground": true,
+      "type": "shell",
+      "problemMatcher": [
+        {
+          "pattern": {
+            "regexp": "^connected to",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^connected to",
+            "endsPattern": "^$"
+          }
+        }
+      ]
     }
   ]
 }

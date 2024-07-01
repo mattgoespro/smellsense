@@ -3,6 +3,7 @@
 name: smellsense
 description: A mobile application for smell training.
 
+# Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
 # Versions and builds
@@ -12,11 +13,15 @@ version: 1.1.0+10
 
 # Flutter SDK
 environment:
-  sdk: ">2.17.0 <=3.22.2"
+  sdk: ">=3.4.3 <4.0.0"
 
 # Application dependencies
 dependencies:
   flutter:
+    sdk: flutter
+
+  # TODO: Add localizations
+  flutter_localizations:
     sdk: flutter
 
   get_it: ^7.7.0
@@ -32,7 +37,6 @@ dependencies:
   flutter_svg: 2.0.10+1
   flutter_widget_from_html: 0.15.1
   fl_chart: ^0.68.0
-  charts_flutter: ^0.12.0
   floor: ^1.5.0
   uuid: ^4.4.0
   shared_preferences: ^2.2.3
@@ -50,34 +54,36 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
   generate: true
 
   # Resolution-aware assets: https://flutter.dev/assets-and-#resolution-aware.s
   assets:
     # SVGs
-    - lib/assets/svg/smellsense_logo.svg
-    - lib/assets/svg/checkmark.svg
+    - assets/svg/smellsense_logo.svg
+    - assets/svg/checkmark.svg
 
     # Scent training images
-    - lib/assets/scent_png/chamomile.png
-    - lib/assets/scent_png/cinnamon.png
-    - lib/assets/scent_png/citronella.png
-    - lib/assets/scent_png/clove.png
-    - lib/assets/scent_png/eucalyptus.png
-    - lib/assets/scent_png/garlic.png
-    - lib/assets/scent_png/grapefruit.png
-    - lib/assets/scent_png/lavender.png
-    - lib/assets/scent_png/lemon.png
-    - lib/assets/scent_png/mint.png
-    - lib/assets/scent_png/orange.png
-    - lib/assets/scent_png/rose.png
-    - lib/assets/scent_png/rosemary.png
-    - lib/assets/scent_png/teatree.png
+    - assets/scent_png/chamomile.png
+    - assets/scent_png/cinnamon.png
+    - assets/scent_png/citronella.png
+    - assets/scent_png/clove.png
+    - assets/scent_png/eucalyptus.png
+    - assets/scent_png/garlic.png
+    - assets/scent_png/grapefruit.png
+    - assets/scent_png/lavender.png
+    - assets/scent_png/lemon.png
+    - assets/scent_png/mint.png
+    - assets/scent_png/orange.png
+    - assets/scent_png/rose.png
+    - assets/scent_png/rosemary.png
+    - assets/scent_png/teatree.png
 
     # Parosmia smell reaction emojis
-    - lib/assets/svg/reactions/angry.svg
-    - lib/assets/svg/reactions/disgusted.svg
-    - lib/assets/svg/reactions/unhappy.svg
-    - lib/assets/svg/reactions/neutral.svg
-    - lib/assets/svg/reactions/pleased.svg
-    - lib/assets/svg/reactions/happy.svg
+    - assets/svg/reactions/angry.svg
+    - assets/svg/reactions/disgusted.svg
+    - assets/svg/reactions/unhappy.svg
+    - assets/svg/reactions/neutral.svg
+    - assets/svg/reactions/pleased.svg
+    - assets/svg/reactions/happy.svg

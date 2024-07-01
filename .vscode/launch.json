@@ -6,7 +6,8 @@
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "flutterMode": "debug"
+      "flutterMode": "debug",
+      "preLaunchTask": "ADB: Connect to wireless device"
     }
   ]
 }

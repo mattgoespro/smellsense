@@ -156,15 +156,14 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
   _$TrainingPeriodDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database, changeListener),
+  )   : _queryAdapter = QueryAdapter(database),
         _trainingPeriodEntityInsertionAdapter = InsertionAdapter(
             database,
             'TrainingPeriodEntity',
             (TrainingPeriodEntity item) => <String, Object?>{
                   'id': item.id,
                   'start_date': _dateTimeTypeConverter.encode(item.startDate)
-                },
-            changeListener),
+                }),
         _trainingPeriodEntityUpdateAdapter = UpdateAdapter(
             database,
             'TrainingPeriodEntity',
@@ -172,8 +171,7 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
             (TrainingPeriodEntity item) => <String, Object?>{
                   'id': item.id,
                   'start_date': _dateTimeTypeConverter.encode(item.startDate)
-                },
-            changeListener),
+                }),
         _trainingPeriodEntityDeletionAdapter = DeletionAdapter(
             database,
             'TrainingPeriodEntity',
@@ -181,8 +179,7 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
             (TrainingPeriodEntity item) => <String, Object?>{
                   'id': item.id,
                   'start_date': _dateTimeTypeConverter.encode(item.startDate)
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -199,14 +196,12 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
       _trainingPeriodEntityDeletionAdapter;
 
   @override
-  Stream<List<TrainingPeriodEntity>> listTrainingPeriods() {
-    return _queryAdapter.queryListStream(
-        'SELECT id, start_date FROM TrainingPeriod',
+  Future<List<TrainingPeriodEntity>> listTrainingPeriods() async {
+    return _queryAdapter.queryList('SELECT id, start_date FROM TrainingPeriod',
         mapper: (Map<String, Object?> row) => TrainingPeriodEntity(
             id: row['id'] as String,
-            startDate: _dateTimeTypeConverter.decode(row['start_date'] as int)),
-        queryableName: 'TrainingPeriod',
-        isView: false);
+            startDate:
+                _dateTimeTypeConverter.decode(row['start_date'] as int)));
   }
 
   @override

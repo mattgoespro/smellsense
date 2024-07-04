@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smellsense/app/providers/infrastructure.provider.dart';
-import 'package:smellsense/app/screens/training_session/training_session_entry/form/form_rating.widget.dart';
-import 'package:smellsense/app/screens/training_session/training_session_entry/form/form_timer.widget.dart';
+import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/form_rating.widget.dart';
+import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/form_timer.widget.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent_display.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session.module.dart';
@@ -50,11 +50,11 @@ class TrainingSessionEntryFormWidgetState
             Image(
               image: infrastructure.getAssetProvider().getImage(
                     TrainingScentDisplay.getScent(
-                      widget.scent.name.name,
+                      widget.scent.name.scentName,
                     ).displayImage,
                   ),
             ),
-            TimerWidget(
+            TrainingSessionEntryRatingFormTimerWidget(
               time: TrainingSessionEntryFormWidget.timerDuration,
               onStartFn: () {
                 setState(() {
@@ -69,7 +69,9 @@ class TrainingSessionEntryFormWidgetState
                   currentEncouragement = null;
                 });
               },
-              replaceDoneTimerWidget: FormRatingWidget(scent: widget.scent),
+              replaceDoneTimerWidget:
+                  TrainingSessionEntryRatingFormRatingWidget(
+                      scent: widget.scent),
             ),
           ],
         ),

@@ -79,6 +79,8 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
 
   TrainingSessionEntryDao? _trainingSessionEntryDaoInstance;
 
+  SupportedTrainingScentDao? _supportedTrainingScentDaoInstance;
+
   TrainingScentDao? _trainingScentDaoInstance;
 
   Future<sqflite.Database> open(
@@ -103,11 +105,13 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TrainingScentEntity` (`id` TEXT NOT NULL, `period_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `SupportedTrainingScentEntity` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `TrainingScentEntity` (`id` TEXT NOT NULL, `supported_scent_id` TEXT NOT NULL, `period_id` TEXT NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `TrainingPeriodEntity` (`id` TEXT NOT NULL, `start_date` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TrainingSessionEntity` (`id` TEXT NOT NULL, `period_id` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `TrainingSessionEntity` (`id` TEXT NOT NULL, `period_id` TEXT NOT NULL, `date` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `TrainingSessionEntryEntity` (`id` TEXT NOT NULL, `session_id` TEXT NOT NULL, `scent_id` TEXT NOT NULL, `rating` INTEGER NOT NULL, `comment` TEXT, `parosmia_reaction` INTEGER, `parosmia_reaction_severity` TEXT, PRIMARY KEY (`id`))');
 
@@ -133,6 +137,12 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
   TrainingSessionEntryDao get trainingSessionEntryDao {
     return _trainingSessionEntryDaoInstance ??=
         _$TrainingSessionEntryDao(database, changeListener);
+  }
+
+  @override
+  SupportedTrainingScentDao get supportedTrainingScentDao {
+    return _supportedTrainingScentDaoInstance ??=
+        _$SupportedTrainingScentDao(database, changeListener);
   }
 
   @override
@@ -220,6 +230,17 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
   }
 
   @override
+  Future<TrainingPeriodEntity?> findTrainingPeriodByStartDate(
+      DateTime startDate) async {
+    return _queryAdapter.query(
+        'SELECT id, start_date FROM TrainingPeriod WHERE start_date = ?1',
+        mapper: (Map<String, Object?> row) => TrainingPeriodEntity(
+            id: row['id'] as String,
+            startDate: _dateTimeTypeConverter.decode(row['start_date'] as int)),
+        arguments: [_dateTimeTypeConverter.encode(startDate)]);
+  }
+
+  @override
   Future<void> insertTrainingPeriod(TrainingPeriodEntity period) async {
     await _trainingPeriodEntityInsertionAdapter.insert(
         period, OnConflictStrategy.abort);
@@ -241,12 +262,15 @@ class _$TrainingSessionDao extends TrainingSessionDao {
   _$TrainingSessionDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database, changeListener),
+  )   : _queryAdapter = QueryAdapter(database),
         _trainingSessionEntityInsertionAdapter = InsertionAdapter(
             database,
             'TrainingSessionEntity',
-            (TrainingSessionEntity item) =>
-                <String, Object?>{'id': item.id, 'period_id': item.periodId});
+            (TrainingSessionEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'period_id': item.periodId,
+                  'date': _dateTimeTypeConverter.encode(item.date)
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -258,22 +282,12 @@ class _$TrainingSessionDao extends TrainingSessionDao {
       _trainingSessionEntityInsertionAdapter;
 
   @override
-  Stream<List<TrainingSessionEntryEntity>> findTrainingSessionsByPeriodId(
-      String periodId) {
-    return _queryAdapter.queryListStream(
+  Future<List<TrainingSessionEntryEntity>> findTrainingSessionsByPeriodId(
+      String periodId) async {
+    return _queryAdapter.queryList(
         'SELECT id, period_id FROM TrainingSession as ts INNER JOIN TrainingPeriod as tsp ON ts.period_id = tsp.id WHERE tsp.id = ?1',
-        mapper: (Map<String, Object?> row) => TrainingSessionEntryEntity(
-            id: row['id'] as String,
-            sessionId: row['session_id'] as String,
-            scentId: row['scent_id'] as String,
-            rating: row['rating'] as int,
-            comment: row['comment'] as String?,
-            parosmiaReactionSeverity:
-                row['parosmia_reaction_severity'] as String?,
-            parosmiaReaction: row['parosmia_reaction'] as int?),
-        arguments: [periodId],
-        queryableName: 'TrainingSession',
-        isView: false);
+        mapper: (Map<String, Object?> row) => TrainingSessionEntryEntity(id: row['id'] as String, sessionId: row['session_id'] as String, scentId: row['scent_id'] as String, rating: row['rating'] as int, comment: row['comment'] as String?, parosmiaReactionSeverity: row['parosmia_reaction_severity'] as String?, parosmiaReaction: row['parosmia_reaction'] as int?),
+        arguments: [periodId]);
   }
 
   @override
@@ -299,8 +313,7 @@ class _$TrainingSessionEntryDao extends TrainingSessionEntryDao {
                   'comment': item.comment,
                   'parosmia_reaction': item.parosmiaReaction,
                   'parosmia_reaction_severity': item.parosmiaReactionSeverity
-                },
-            changeListener),
+                }),
         _trainingSessionEntryEntityDeletionAdapter = DeletionAdapter(
             database,
             'TrainingSessionEntryEntity',
@@ -313,8 +326,7 @@ class _$TrainingSessionEntryDao extends TrainingSessionEntryDao {
                   'comment': item.comment,
                   'parosmia_reaction': item.parosmiaReaction,
                   'parosmia_reaction_severity': item.parosmiaReactionSeverity
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -366,6 +378,48 @@ class _$TrainingSessionEntryDao extends TrainingSessionEntryDao {
   }
 }
 
+class _$SupportedTrainingScentDao extends SupportedTrainingScentDao {
+  _$SupportedTrainingScentDao(
+    this.database,
+    this.changeListener,
+  ) : _queryAdapter = QueryAdapter(database);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  @override
+  Future<List<SupportedTrainingScentEntity>>
+      listSupportedTrainingScents() async {
+    return _queryAdapter.queryList(
+        'SELECT id, name FROM SupportedTrainingScent',
+        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
+            id: row['id'] as String, name: row['name'] as String));
+  }
+
+  @override
+  Future<SupportedTrainingScentEntity?> findSupportedTrainingScentByName(
+      String name) async {
+    return _queryAdapter.query(
+        'SELECT id, name FROM SupportedTrainingScent WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
+            id: row['id'] as String, name: row['name'] as String),
+        arguments: [name]);
+  }
+
+  @override
+  Future<SupportedTrainingScentEntity?> findSupportedTrainingScentById(
+      String name) async {
+    return _queryAdapter.query(
+        'SELECT id, name FROM SupportedTrainingScent WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
+            id: row['id'] as String, name: row['name'] as String),
+        arguments: [name]);
+  }
+}
+
 class _$TrainingScentDao extends TrainingScentDao {
   _$TrainingScentDao(
     this.database,
@@ -376,8 +430,8 @@ class _$TrainingScentDao extends TrainingScentDao {
             'TrainingScentEntity',
             (TrainingScentEntity item) => <String, Object?>{
                   'id': item.id,
-                  'period_id': item.periodId,
-                  'name': item.name
+                  'supported_scent_id': item.supportedScentId,
+                  'period_id': item.periodId
                 }),
         _trainingScentEntityUpdateAdapter = UpdateAdapter(
             database,
@@ -385,8 +439,8 @@ class _$TrainingScentDao extends TrainingScentDao {
             ['id'],
             (TrainingScentEntity item) => <String, Object?>{
                   'id': item.id,
-                  'period_id': item.periodId,
-                  'name': item.name
+                  'supported_scent_id': item.supportedScentId,
+                  'period_id': item.periodId
                 }),
         _trainingScentEntityDeletionAdapter = DeletionAdapter(
             database,
@@ -394,8 +448,8 @@ class _$TrainingScentDao extends TrainingScentDao {
             ['id'],
             (TrainingScentEntity item) => <String, Object?>{
                   'id': item.id,
-                  'period_id': item.periodId,
-                  'name': item.name
+                  'supported_scent_id': item.supportedScentId,
+                  'period_id': item.periodId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -413,14 +467,11 @@ class _$TrainingScentDao extends TrainingScentDao {
       _trainingScentEntityDeletionAdapter;
 
   @override
-  Future<List<TrainingScentEntity>?> findTrainingScentsByPeriod(
+  Future<List<TrainingScentEntity>?> findTrainingScentsByPeriodId(
       String periodId) async {
     return _queryAdapter.queryList(
-        'SELECT id, name FROM TrainingScent WHERE period_id = ?1',
-        mapper: (Map<String, Object?> row) => TrainingScentEntity(
-            id: row['id'] as String,
-            periodId: row['period_id'] as String,
-            name: row['name'] as String),
+        'SELECT id, supported_scent_id, period_id FROM TrainingScent WHERE period_id = ?1',
+        mapper: (Map<String, Object?> row) => TrainingScentEntity(id: row['id'] as String, periodId: row['period_id'] as String, supportedScentId: row['supported_scent_id'] as String),
         arguments: [periodId]);
   }
 

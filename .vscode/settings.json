@@ -11,7 +11,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[shellscript]": {
-    "editor.defaultFormatter": "shakram02.bash-beautify",
+    "editor.defaultFormatter": "foxundermoon.shell-format",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true
   },
@@ -33,6 +33,7 @@
   // "[xml]": {
   //   "editor.defaultFormatter": "redhat.vscode-xml"
   // },
+  // "terminal.integrated.shellIntegration.enabled": false,
   "dart.debugExternalPackageLibraries": true,
   "dart.debugSdkLibraries": true,
   "dart.renameFilesWithClasses": "prompt",
@@ -58,13 +59,15 @@
     ".packages": true,
     "pubspec.lock": true
   },
+  "terminal.integrated.defaultProfile.windows": "bash",
   "terminal.integrated.profiles.windows": {
-    "Git Bash": {
-      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
-      "args": ["-i"]
+    "bash": {
+      "source": "Git Bash",
+      "env": {
+        "PATH": "{env:PATH};${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools"
+      }
     }
   },
-  "terminal.integrated.defaultProfile.windows": "Git Bash",
   "yaml.schemas": {
     "https://static.codemagic.io/codemagic-schema.json": "https://codemagic.io/codemagic-schema.json"
   },

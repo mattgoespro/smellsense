@@ -15,8 +15,12 @@ class TrainingSessionEntity {
   @ColumnInfo(name: 'period_id')
   final String periodId;
 
+  @ColumnInfo(name: 'date')
+  final DateTime date;
+
   TrainingSessionEntity({
     required this.id,
     required this.periodId,
+    required this.date,
   });
 }

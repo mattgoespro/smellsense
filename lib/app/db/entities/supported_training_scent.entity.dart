@@ -1,16 +1,16 @@
 import 'package:floor/floor.dart' show ColumnInfo, entity, primaryKey;
 
 @entity
-class TrainingPeriodEntity {
+class SupportedTrainingScentEntity {
   @ColumnInfo(name: 'id')
   @primaryKey
   final String id;
 
-  @ColumnInfo(name: 'start_date')
-  final DateTime startDate;
+  @ColumnInfo(name: 'name')
+  final String name;
 
-  TrainingPeriodEntity({
+  SupportedTrainingScentEntity({
     required this.id,
-    required this.startDate,
+    required this.name,
   });
 }

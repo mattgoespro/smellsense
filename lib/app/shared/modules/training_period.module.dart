@@ -1,13 +1,8 @@
-import 'package:smellsense/app/db/entities/training_period.entity.dart';
+import 'package:smellsense/app/shared/modules/training_session/training_session.module.dart';
 
 class TrainingPeriod {
   final DateTime startDate;
+  final List<TrainingSession> sessions;
 
-  TrainingPeriod({
-    required this.startDate,
-  });
-
-  static TrainingPeriod fromEntity(TrainingPeriodEntity entity) {
-    return TrainingPeriod(startDate: entity.startDate);
-  }
+  TrainingPeriod({required this.startDate, required this.sessions});
 }

@@ -13,6 +13,11 @@ abstract class TrainingPeriodDao {
   @Query('SELECT id, start_date FROM TrainingPeriod WHERE id = :id')
   Future<TrainingPeriodEntity?> findTrainingPeriodById(String id);
 
+  @Query(
+      'SELECT id, start_date FROM TrainingPeriod WHERE start_date = :startDate')
+  Future<TrainingPeriodEntity?> findTrainingPeriodByStartDate(
+      DateTime startDate);
+
   @insert
   Future<void> insertTrainingPeriod(TrainingPeriodEntity period);
 

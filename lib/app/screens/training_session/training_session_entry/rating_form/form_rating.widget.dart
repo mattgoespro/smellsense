@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:smellsense/app/providers/infrastructure.provider.dart';
-import 'package:smellsense/app/screens/training_session/training_session_entry/form/form.widget.dart';
+import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/rating_form.widget.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry.module.dart';
+import 'package:smellsense/app/shared/modules/training_session/training_session_entry_rating.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry_reaction.module.dart';
 import 'package:smellsense/app/theme.dart';
 
-class FormRatingWidget extends StatefulWidget {
+class TrainingSessionEntryRatingFormRatingWidget extends StatefulWidget {
   static const timerDuration = 15;
 
   final TrainingScent scent;
 
-  const FormRatingWidget({super.key, required this.scent});
+  const TrainingSessionEntryRatingFormRatingWidget(
+      {super.key, required this.scent});
 
   @override
-  FormRatingWidgetState createState() => FormRatingWidgetState();
+  TrainingSessionEntryRatingFormRatingWidgetState createState() =>
+      TrainingSessionEntryRatingFormRatingWidgetState();
 }
 
-class FormRatingWidgetState extends State<FormRatingWidget>
+class TrainingSessionEntryRatingFormRatingWidgetState
+    extends State<TrainingSessionEntryRatingFormRatingWidget>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late Infrastructure _infrastructure;
 
@@ -37,20 +41,19 @@ class FormRatingWidgetState extends State<FormRatingWidget>
 
     return RatingBar.builder(
       direction: Axis.vertical,
-      itemCount: TrainingSessionRatings.getRatings().length,
+      itemCount: TrainingSessionEntryRatings.getRatings().length,
       minRating: 1,
       itemBuilder: (context, rating) =>
           _infrastructure.getAssetProvider().getIcon(
-                TrainingSessionRatings.getRating(
+                TrainingSessionEntryRatings.getRating(
                   rating,
                 ).name,
               ),
       onRatingUpdate: (rating) =>
-          TrainingSessionEntryFormWidget.of(context).updateEntry(
+          TrainingSessionEntryRatingFormWidget.of(context).updateEntry(
         TrainingSessionEntry(
-          scentName: widget.scent.name,
-          date: context.read<DateTime>(),
-          rating: TrainingSessionRatings.getRating(rating),
+          scent: TrainingScent(name: widget.scent.name),
+          rating: TrainingSessionEntryRatings.getRating(rating),
           comment: '',
           parosmiaSeverity: TrainingSessionEntryParosmiaSeverity.none,
           reaction: TrainingSessionEntryParosmiaReaction.none,

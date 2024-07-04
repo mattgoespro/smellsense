@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TimerWidget extends StatefulWidget {
+class TrainingSessionEntryRatingFormTimerWidget extends StatefulWidget {
   final int time;
   final void Function() onStartFn;
   final void Function() onCompleteFn;
   final Widget replaceDoneTimerWidget;
 
-  const TimerWidget({
+  const TrainingSessionEntryRatingFormTimerWidget({
     super.key,
     required this.time,
     required this.onStartFn,
@@ -15,10 +15,12 @@ class TimerWidget extends StatefulWidget {
   });
 
   @override
-  State<TimerWidget> createState() => TimerWidgetState();
+  State<TrainingSessionEntryRatingFormTimerWidget> createState() =>
+      TrainingSessionEntryRatingFormTimerWidgetState();
 }
 
-class TimerWidgetState extends State<TimerWidget>
+class TrainingSessionEntryRatingFormTimerWidgetState
+    extends State<TrainingSessionEntryRatingFormTimerWidget>
     with TickerProviderStateMixin {
   late AnimationController controller;
 

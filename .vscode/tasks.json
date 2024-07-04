@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Generate SmellSense Database",
-      "detail": "Use the `floor` package to generate the SmellSense database.",
-      "command": ". \"${workspaceFolder}\\scripts\\generate_db.sh\"",
+      "label": "build_runner: build",
+      "detail": "Run build using build_runner.",
+      "command": "dart run build_runner build",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -16,23 +16,25 @@
       }
     },
     {
-      "label": "ADB: Connect to wireless device",
-      "detail": "Connect to a wireless device using ADB.",
-      "command": "/c/Users/Matt/AppData/Local/Android/Sdk/platform-tools/adb.exe",
-      "args": ["connect", "192.168.8.122:45507"],
+      "label": "adb: connect wireless device",
+      "detail": "Connect to device over Wi-Fi.",
+      "command": "scripts/connect_device.sh",
       "isBackground": true,
       "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "problemMatcher": [
         {
           "pattern": {
-            "regexp": "^connected to",
+            "regexp": "^Successfully connected on",
             "file": 1,
             "location": 2,
             "message": 3
           },
           "background": {
             "activeOnStart": true,
-            "beginsPattern": "^connected to",
+            "beginsPattern": "^Successfully connected on",
             "endsPattern": "^$"
           }
         }

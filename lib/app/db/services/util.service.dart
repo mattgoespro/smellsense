@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:uuid/uuid.dart';
 
-String generateUuid() => const Uuid().v4().toString();
+String uuid() => const Uuid().v4();
 
 class ListCollector<T> implements StreamConsumer<List<T>> {
   final List<T> _collectedData = [];

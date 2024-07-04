@@ -6,14 +6,14 @@ import 'package:smellsense/app/shared/modules/training_session/training_scent.mo
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
     show ActionButton, ActionButtonType;
 
-class MainMenuScreenWidget extends StatefulWidget {
-  const MainMenuScreenWidget({super.key});
+class HomeScreenWidget extends StatefulWidget {
+  const HomeScreenWidget({super.key});
 
   @override
-  MainMenuScreenWidgetState createState() => MainMenuScreenWidgetState();
+  HomeScreenWidgetState createState() => HomeScreenWidgetState();
 }
 
-class MainMenuScreenWidgetState extends State<MainMenuScreenWidget> {
+class HomeScreenWidgetState extends State<HomeScreenWidget> {
   final double _menuButtonSize = 140;
   final List<TrainingScent> scents = [];
 

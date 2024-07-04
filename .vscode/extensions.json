@@ -21,6 +21,7 @@
     "gruntfuggly.todo-tree",
     "simonsiefke.svg-preview",
     "dart-code.dart-code",
-    "gmlewis-vscode.flutter-stylizer"
+    "gmlewis-vscode.flutter-stylizer",
+    "netcorext.uuid-generator"
   ]
 }

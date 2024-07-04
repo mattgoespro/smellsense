@@ -5,7 +5,9 @@ import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
     show SmellSenseAppBar;
 
 class TrainingSessionScreenWidget extends StatefulWidget {
-  const TrainingSessionScreenWidget({super.key});
+  final List<TrainingScent> scents;
+
+  const TrainingSessionScreenWidget({super.key, required this.scents});
 
   @override
   TrainingSessionScreenWidgetState createState() =>
@@ -14,8 +16,6 @@ class TrainingSessionScreenWidget extends StatefulWidget {
 
 class TrainingSessionScreenWidgetState
     extends State<TrainingSessionScreenWidget> {
-  List<TrainingScent> scents = [];
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +29,7 @@ class TrainingSessionScreenWidgetState
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: TrainingSessionEntryFormStepper(
-          scents: scents,
+          scents: widget.scents,
         ),
       ),
     );

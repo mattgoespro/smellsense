@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smellsense/app/screens/training_session/training_session_entry/form/form.widget.dart';
+import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/rating_form.widget.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
 
 class TrainingSessionEntryFormStepper extends StatefulWidget {
@@ -43,7 +43,7 @@ class _TrainingSessionEntryFormStepperState
       steps: widget.scents.map((scent) {
         return Step(
           title: Text(scent.name.toString()),
-          content: TrainingSessionEntryFormWidget(
+          content: TrainingSessionEntryRatingFormWidget(
             scent: scent,
           ),
         );

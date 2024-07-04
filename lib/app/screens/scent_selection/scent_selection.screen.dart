@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smellsense/app/screens/scent_selection/scent_selection_checkbox_group.widget.dart';
 import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
     show SmellSenseAppBar;
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
     show ActionButton, ActionButtonType;
 
-class SmellSenseScentSelectionScreenWidget extends StatefulWidget {
+class ScentSelectionScreenWidget extends StatefulWidget {
   static int maxSelectionCount = 4;
 
-  const SmellSenseScentSelectionScreenWidget({super.key});
+  const ScentSelectionScreenWidget({super.key});
 
   @override
-  SmellSenseScentSelectionScreenWidgetState createState() =>
-      SmellSenseScentSelectionScreenWidgetState();
+  ScentSelectionScreenWidgetState createState() =>
+      ScentSelectionScreenWidgetState();
 }
 
-class SmellSenseScentSelectionScreenWidgetState
-    extends State<SmellSenseScentSelectionScreenWidget> {
+class ScentSelectionScreenWidgetState
+    extends State<ScentSelectionScreenWidget> {
   Set<String> selectedScents = {};
 
   isSelectionComplete() =>
@@ -24,7 +25,7 @@ class SmellSenseScentSelectionScreenWidgetState
       ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
   storeScentSelections() {
-    // Store selected scents in shared preferences
+    // TODO: Store selected scents in db
   }
 
   @override
@@ -72,12 +73,15 @@ class SmellSenseScentSelectionScreenWidgetState
                 child: ActionButton(
                   type: ActionButtonType.primary,
                   text: 'Next',
-                  onPressed: selectedScents.length ==
-                          SmellSenseScentSelectionScreenWidget.maxSelectionCount
-                      ? () {
-                          Navigator.of(context).pop();
-                        }
-                      : null,
+                  onPressed: () {
+                    if (!isSelectionComplete()) {
+                      // button stays disabled
+                      return;
+                    }
+
+                    storeScentSelections();
+                    context.go('/training');
+                  },
                 ),
               ),
             ),

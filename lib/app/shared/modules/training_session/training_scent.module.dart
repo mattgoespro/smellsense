@@ -1,4 +1,3 @@
-import 'package:smellsense/app/db/entities/training_scent.entity.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent_display.module.dart';
 
 enum TrainingScentName {
@@ -16,29 +15,28 @@ enum TrainingScentName {
   chamomile("chamomile"),
   teaTree("teaTree");
 
-  final String name;
+  final String scentName;
 
-  const TrainingScentName(this.name);
+  const TrainingScentName(this.scentName);
 
   static fromString(String name) {
     return TrainingScentName.values.firstWhere(
-      (element) => element.name == name,
+      (element) => element.scentName == name,
     );
   }
 
   @override
-  toString() => name;
+  toString() => scentName;
 }
 
 class TrainingScent {
-  final TrainingScentName name;
+  static const maxTrainingScents = 4;
+
+  TrainingScentName name;
 
   TrainingScent({
     required this.name,
   });
-
-  static TrainingScent fromEntity(TrainingScentEntity entity) =>
-      TrainingScent(name: TrainingScentName.fromString(entity.name));
 
   getDisplay() => TrainingScentDisplay.getScent(name.toString());
 }

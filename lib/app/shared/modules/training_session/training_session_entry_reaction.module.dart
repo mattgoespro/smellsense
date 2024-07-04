@@ -1,3 +1,15 @@
+enum TrainingSessionEntryParosmiaSeverity { none, mild, moderate, severe }
+
+enum TrainingSessionEntryParosmiaReaction {
+  none,
+  angry,
+  disgusted,
+  unhappy,
+  neutral,
+  pleased,
+  happy
+}
+
 class TrainingSessionEntryParosmia {
   static const Map<String, String> _reactions = {
     'angry': 'assets/svg/emojis/angry.svg',
@@ -32,16 +44,4 @@ class TrainingSessionEntryParosmia {
       TrainingSessionEntryParosmiaSeverity severity) {
     return _reactionSeverities[severity]!;
   }
-}
-
-enum TrainingSessionEntryParosmiaSeverity { none, mild, moderate, severe }
-
-enum TrainingSessionEntryParosmiaReaction {
-  none,
-  angry,
-  disgusted,
-  unhappy,
-  neutral,
-  pleased,
-  happy
 }

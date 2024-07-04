@@ -21,12 +21,21 @@ class TrainingPeriodService {
     return db.trainingPeriodDao.findTrainingPeriodById(id);
   }
 
+  Future<TrainingPeriodEntity?> findTrainingPeriodByStartDate(
+      DateTime startDate) async {
+    return db.trainingPeriodDao.findTrainingPeriodByStartDate(startDate);
+  }
+
   Future<void> createTrainingPeriod(
     TrainingPeriod period,
-    List<TrainingScent> scents,
   ) async {
+    if (period.sessions.isNotEmpty) {
+      throw SmellSenseDatabaseException(
+          "Error creating training period: cannot create period with multiple initial sessions.");
+    }
+
     try {
-      String periodId = generateUuid();
+      String periodId = uuid();
 
       await _trainingPeriodDao.insertTrainingPeriod(
         TrainingPeriodEntity(
@@ -35,12 +44,18 @@ class TrainingPeriodService {
         ),
       );
 
-      for (TrainingScent scent in scents) {
+      var session = period.sessions[0];
+      var entries = session.entries;
+
+      for (TrainingScent scent in entries.map((entry) => entry.scent)) {
+        var supportedScent = await db.supportedTrainingScentDao
+            .findSupportedTrainingScentByName(scent.name.scentName);
+
         await _trainingScentDao.insertTrainingScent(
           TrainingScentEntity(
-            id: generateUuid(),
+            id: uuid(),
             periodId: periodId,
-            name: scent.name.toString(),
+            supportedScentId: supportedScent!.id,
           ),
         );
       }

@@ -1,0 +1,54 @@
+# Supported training scents that can be picked during scent selection.
+SupportedTrainingScent as sts
+----
+# Unique training scent ID
+id PK UUID
+# The name of the scent
+name string INDEX
+
+# A training period is a period between two dates where training sessions were conducted using the scents currently selected by the user.
+#
+# A training period consists of multiple training sessions that were all trained on the same training scents. If training scents are reselected, a new training period will begin from the date that the scents were reselected. Scents cannot be reselected more than once per day.
+TrainingPeriod
+----
+# Unique training period ID
+id PK UUID
+# The date that the period started.
+start_date Date INDEX
+
+# A training session conducted by the user on a particular date. Each training session is unique, and cannot be assigned to more than one training period, however more than one training session can be conducted on the same date.
+TrainingSession
+----
+# Unique training session ID
+id PK UUID
+# The ID of the period in which the session was conducted.
+period_id UUID FK >0- TrainingPeriod.id INDEX
+# The date that the training session took place.
+date Date INDEX
+
+# A training session entry detailing the rating of a scent for a particular training session. Each training session entry is part of a set of a predefined number of training session entries belonging to a training session.
+TrainingSessionEntry as tse # Title
+----
+# Unique training session entry ID
+id PK UUID
+# The ID of the session in which this training entry was made.
+session_id UUID FK >- TrainingSession.id INDEX
+# The ID of the scent that was being trained.
+supported_scent_id: UUID FK >- SupportedTrainingScent.id INDEX
+# The rating of the training entry from 1-5.
+#
+# Supported values:
+#   - none (1)
+#   - weak (2)
+#   - normal (3)
+#   - heightened (4)
+#   - parosmia (5)
+rating int
+# The comment made by the user.
+comment varchar(360)
+# The reaction to the scent's smell if parosmia is experienced
+# by the user if the rating is 5.
+parosmia_reaction varchar(12)
+# The severity of the reaction to the scent's smell if parosmia
+# is experienced by the user if the rating is 5.
+parosmia_reaction_severity varchar(12)

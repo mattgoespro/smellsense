@@ -16,9 +16,9 @@
       }
     },
     {
-      "label": "adb: connect wireless device",
+      "label": "adb: connect to device",
       "detail": "Connect to device over Wi-Fi.",
-      "command": "scripts/connect_device.sh",
+      "command": "scripts/connect_device.sh -d ${input:device}",
       "isBackground": true,
       "type": "shell",
       "options": {
@@ -37,6 +37,23 @@
             "beginsPattern": "^Successfully connected on",
             "endsPattern": "^$"
           }
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "device",
+      "description": "Select the type of device to connect to...",
+      "options": [
+        {
+          "label": "Wi-Fi",
+          "value": "wifi"
+        },
+        {
+          "label": "VM",
+          "value": "vm"
         }
       ]
     }

@@ -4,10 +4,10 @@ import 'package:smellsense/app/shared/modules/training_session/training_scent_di
 class ScentSelectionCheckboxGroupWidget extends StatefulWidget {
   static const maxSelectionCount = 4;
 
-  final void Function(Set<String>) onSelectionChangeFn;
+  final void Function(Set<String>) onSelectionChange;
 
   const ScentSelectionCheckboxGroupWidget(
-      {super.key, required this.onSelectionChangeFn});
+      {super.key, required this.onSelectionChange});
 
   @override
   ScentSelectionCheckboxGroupWidgetState createState() =>
@@ -35,17 +35,19 @@ class ScentSelectionCheckboxGroupWidgetState
                   return;
                 }
 
-                setState(() {
-                  if (selectedScents.length <
-                      ScentSelectionCheckboxGroupWidget.maxSelectionCount) {
-                    selectedScents.add(scent.displayName);
-                    widget.onSelectionChangeFn(selectedScents);
-                    return;
-                  }
+                setState(
+                  () {
+                    if (selectedScents.length <
+                        ScentSelectionCheckboxGroupWidget.maxSelectionCount) {
+                      selectedScents.add(scent.displayName);
+                      widget.onSelectionChange(selectedScents);
+                      return;
+                    }
 
-                  selectedScents.remove(scent.displayName);
-                  widget.onSelectionChangeFn(selectedScents);
-                });
+                    selectedScents.remove(scent.displayName);
+                    widget.onSelectionChange(selectedScents);
+                  },
+                );
               },
               value: selectedScents.contains(scent.displayName),
               controlAffinity: ListTileControlAffinity.leading,

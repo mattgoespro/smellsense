@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
-import 'package:smellsense/app/providers/asset.provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smellsense/app/application/providers/asset.provider.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart'
     show TrainingScent;
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
@@ -23,8 +24,8 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: ActionButton(
         type: ActionButtonType.primary,
         text: 'Train',
-        onPressed: () async => Navigator.of(context).pushNamed(
-          '/training',
+        onPressed: () async => context.go(
+          '/training-session',
         ),
       ),
     ),
@@ -33,7 +34,7 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: ActionButton(
         type: ActionButtonType.primary,
         text: 'View Progress',
-        onPressed: () => Navigator.of(context).pushNamed('/training-progress'),
+        onPressed: () => context.go('/training-progress'),
       ),
     ),
     // TODO: Move to Settings panel
@@ -42,7 +43,7 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
     //   child: ActionButton(
     //     type: ActionButtonType.primary,
     //     text: 'Select Scents',
-    //     onPressed: () => Navigator.of(context).pushNamed(
+    //     onPressed: () => context.go(
     //       '/select-scents',
     //       arguments: ScentSelectionRouteArguments(
     //         _scentSelections,
@@ -56,7 +57,7 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: ActionButton(
         type: ActionButtonType.primary,
         text: 'About',
-        onPressed: () => Navigator.of(context).pushNamed('/about'),
+        onPressed: () => context.go('/about'),
       ),
     ),
     SizedBox(
@@ -64,7 +65,7 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
       child: ActionButton(
         type: ActionButtonType.primary,
         text: 'Help',
-        onPressed: () => Navigator.of(context).pushNamed('/help'),
+        onPressed: () => context.go('/help'),
       ),
     )
   ];

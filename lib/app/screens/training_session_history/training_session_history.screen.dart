@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
-import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
-    show SmellSenseAppBar;
 
 class TrainingSessionHistoryScreenWidget extends StatefulWidget {
   const TrainingSessionHistoryScreenWidget({super.key});
@@ -26,10 +24,12 @@ class TrainingSessionHistoryScreenWidgetState
 
   @override
   dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    SystemChrome.setPreferredOrientations(
+      [
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ],
+    );
     super.dispose();
   }
 
@@ -46,7 +46,6 @@ class TrainingSessionHistoryScreenWidgetState
     // var chart;
 
     return Scaffold(
-      appBar: SmellSenseAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

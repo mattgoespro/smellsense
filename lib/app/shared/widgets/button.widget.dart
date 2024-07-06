@@ -26,20 +26,20 @@ class ButtonStyles {
 }
 
 class ActionButton extends ElevatedButton {
-  ActionButton(
-      {super.key,
-      required ActionButtonType type,
-      required String text,
-      super.onPressed,
-      super.autofocus,
-      super.clipBehavior,
-      super.focusNode,
-      super.iconAlignment,
-      super.onFocusChange,
-      super.onHover,
-      super.onLongPress,
-      super.statesController})
-      : super(
+  ActionButton({
+    super.key,
+    required ActionButtonType type,
+    required String text,
+    super.onPressed,
+    super.autofocus,
+    super.clipBehavior,
+    super.focusNode,
+    super.iconAlignment,
+    super.onFocusChange,
+    super.onHover,
+    super.onLongPress,
+    super.statesController,
+  }) : super(
           style: ButtonStyle(
             backgroundColor: ButtonStyles.backgroundColor(type),
             shape: ActionButtonBorderShape.rounded,

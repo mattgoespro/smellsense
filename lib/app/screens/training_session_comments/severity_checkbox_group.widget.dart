@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry_reaction.module.dart';
-import 'package:smellsense/app/shared/widgets/app_bar.widget.dart';
 
 class TrainingSessionSeverityCheckboxGroupWidget extends StatefulWidget {
   final TrainingSessionEntry entry;
@@ -22,7 +21,6 @@ class TrainingSessionSeverityCheckboxGroupWidgetState
   @override
   Widget build(BuildContext context) => Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: SmellSenseAppBar(),
         body: Column(
           children: [
             for (var severity

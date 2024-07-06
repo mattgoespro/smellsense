@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart'
     show HtmlWidget;
-import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
-    show SmellSenseAppBar;
 
 class HelpScreenWidget extends StatelessWidget {
   const HelpScreenWidget({super.key});
@@ -109,7 +107,6 @@ class HelpScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SmellSenseAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
 import 'package:smellsense/app/screens/scent_selection/scent_selection_checkbox_group.widget.dart';
-import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
-    show SmellSenseAppBar;
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
     show ActionButton, ActionButtonType;
 
@@ -20,18 +20,21 @@ class ScentSelectionScreenWidgetState
     extends State<ScentSelectionScreenWidget> {
   Set<String> selectedScents = {};
 
-  isSelectionComplete() =>
+  bool isSelectionComplete() =>
       selectedScents.length ==
       ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
-  storeScentSelections() {
-    // TODO: Store selected scents in db
+  void storeScentSelections() {
+    var infrastructure = context.read<Infrastructure>();
+
+    infrastructure.databaseService!
+        .getTrainingPeriodService()
+        .createTrainingPeriod(DateTime.now());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SmellSenseAppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -51,10 +54,12 @@ class ScentSelectionScreenWidgetState
           ),
           Expanded(
             child: ScentSelectionCheckboxGroupWidget(
-              onSelectionChangeFn: (Set<String> scents) {
-                setState(() {
-                  selectedScents = scents;
-                });
+              onSelectionChange: (Set<String> scents) {
+                setState(
+                  () {
+                    selectedScents = scents;
+                  },
+                );
               },
             ),
           ),
@@ -80,7 +85,7 @@ class ScentSelectionScreenWidgetState
                     }
 
                     storeScentSelections();
-                    context.go('/training');
+                    context.go('/');
                   },
                 ),
               ),

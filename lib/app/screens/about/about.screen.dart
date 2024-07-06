@@ -1,7 +1,5 @@
 import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/material.dart';
-import 'package:smellsense/app/shared/widgets/app_bar.widget.dart'
-    show SmellSenseAppBar;
 import 'package:smellsense/app/theme.dart';
 import 'package:url_launcher/url_launcher.dart' show launchUrl;
 
@@ -66,7 +64,6 @@ class AboutScreenWidgetState extends State<AboutScreenWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: SmellSenseAppBar(),
       body: Column(
         children: [
           Expanded(

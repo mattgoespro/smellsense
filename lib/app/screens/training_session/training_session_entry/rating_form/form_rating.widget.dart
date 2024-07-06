@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:smellsense/app/providers/infrastructure.provider.dart';
-import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/rating_form.widget.dart';
+import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
+import 'package:smellsense/app/screens/training_session/training_session_entry/training_session_entry.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry_rating.module.dart';

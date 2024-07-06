@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smellsense/app/providers/infrastructure.provider.dart';
+import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
 import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/form_rating.widget.dart';
 import 'package:smellsense/app/screens/training_session/training_session_entry/rating_form/form_timer.widget.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';

@@ -41,10 +41,17 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "always"
   },
-  "gradle.nestedProjects": true,
-  "java.gradle.buildServer.openBuildOutput": "openOnBuildStart",
-  "gradle.allowParallelRun": true,
-  "gradle.autoDetect": "on",
+  "json.schemas": [
+    {
+      "description": "Codemagic CI/CD file configuration",
+      "fileMatch": ["codemagic.yml", "codemagic.yaml"],
+      "url": "https://codemagic.io/codemagic-schema.json"
+    }
+  ],
+  // "gradle.nestedProjects": true,
+  // "java.gradle.buildServer.openBuildOutput": "openOnBuildStart",
+  // "gradle.allowParallelRun": true,
+  // "gradle.autoDetect": "on",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.exclude": {
@@ -67,9 +74,8 @@
         "PATH": "{env:PATH};${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools"
       }
     }
-  },
-  "yaml.schemas": {
-    "https://static.codemagic.io/codemagic-schema.json": "https://codemagic.io/codemagic-schema.json"
-  },
-  "gradle.debug": true
+  }
+  // "yaml.schemas": {
+  //   "https://static.codemagic.io/codemagic-schema.json": "https://codemagic.io/codemagic-schema.json"
+  // },
 }

@@ -1,19 +1,18 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class FadeAnimation extends StatefulWidget {
-  final Widget? child;
-  final bool reverse;
-  final int? waitSecondsBetween;
-  final Function? onComplete;
+  final Widget child;
+  final Curve easing;
+  final int duration;
+  final double scale;
 
-  const FadeAnimation(
-      {super.key,
-      this.child,
-      required this.reverse,
-      this.waitSecondsBetween,
-      this.onComplete});
+  const FadeAnimation({
+    super.key,
+    required this.child,
+    required this.scale,
+    required this.duration,
+    required this.easing,
+  });
 
   @override
   FadeAnimationState createState() => FadeAnimationState();
@@ -21,44 +20,61 @@ class FadeAnimation extends StatefulWidget {
 
 class FadeAnimationState extends State<FadeAnimation>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController _opacityController;
+  late AnimationController _scaleController;
   late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+
+    _opacityController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: Duration(
+        milliseconds: widget.duration,
+      ),
+      lowerBound: 0,
+      upperBound: 1,
     );
 
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: widget.duration,
+      ),
+      lowerBound: 0,
+      upperBound: widget.scale,
+    );
 
-    _animation.addStatusListener((status) async {
-      if (status == AnimationStatus.completed && widget.reverse) {
-        Timer(Duration(seconds: widget.waitSecondsBetween!), () {
-          if (mounted) {
-            _controller.reverse();
-          }
-        });
-      } else if (status == AnimationStatus.dismissed) {
-        widget.onComplete!();
-      }
-    });
+    _animation = Tween(begin: 0.0, end: 1.0)
+        .chain(
+          CurveTween(curve: widget.easing),
+        )
+        .animate(_scaleController);
+
+    _animation.addStatusListener((status) {});
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _opacityController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
-    return FadeTransition(
-      opacity: _animation,
-      child: widget.child,
+    _opacityController.forward();
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, widget) {
+        return ScaleTransition(
+          scale: _animation,
+          child: Opacity(
+            opacity: _opacityController.value,
+            child: widget,
+          ),
+        );
+      },
     );
   }
 }

@@ -2,13 +2,21 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter",
+      "name": "Flutter: debug",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "name": "Flutter: debug with device",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
       "flutterMode": "debug",
       "preLaunchTask": "adb: connect to device",
-      "internalConsoleOptions": "openOnFirstSessionStart"
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }

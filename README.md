@@ -1,4 +1,4 @@
-# SmellSense - The Smell Training App
+# SmellSense - Smell Training
 
 SmellSense is a mobile application used to aid the recovery of sense of taste and smell.
 
@@ -12,6 +12,10 @@ SmellSense was designed to provide the following functionality:
 ## What is _Smell Training_?
 
 Smell training is a little-known but scientifically proven method of quickly regaining one's sense of smell by utilizing a complex mechanism of the brain called 'Neuroplasticity', instead of waiting for long periods for your smell to naturally return to normal.
+
+## Set Up Flutter
+
+- Disable flutter for desktop support: `flutter config --no-enable-windows-desktop`
 
 ## Known Issues
 

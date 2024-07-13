@@ -18,7 +18,7 @@
     {
       "label": "adb: connect to device",
       "detail": "Connect to device over Wi-Fi.",
-      "command": "scripts/connect_device.sh -d ${input:device}",
+      "command": "scripts/connect_device.sh -d wifi",
       "isBackground": true,
       "type": "shell",
       "options": {
@@ -35,6 +35,32 @@
           "background": {
             "activeOnStart": true,
             "beginsPattern": "^Successfully connected on",
+            "endsPattern": "^$"
+          }
+        }
+      ]
+    },
+    {
+      "label": "dart: fix",
+      "detail": "Run dart fix.",
+      "command": "scripts/fix.sh",
+      "isBackground": true,
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        {
+          "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+): (.*): (.*)$",
+            "file": 1,
+            "location": 2,
+            "severity": 4,
+            "message": 5
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^(.*):(\\d+):(\\d+): (.*): (.*)$",
             "endsPattern": "^$"
           }
         }

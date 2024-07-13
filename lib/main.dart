@@ -15,7 +15,5 @@ void main() async {
     if (kReleaseMode) exit(1);
   };
 
-  runApp(
-    const App(),
-  );
+  runApp(const App());
 }

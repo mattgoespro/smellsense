@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
 import 'package:smellsense/app/screens/scent_selection/scent_selection_checkbox_group.widget.dart';
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
     show ActionButton, ActionButtonType;
@@ -25,11 +23,13 @@ class ScentSelectionScreenWidgetState
       ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
   void storeScentSelections() {
-    var infrastructure = context.read<Infrastructure>();
+    // log(context.watch());
 
-    infrastructure.databaseService!
-        .getTrainingPeriodService()
-        .createTrainingPeriod(DateTime.now());
+    // var infrastructure = context.watch<Infrastructure>();
+
+    // infrastructure.databaseService
+    //     .getTrainingPeriodService()
+    //     .createTrainingPeriod(DateTime.now());
   }
 
   @override
@@ -78,15 +78,13 @@ class ScentSelectionScreenWidgetState
                 child: ActionButton(
                   type: ActionButtonType.primary,
                   text: 'Next',
-                  onPressed: () {
-                    if (!isSelectionComplete()) {
-                      // button stays disabled
-                      return;
-                    }
-
-                    storeScentSelections();
-                    context.go('/');
-                  },
+                  onPressed: isSelectionComplete()
+                      ? () {
+                          print("Done");
+                          storeScentSelections();
+                          return context.go('/');
+                        }
+                      : null,
                 ),
               ),
             ),

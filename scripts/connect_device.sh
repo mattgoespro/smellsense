@@ -1,45 +1,7 @@
 #!/bin/bash
 
-# Function to print usage
-usage() {
+function usage() {
     echo "Usage: connect_device.sh [-d <wifi|vm>]"
-}
-
-function connect_device() {
-    while getopts ":d" opt; do
-        case ${opt} in
-        d)
-            if [ -z "$OPTARG" ]; then
-                usage
-                return 0
-            fi
-
-            case "$OPTARG" in
-            "wifi")
-                echo "Connecting to device over Wi-Fi..."
-
-                if ! connect_wireless_device; then
-                    echo -e "\n\nFailed to connect to device."
-                    return 1
-                fi
-                ;;
-            "vm")
-                echo "Connecting to device over VM..."
-                return 0
-                ;;
-
-            *)
-                echo "Invalid option: $OPTARG"
-                usage
-                return 1
-                ;;
-            esac
-            ;;
-        \?)
-            usage
-            ;;
-        esac
-    done
 }
 
 function connect_wireless_device() {
@@ -59,7 +21,7 @@ function connect_wireless_device() {
     ADB_PORT=5555
 
     # Retrieve the IP address of the connected device
-    DEVICE_IP=$(adb -s "$DEVICE_ID" shell ip route | awk '{print $9}' | tail -n 1)
+    DEVICE_IP="$(adb -s "$DEVICE_ID" shell ip route | awk '{print $9}' | tail -n 1)"
 
     echo "Identified device '$DEVICE_ID' with IP address: $DEVICE_IP"
 
@@ -80,4 +42,39 @@ function connect_wireless_device() {
     return 1
 }
 
-connect_device
+while getopts "d:" opt; do
+    case "${opt}" in
+    d)
+        if [ -z "$OPTARG" ]; then
+            usage
+            exit 1
+        fi
+
+        case "$OPTARG" in
+        "wifi")
+            echo "Connecting to device over Wi-Fi..."
+
+            if ! connect_wireless_device; then
+                echo -e "\n\nFailed to connect to device."
+                exit 1
+            fi
+            ;;
+        "vm")
+            echo "Connecting to device over VM..."
+            exit 0
+            ;;
+
+        *)
+            echo "Invalid option: $OPTARG"
+            usage
+            exit 1
+            ;;
+        esac
+        ;;
+    \?)
+        usage
+        ;;
+    esac
+done
+
+exit 0

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:smellsense/app/application/providers/asset.provider.dart';
+import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
+import 'package:smellsense/app/shared/modules/training_period.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart'
     show TrainingScent;
 import 'package:smellsense/app/shared/widgets/button.widget.dart'
@@ -18,124 +21,66 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
   final double _menuButtonSize = 140;
   final List<TrainingScent> scents = [];
 
-  late List<Widget> menuButtons = [
-    SizedBox(
-      width: _menuButtonSize,
-      child: ActionButton(
-        type: ActionButtonType.primary,
-        text: 'Train',
-        onPressed: () async => context.go(
-          '/training-session',
-        ),
-      ),
-    ),
-    SizedBox(
-      width: _menuButtonSize,
-      child: ActionButton(
-        type: ActionButtonType.primary,
-        text: 'View Progress',
-        onPressed: () => context.go('/training-progress'),
-      ),
-    ),
-    // TODO: Move to Settings panel
-    // SizedBox(
-    //   width: _menuButtonSize,
-    //   child: ActionButton(
-    //     type: ActionButtonType.primary,
-    //     text: 'Select Scents',
-    //     onPressed: () => context.go(
-    //       '/select-scents',
-    //       arguments: ScentSelectionRouteArguments(
-    //         _scentSelections,
-    //         _onScentSelectionChanged,
-    //       ),
-    //     ),
-    //   ),
-    // ),
-    SizedBox(
-      width: _menuButtonSize,
-      child: ActionButton(
-        type: ActionButtonType.primary,
-        text: 'About',
-        onPressed: () => context.go('/about'),
-      ),
-    ),
-    SizedBox(
-      width: _menuButtonSize,
-      child: ActionButton(
-        type: ActionButtonType.primary,
-        text: 'Help',
-        onPressed: () => context.go('/help'),
-      ),
-    )
-  ];
-
   get assetBundle => AssetProvider();
 
   @override
   Widget build(BuildContext context) {
+    var infrastructure = context.watch<Infrastructure>();
+
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
+        backgroundColor: Colors.grey[200],
+        body: FutureBuilder(
+          future: infrastructure.databaseService
+              .getTrainingScentService()
+              .findTrainingScentsForPeriod(
+                  TrainingPeriod(startDate: DateTime.now(), sessions: [])),
+          builder: (context, snapshot) {
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/svg/smellsense_logo.svg",
-                          width: 50,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Smell',
-                                style: Theme.of(context).textTheme.displayLarge,
-                              ),
-                              TextSpan(
-                                text: 'Sense',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .merge(
-                                      const TextStyle(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          'Smell Training',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        )
-                      ],
-                    ),
+                SvgPicture.asset(
+                  "assets/svg/smellsense_logo.svg",
+                  width: 50,
+                ),
+                Text(
+                  'SmellSense',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                Text(
+                  'Smell Training',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                ActionButton(
+                  type: ActionButtonType.primary,
+                  text: 'Train',
+                  onPressed: () async => context.go(
+                    '/training-session',
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FittedBox(
-                    child: Column(
-                      children: [...menuButtons],
-                    ),
+                ActionButton(
+                  type: ActionButtonType.primary,
+                  text: 'View Progress',
+                  onPressed: () => context.go('/training-progress'),
+                ),
+                SizedBox(
+                  width: _menuButtonSize,
+                  child: ActionButton(
+                    type: ActionButtonType.primary,
+                    text: 'About',
+                    onPressed: () => context.goNamed('about'),
                   ),
                 ),
+                SizedBox(
+                  width: _menuButtonSize,
+                  child: ActionButton(
+                    type: ActionButtonType.primary,
+                    text: 'Help',
+                    onPressed: () => context.goNamed('help'),
+                  ),
+                )
               ],
-            ),
-          ),
-        ],
-      ),
-    );
+            );
+          },
+        ));
   }
 }

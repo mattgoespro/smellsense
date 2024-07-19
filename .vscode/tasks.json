@@ -16,8 +16,8 @@
       }
     },
     {
-      "label": "adb: connect to device",
-      "detail": "Connect to device over Wi-Fi.",
+      "label": "adb: connect to wifi device",
+      "detail": "Connect to a device over Wi-Fi.",
       "command": "scripts/connect_device.sh -d wifi",
       "isBackground": true,
       "type": "shell",
@@ -35,6 +35,31 @@
           "background": {
             "activeOnStart": true,
             "beginsPattern": "^Successfully connected on",
+            "endsPattern": "^$"
+          }
+        }
+      ]
+    },
+    {
+      "label": "adb: launch virtual device",
+      "detail": "Launch a virtual device.",
+      "command": "emulator -avd Pixel_6_API_34 -gpu host  -grpc-use-jwt",
+      "isBackground": true,
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        {
+          "pattern": {
+            "regexp": "^emulator: INFO: boot completed",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^emulator: INFO: boot completed",
             "endsPattern": "^$"
           }
         }

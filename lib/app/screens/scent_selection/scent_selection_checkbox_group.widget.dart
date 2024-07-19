@@ -6,8 +6,10 @@ class ScentSelectionCheckboxGroupWidget extends StatefulWidget {
 
   final void Function(Set<String>) onSelectionChange;
 
-  const ScentSelectionCheckboxGroupWidget(
-      {super.key, required this.onSelectionChange});
+  const ScentSelectionCheckboxGroupWidget({
+    super.key,
+    required this.onSelectionChange,
+  });
 
   @override
   ScentSelectionCheckboxGroupWidgetState createState() =>
@@ -28,6 +30,12 @@ class ScentSelectionCheckboxGroupWidgetState
                 scent.displayName,
                 style: TextStyle(
                   color: scent.displayColor,
+                ),
+              ),
+              secondary: const Text(
+                "Hello",
+                style: TextStyle(
+                  color: Colors.black,
                 ),
               ),
               onChanged: (value) {

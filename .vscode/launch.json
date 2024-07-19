@@ -5,17 +5,16 @@
       "name": "Flutter: debug",
       "type": "dart",
       "request": "launch",
-      "program": "lib/main.dart",
       "flutterMode": "debug",
       "internalConsoleOptions": "openOnSessionStart"
     },
     {
-      "name": "Flutter: debug with device",
+      "name": "Flutter: debug with wifi device",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
       "flutterMode": "debug",
-      "preLaunchTask": "adb: connect to device",
+      "preLaunchTask": "adb: connect to wifi device",
       "internalConsoleOptions": "openOnSessionStart"
     }
   ]

@@ -28,59 +28,64 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
     var infrastructure = context.watch<Infrastructure>();
 
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        body: FutureBuilder(
-          future: infrastructure.databaseService
-              .getTrainingScentService()
-              .findTrainingScentsForPeriod(
-                  TrainingPeriod(startDate: DateTime.now(), sessions: [])),
-          builder: (context, snapshot) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  "assets/svg/smellsense_logo.svg",
-                  width: 50,
+      backgroundColor: Colors.grey[200],
+      body: FutureBuilder(
+        future: infrastructure.databaseService
+            .getTrainingScentService()
+            .findTrainingScentsForPeriod(
+              TrainingPeriod(
+                startDate: DateTime.now(),
+                sessions: [],
+              ),
+            ),
+        builder: (context, snapshot) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/svg/smellsense_logo.svg",
+                width: 50,
+              ),
+              Text(
+                'SmellSense',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              Text(
+                'Smell Training',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              ActionButton(
+                type: ActionButtonType.primary,
+                text: 'Train',
+                onPressed: () async => context.go(
+                  '/training-session',
                 ),
-                Text(
-                  'SmellSense',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                Text(
-                  'Smell Training',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                ActionButton(
+              ),
+              ActionButton(
+                type: ActionButtonType.primary,
+                text: 'View Progress',
+                onPressed: () => context.go('/training-progress'),
+              ),
+              SizedBox(
+                width: _menuButtonSize,
+                child: ActionButton(
                   type: ActionButtonType.primary,
-                  text: 'Train',
-                  onPressed: () async => context.go(
-                    '/training-session',
-                  ),
+                  text: 'About',
+                  onPressed: () => context.goNamed('about'),
                 ),
-                ActionButton(
+              ),
+              SizedBox(
+                width: _menuButtonSize,
+                child: ActionButton(
                   type: ActionButtonType.primary,
-                  text: 'View Progress',
-                  onPressed: () => context.go('/training-progress'),
+                  text: 'Help',
+                  onPressed: () => context.goNamed('help'),
                 ),
-                SizedBox(
-                  width: _menuButtonSize,
-                  child: ActionButton(
-                    type: ActionButtonType.primary,
-                    text: 'About',
-                    onPressed: () => context.goNamed('about'),
-                  ),
-                ),
-                SizedBox(
-                  width: _menuButtonSize,
-                  child: ActionButton(
-                    type: ActionButtonType.primary,
-                    text: 'Help',
-                    onPressed: () => context.goNamed('help'),
-                  ),
-                )
-              ],
-            );
-          },
-        ));
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 }

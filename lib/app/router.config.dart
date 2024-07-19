@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +10,11 @@ import 'package:smellsense/app/screens/splash/splash.screen.dart';
 import 'package:smellsense/app/screens/training_session/training_session.screen.dart';
 import 'package:smellsense/app/screens/training_session_history/training_session_history.screen.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
-import 'package:smellsense/app/shared/widgets/fade.widget.dart';
 
 List<TrainingScent> parseScentsFromUri(Uri uri) {
-  print(uri);
+  if (kDebugMode) {
+    print(uri);
+  }
   String? scentsQueryParam = uri.queryParameters['scents'];
 
   if (scentsQueryParam == null) {
@@ -22,7 +24,7 @@ List<TrainingScent> parseScentsFromUri(Uri uri) {
   List<String> scents = scentsQueryParam.split(',');
 
   if (scents.length < TrainingScent.maxTrainingScents) {
-    throw GoException(
+    throw Exception(
         "Error: Not enough scents resolved from URL path: ${uri.path}.\nExpected ${TrainingScent.maxTrainingScents} scents, but got ${scents.length}.");
   }
 
@@ -73,12 +75,7 @@ final routerConfig = GoRouter(
               return SharedPreferences.getInstance();
             },
             initialData: null,
-            child: const FadeAnimation(
-              scale: 0.5,
-              duration: 5000,
-              easing: Curves.easeInOut,
-              child: ScentSelectionScreenWidget(),
-            ),
+            child: const ScentSelectionScreenWidget(),
           ),
         );
       },

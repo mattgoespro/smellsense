@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class FadeAndScale extends StatefulWidget {
   final Widget child;
-  final Duration duration;
+  final AnimationController? controller;
   final bool fade;
+  final Duration fadeInDuration;
+  final Duration fadeOutDuration;
   final bool scale;
   final double initialScale;
   final double endScale;
@@ -12,9 +14,11 @@ class FadeAndScale extends StatefulWidget {
   const FadeAndScale({
     super.key,
     required this.child,
-    required this.duration,
     required this.onComplete,
+    this.controller,
     this.fade = true,
+    this.fadeInDuration = const Duration(milliseconds: 300),
+    this.fadeOutDuration = const Duration(milliseconds: 300),
     this.initialScale = 0,
     this.endScale = 1,
     this.scale = true,
@@ -25,7 +29,7 @@ class FadeAndScale extends StatefulWidget {
 }
 
 class FadeAndScaleState extends State<FadeAndScale>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _fadeAnimation;
   late final Animation<double> _scaleAnimation;
@@ -33,10 +37,14 @@ class FadeAndScaleState extends State<FadeAndScale>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    )..forward();
+    _controller = widget.controller ??
+        AnimationController(
+          duration: widget.fadeInDuration,
+          vsync: this,
+          reverseDuration: widget.fadeOutDuration,
+        );
+
+    _controller.forward();
 
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
@@ -48,23 +56,18 @@ class FadeAndScaleState extends State<FadeAndScale>
       end: widget.endScale,
     ).animate(_fadeAnimation);
 
-    _scaleAnimation.addStatusListener((status) {
+    _fadeAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.onComplete();
-        _controller.dispose();
+        dispose();
       }
-    });
-
-    _scaleAnimation.addListener(() {
-      setState(() => widget.onComplete());
     });
   }
 
   @override
   void dispose() {
-    super.dispose();
-
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -81,6 +84,7 @@ class FadeAndScaleState extends State<FadeAndScale>
     if (widget.scale) {
       animatedWidget = ScaleTransition(
         scale: _scaleAnimation,
+        alignment: Alignment.center,
         child: animatedWidget,
       );
     }

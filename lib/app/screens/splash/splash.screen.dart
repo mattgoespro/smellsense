@@ -1,101 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smellsense/app/shared/widgets/fade_and_scale.animation.dart';
 
-/// A screen that shows the splash screen, which is the first screen that the user sees when the app is opened.
-/// It animates the smellsense logo by fading it in and scaling it up, then fades out again, and then navigates to the home screen.
 class SplashScreenWidget extends StatefulWidget {
   const SplashScreenWidget({super.key});
 
   @override
-  SplashScreenWidgetState createState() => SplashScreenWidgetState();
+  State<SplashScreenWidget> createState() => _SplashScreenWidgetState();
 }
 
-class SplashScreenWidgetState extends State<SplashScreenWidget> {
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(
-        const Duration(
-          seconds: 2,
-        ), () {
-      context.go('/home');
-    });
-  }
+class _SplashScreenWidgetState extends State<SplashScreenWidget> {
+  int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FadeAndScale(
-              duration: const Duration(seconds: 1),
-              child: SvgPicture.asset(
-                "assets/svg/smellsense_logo.svg",
-                width: 50,
-              ),
-              onComplete: () {
-                context.go('/home');
-                return;
-              },
-            ),
-          ],
+    var theme = Theme.of(context);
+
+    final List<Widget> introSequence = [
+      TweenAnimationBuilder<double>(
+        tween: Tween(
+          begin: 0,
+          end: 1,
         ),
+        duration: const Duration(
+          seconds: 8,
+        ),
+        curve: Curves.decelerate,
+        onEnd: () => setState(
+          () => _currentStep++,
+        ),
+        builder: (context, value, child) {
+          return Opacity(
+            opacity: value < 0.6 ? value : 1 - value,
+            child: Transform.translate(
+              offset: Offset.fromDirection(
+                0,
+                (value - 1) * 200,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/svg/smellsense_logo.svg",
+                    width: 200,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Smell",
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                        TextSpan(
+                          text: "Sense",
+                          style: theme.textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
-    );
-  }
-}
+      TweenAnimationBuilder<double>(
+        tween: Tween(
+          begin: 0,
+          end: 1,
+        ),
+        duration: const Duration(
+          seconds: 8,
+        ),
+        curve: Curves.easeInToLinear,
+        onEnd: () => context.go("/"),
+        builder: (context, value, child) {
+          return Opacity(
+            opacity: value < 0.6 ? value : 1 - value,
+            child: Transform.translate(
+              offset: Offset.fromDirection(
+                0,
+                value * 200,
+              ),
+              child: Text(
+                "Let's start by selecting your training scents.",
+                style: theme.textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        },
+      )
+    ];
 
-class FadeIn extends StatefulWidget {
-  final Widget child;
-  final Duration duration;
-
-  const FadeIn({
-    super.key,
-    required this.child,
-    required this.duration,
-  });
-
-  @override
-  _FadeInState createState() => _FadeInState();
-}
-
-class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        curve: Curves.easeInOut,
-        parent: _controller,
-      ),
-    );
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: widget.child,
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
+      body: Center(child: introSequence[_currentStep]),
     );
   }
 }

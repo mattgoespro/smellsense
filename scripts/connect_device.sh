@@ -9,7 +9,7 @@ function connect_wireless_device() {
     adb start-server
 
     # Get the device ID of the single connected device
-    DEVICE_ID=$(adb devices | grep -w "device" | cut -f1)
+    DEVICE_ID="$(adb devices | grep -w "device" | cut -f1)"
     echo "Detected device with ID: $DEVICE_ID"
 
     # Check if a single device is connected

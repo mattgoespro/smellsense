@@ -47,13 +47,9 @@
     }
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "always"
+    "source.organizeImports": "always",
+    "source.fixAll": "always",
   },
-  // "gradle.nestedProjects": true,
-  // "java.gradle.buildServer.openBuildOutput": "openOnBuildStart",
-  // "gradle.allowParallelRun": true,
-  // "gradle.autoDetect": "on",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.exclude": {

@@ -1,4 +1,10 @@
-enum TrainingSessionEntryRating { none, weak, normal, heightened, parosmia }
+enum TrainingSessionEntryRating {
+  none,
+  weak,
+  normal,
+  heightened,
+  parosmia,
+}
 
 class TrainingSessionEntryRatings {
   static final Map<int, TrainingSessionEntryRating> _ratings = {

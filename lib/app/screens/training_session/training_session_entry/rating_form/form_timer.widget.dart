@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class TrainingSessionEntryRatingFormTimerWidget extends StatefulWidget {
   final int time;
-  final void Function() onStartFn;
-  final void Function() onCompleteFn;
+  final void Function() onStart;
+  final void Function() onComplete;
   final Widget replaceDoneTimerWidget;
 
   const TrainingSessionEntryRatingFormTimerWidget({
     super.key,
     required this.time,
-    required this.onStartFn,
-    required this.onCompleteFn,
+    required this.onStart,
+    required this.onComplete,
     required this.replaceDoneTimerWidget,
   });
 
@@ -79,13 +79,13 @@ class TrainingSessionEntryRatingFormTimerWidgetState
     )..addStatusListener((status) {
         switch (status) {
           case AnimationStatus.completed:
-            widget.onCompleteFn();
+            widget.onComplete();
             break;
           case AnimationStatus.forward:
-            widget.onStartFn();
+            widget.onStart();
             break;
           case AnimationStatus.dismissed:
-            widget.onStartFn();
+            widget.onStart();
             break;
           default:
             break;

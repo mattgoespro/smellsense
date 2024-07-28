@@ -51,20 +51,20 @@ class TrainingSessionEntryRatingFormWidgetState
             Image(
               image: infrastructure.getAssetProvider().getImage(
                     TrainingScentDisplay.getScent(
-                      widget.scent.name.scentName,
+                      widget.scent.name,
                     ).displayImage,
                   ),
             ),
             TrainingSessionEntryRatingFormTimerWidget(
               time: TrainingSessionEntryRatingFormWidget.timerDuration,
-              onStartFn: () {
+              onStart: () {
                 setState(() {
                   busy = true;
                   currentEncouragement =
                       TrainingSessionEncouragements.getNextEncouragement();
                 });
               },
-              onCompleteFn: () {
+              onComplete: () {
                 setState(() {
                   busy = false;
                   currentEncouragement = null;
@@ -72,7 +72,8 @@ class TrainingSessionEntryRatingFormWidgetState
               },
               replaceDoneTimerWidget:
                   TrainingSessionEntryRatingFormRatingWidget(
-                      scent: widget.scent),
+                scent: widget.scent,
+              ),
             ),
           ],
         ),

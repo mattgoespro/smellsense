@@ -1,29 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'supported_scents_loader.dart';
+part of 'supported_training_scent_data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-SupportedScents _$SupportedScentsFromJson(Map<String, dynamic> json) =>
-    SupportedScents()
-      ..scents = (json['scents'] as List<dynamic>)
-          .map((e) => SupportedScent.fromJson(e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$SupportedScentsToJson(SupportedScents instance) =>
-    <String, dynamic>{
-      'scents': instance.scents,
-    };
-
-SupportedScent _$SupportedScentFromJson(Map<String, dynamic> json) =>
-    SupportedScent(
+SupportedTrainingScent _$SupportedTrainingScentFromJson(
+        Map<String, dynamic> json) =>
+    SupportedTrainingScent(
       json['id'] as String,
       json['name'] as String,
     );
 
-Map<String, dynamic> _$SupportedScentToJson(SupportedScent instance) =>
+Map<String, dynamic> _$SupportedTrainingScentToJson(
+        SupportedTrainingScent instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -33,7 +24,7 @@ Map<String, dynamic> _$SupportedScentToJson(SupportedScent instance) =>
 // JsonLiteralGenerator
 // **************************************************************************
 
-final _$glossaryDataJsonLiteral = [
+final _$supportedScentsDataJsonLiteral = [
   {'id': 'dec45941-b576-4377-8dcf-5240c682493e', 'name': 'lemon'},
   {'id': '02e1a6cc-a8e6-41a6-8893-4a713448c6df', 'name': 'rose'},
   {'id': '04299219-a7f4-4439-94e1-bb81d668fe2b', 'name': 'eucalyptus'},

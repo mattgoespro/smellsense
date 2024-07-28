@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smellsense/app/screens/scent_selection/scent_selection_checkbox_group.widget.dart';
-import 'package:smellsense/app/shared/widgets/button.widget.dart'
-    show ActionButton, ActionButtonType;
+import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart';
 
 class ScentSelectionScreenWidget extends StatefulWidget {
   static int maxSelectionCount = 4;
@@ -16,80 +15,69 @@ class ScentSelectionScreenWidget extends StatefulWidget {
 
 class ScentSelectionScreenWidgetState
     extends State<ScentSelectionScreenWidget> {
-  Set<String> selectedScents = {};
+  List<TrainingScentName> selectedScents = [];
 
   bool isSelectionComplete() =>
       selectedScents.length ==
       ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
   void storeScentSelections() {
-    // log(context.watch());
-
-    // var infrastructure = context.watch<Infrastructure>();
-
-    // infrastructure.databaseService
-    //     .getTrainingPeriodService()
-    //     .createTrainingPeriod(DateTime.now());
+    // TODO: Store selected scents in the SmellSense database
   }
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 30, bottom: 10),
-            child: Center(
-              child: Text(
-                'Select your training scents',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w100,
-                  fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize,
+      body: Center(
+        widthFactor: MediaQuery.of(context).size.width,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Text(
+                  'Select ${ScentSelectionCheckboxGroupWidget.maxSelectionCount} of your desired training scents',
+                  style: theme.textTheme.titleMedium,
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
-            ),
-          ),
-          Expanded(
-            child: ScentSelectionCheckboxGroupWidget(
-              onSelectionChange: (Set<String> scents) {
-                setState(
-                  () {
-                    selectedScents = scents;
+              Flexible(
+                flex: 3,
+                child: ScentSelectionCheckboxGroupWidget(
+                  onSelectionChange: (List<TrainingScentName> scents) {
+                    setState(
+                      () {
+                        selectedScents = scents;
+                      },
+                    );
                   },
-                );
-              },
-            ),
-          ),
-          const Divider(
-            color: Colors.blueGrey,
-            indent: 30,
-            endIndent: 30,
-          ),
-          Align(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                bottom: 40,
+                ),
               ),
-              child: SizedBox(
-                child: ActionButton(
-                  type: ActionButtonType.primary,
-                  text: 'Next',
+              Align(
+                alignment: Alignment.bottomRight,
+                child: OutlinedButton(
                   onPressed: isSelectionComplete()
                       ? () {
-                          print("Done");
                           storeScentSelections();
-                          return context.go('/');
+                          return context.goNamed("home");
                         }
                       : null,
+                  child: Text(
+                    'DONE',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
-              ),
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

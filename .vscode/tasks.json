@@ -44,7 +44,6 @@
       "label": "adb: launch virtual device",
       "detail": "Launch a virtual device.",
       "command": "emulator -avd Pixel_6_API_34 -gpu host  -grpc-use-jwt",
-      "isBackground": true,
       "type": "shell",
       "options": {
         "cwd": "${workspaceFolder}"

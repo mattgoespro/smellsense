@@ -7,8 +7,6 @@ import 'package:smellsense/app/application/providers/infrastructure.provider.dar
 import 'package:smellsense/app/shared/modules/training_period.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_scent.module.dart'
     show TrainingScent;
-import 'package:smellsense/app/shared/widgets/button.widget.dart'
-    show ActionButton, ActionButtonType;
 
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({super.key});
@@ -18,17 +16,32 @@ class HomeScreenWidget extends StatefulWidget {
 }
 
 class HomeScreenWidgetState extends State<HomeScreenWidget> {
-  final double _menuButtonSize = 140;
+  // final double _menuButtonSize = 140;
   final List<TrainingScent> scents = [];
+  late final Infrastructure infrastructure;
 
   get assetBundle => AssetProvider();
+
+  Future<TrainingPeriod> getActiveTrainingPeriod() async {
+    return infrastructure.databaseService
+        .getTrainingPeriodService()
+        .getActiveTrainingPeriod();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    infrastructure = context.read<Infrastructure>();
+  }
 
   @override
   Widget build(BuildContext context) {
     var infrastructure = context.watch<Infrastructure>();
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: theme.canvasColor,
       body: FutureBuilder(
         future: infrastructure.databaseService
             .getTrainingScentService()
@@ -54,34 +67,40 @@ class HomeScreenWidgetState extends State<HomeScreenWidget> {
                 'Smell Training',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              ActionButton(
-                type: ActionButtonType.primary,
-                text: 'Train',
-                onPressed: () async => context.go(
-                  '/training-session',
+              FloatingActionButton(
+                onPressed: () => context.goNamed('training'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
                 ),
+                child: Text('Start Training', style: textTheme.labelMedium),
               ),
-              ActionButton(
-                type: ActionButtonType.primary,
-                text: 'View Progress',
-                onPressed: () => context.go('/training-progress'),
-              ),
-              SizedBox(
-                width: _menuButtonSize,
-                child: ActionButton(
-                  type: ActionButtonType.primary,
-                  text: 'About',
+              FloatingActionButton(
+                  onPressed: () => context.go('/training-progress'),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "View Training Progress",
+                    style: textTheme.labelMedium,
+                  )),
+              FloatingActionButton(
                   onPressed: () => context.goNamed('about'),
-                ),
-              ),
-              SizedBox(
-                width: _menuButtonSize,
-                child: ActionButton(
-                  type: ActionButtonType.primary,
-                  text: 'Help',
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "About",
+                    style: textTheme.labelMedium,
+                  )),
+              FloatingActionButton(
                   onPressed: () => context.goNamed('help'),
-                ),
-              )
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "Help",
+                    style: textTheme.labelMedium,
+                  )),
             ],
           );
         },

@@ -1,18 +1,19 @@
 import 'package:smellsense/app/shared/modules/training_session/training_scent_display.module.dart';
 
 enum TrainingScentName {
-  lemon("lemon"),
-  rose("rose"),
-  eucalyptus("eucalyptus"),
-  clove("clove"),
-  orange("orange"),
-  grapefruit("grapefruit"),
-  cinnamon("cinnamon"),
-  mint("mint"),
-  lavender("lavender"),
-  citronella("citronella"),
-  rosemary("rosemary"),
   chamomile("chamomile"),
+  cinnamon("cinnamon"),
+  citronella("citronella"),
+  clove("clove"),
+  eucalyptus("eucalyptus"),
+  garlic("garlic"),
+  grapefruit("grapefruit"),
+  lavender("lavender"),
+  lemon("lemon"),
+  mint("mint"),
+  orange("orange"),
+  rose("rose"),
+  rosemary("rosemary"),
   teaTree("teaTree");
 
   final String scentName;
@@ -38,5 +39,8 @@ class TrainingScent {
     required this.name,
   });
 
-  getDisplay() => TrainingScentDisplay.getScent(name.toString());
+  TrainingScent.fromName(String name)
+      : name = TrainingScentName.fromString(name);
+
+  getDisplay() => TrainingScentDisplay.getScent(name);
 }

@@ -5,7 +5,6 @@
 import 'dart:async'; // generated `floor` SQLite database part imports `StreamController` from `dart:async`
 
 import 'package:floor/floor.dart';
-import 'package:smellsense/app/db/daos/supported_training_scent.dao.dart';
 import 'package:smellsense/app/db/daos/training_period.dao.dart';
 import 'package:smellsense/app/db/daos/training_scent.dao.dart';
 import 'package:smellsense/app/db/daos/training_session.dao.dart';
@@ -35,7 +34,6 @@ abstract class SmellSenseDatabase extends FloorDatabase {
   TrainingPeriodDao get trainingPeriodDao;
   TrainingSessionDao get trainingSessionDao;
   TrainingSessionEntryDao get trainingSessionEntryDao;
-  SupportedTrainingScentDao get supportedTrainingScentDao;
   TrainingScentDao get trainingScentDao;
 }
 

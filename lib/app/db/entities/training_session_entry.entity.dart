@@ -35,7 +35,7 @@ class TrainingSessionEntryEntity {
   final int? parosmiaReaction;
 
   @ColumnInfo(name: 'parosmia_reaction_severity')
-  final String? parosmiaReactionSeverity;
+  final int? parosmiaReactionSeverity;
 
   TrainingSessionEntryEntity({
     required this.id,

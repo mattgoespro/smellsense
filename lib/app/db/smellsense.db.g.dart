@@ -79,8 +79,6 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
 
   TrainingSessionEntryDao? _trainingSessionEntryDaoInstance;
 
-  SupportedTrainingScentDao? _supportedTrainingScentDaoInstance;
-
   TrainingScentDao? _trainingScentDaoInstance;
 
   Future<sqflite.Database> open(
@@ -113,7 +111,7 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `TrainingSessionEntity` (`id` TEXT NOT NULL, `period_id` TEXT NOT NULL, `date` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TrainingSessionEntryEntity` (`id` TEXT NOT NULL, `session_id` TEXT NOT NULL, `scent_id` TEXT NOT NULL, `rating` INTEGER NOT NULL, `comment` TEXT, `parosmia_reaction` INTEGER, `parosmia_reaction_severity` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `TrainingSessionEntryEntity` (`id` TEXT NOT NULL, `session_id` TEXT NOT NULL, `scent_id` TEXT NOT NULL, `rating` INTEGER NOT NULL, `comment` TEXT, `parosmia_reaction` INTEGER, `parosmia_reaction_severity` INTEGER, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -137,12 +135,6 @@ class _$SmellSenseDatabase extends SmellSenseDatabase {
   TrainingSessionEntryDao get trainingSessionEntryDao {
     return _trainingSessionEntryDaoInstance ??=
         _$TrainingSessionEntryDao(database, changeListener);
-  }
-
-  @override
-  SupportedTrainingScentDao get supportedTrainingScentDao {
-    return _supportedTrainingScentDaoInstance ??=
-        _$SupportedTrainingScentDao(database, changeListener);
   }
 
   @override
@@ -205,7 +197,7 @@ class _$TrainingPeriodDao extends TrainingPeriodDao {
   }
 
   @override
-  Future<TrainingPeriodEntity?> findCurrentTrainingPeriod() async {
+  Future<TrainingPeriodEntity?> findActiveTrainingPeriod() async {
     return _queryAdapter.query(
         'SELECT id, start_date FROM TrainingPeriod ORDER BY start_date DESC LIMIT 1',
         mapper: (Map<String, Object?> row) => TrainingPeriodEntity(
@@ -277,11 +269,11 @@ class _$TrainingSessionDao extends TrainingSessionDao {
       _trainingSessionEntityInsertionAdapter;
 
   @override
-  Future<List<TrainingSessionEntryEntity>> findTrainingSessionsByPeriodId(
+  Future<List<TrainingSessionEntity>> findTrainingSessionsByPeriodId(
       String periodId) async {
     return _queryAdapter.queryList(
         'SELECT id, period_id FROM TrainingSession as ts INNER JOIN TrainingPeriod as tsp ON ts.period_id = tsp.id WHERE tsp.id = ?1',
-        mapper: (Map<String, Object?> row) => TrainingSessionEntryEntity(id: row['id'] as String, sessionId: row['session_id'] as String, scentId: row['scent_id'] as String, rating: row['rating'] as int, comment: row['comment'] as String?, parosmiaReactionSeverity: row['parosmia_reaction_severity'] as String?, parosmiaReaction: row['parosmia_reaction'] as int?),
+        mapper: (Map<String, Object?> row) => TrainingSessionEntity(id: row['id'] as String, periodId: row['period_id'] as String, date: _dateTimeTypeConverter.decode(row['date'] as int)),
         arguments: [periodId]);
   }
 
@@ -340,7 +332,7 @@ class _$TrainingSessionEntryDao extends TrainingSessionEntryDao {
       findTrainingSessionEntriesBySessionId(String sessionId) async {
     return _queryAdapter.queryList(
         'SELECT id, session_id, date, scent, rating, comment, severity, response FROM TrainingSessionEntry as tse INNER JOIN TrainingSession as ts ON ts.id = tse.session_id WHERE ts.id = ?1',
-        mapper: (Map<String, Object?> row) => TrainingSessionEntryEntity(id: row['id'] as String, sessionId: row['session_id'] as String, scentId: row['scent_id'] as String, rating: row['rating'] as int, comment: row['comment'] as String?, parosmiaReactionSeverity: row['parosmia_reaction_severity'] as String?, parosmiaReaction: row['parosmia_reaction'] as int?),
+        mapper: (Map<String, Object?> row) => TrainingSessionEntryEntity(id: row['id'] as String, sessionId: row['session_id'] as String, scentId: row['scent_id'] as String, rating: row['rating'] as int, comment: row['comment'] as String?, parosmiaReactionSeverity: row['parosmia_reaction_severity'] as int?, parosmiaReaction: row['parosmia_reaction'] as int?),
         arguments: [sessionId]);
   }
 
@@ -370,48 +362,6 @@ class _$TrainingSessionEntryDao extends TrainingSessionEntryDao {
             .deleteTrainingSessionEntriesBySessionId(sessionId);
       });
     }
-  }
-}
-
-class _$SupportedTrainingScentDao extends SupportedTrainingScentDao {
-  _$SupportedTrainingScentDao(
-    this.database,
-    this.changeListener,
-  ) : _queryAdapter = QueryAdapter(database);
-
-  final sqflite.DatabaseExecutor database;
-
-  final StreamController<String> changeListener;
-
-  final QueryAdapter _queryAdapter;
-
-  @override
-  Future<List<SupportedTrainingScentEntity>>
-      listSupportedTrainingScents() async {
-    return _queryAdapter.queryList(
-        'SELECT id, name FROM SupportedTrainingScent',
-        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
-            id: row['id'] as String, name: row['name'] as String));
-  }
-
-  @override
-  Future<SupportedTrainingScentEntity?> findSupportedTrainingScentByName(
-      String name) async {
-    return _queryAdapter.query(
-        'SELECT id, name FROM SupportedTrainingScent WHERE name = ?1',
-        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
-            id: row['id'] as String, name: row['name'] as String),
-        arguments: [name]);
-  }
-
-  @override
-  Future<SupportedTrainingScentEntity?> findSupportedTrainingScentById(
-      String name) async {
-    return _queryAdapter.query(
-        'SELECT id, name FROM SupportedTrainingScent WHERE name = ?1',
-        mapper: (Map<String, Object?> row) => SupportedTrainingScentEntity(
-            id: row['id'] as String, name: row['name'] as String),
-        arguments: [name]);
   }
 }
 
@@ -460,6 +410,14 @@ class _$TrainingScentDao extends TrainingScentDao {
 
   final DeletionAdapter<TrainingScentEntity>
       _trainingScentEntityDeletionAdapter;
+
+  @override
+  Future<TrainingScentEntity?> findTrainingScentById(String id) async {
+    return _queryAdapter.query(
+        'SELECT id, supported_scent_id, period_id FROM TrainingScent WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => TrainingScentEntity(id: row['id'] as String, periodId: row['period_id'] as String, supportedScentId: row['supported_scent_id'] as String),
+        arguments: [id]);
+  }
 
   @override
   Future<List<TrainingScentEntity>?> findTrainingScentsByPeriodId(

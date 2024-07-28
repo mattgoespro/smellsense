@@ -4,6 +4,10 @@ import 'package:smellsense/app/db/entities/training_scent.entity.dart';
 @dao
 abstract class TrainingScentDao {
   @Query(
+      "SELECT id, supported_scent_id, period_id FROM TrainingScent WHERE id = :id")
+  Future<TrainingScentEntity?> findTrainingScentById(String id);
+
+  @Query(
       'SELECT id, supported_scent_id, period_id FROM TrainingScent WHERE period_id = :periodId')
   Future<List<TrainingScentEntity>?> findTrainingScentsByPeriodId(
       String periodId);

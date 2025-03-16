@@ -87,7 +87,7 @@ class TrainingPeriodService {
 
       List<TrainingPeriod> periods = [];
 
-      for (var periodEntity in periodEntities) {
+      for (TrainingPeriodEntity periodEntity in periodEntities) {
         List<TrainingSession> sessions =
             await trainingSessionService.getTrainingSessions(periodEntity.id);
 

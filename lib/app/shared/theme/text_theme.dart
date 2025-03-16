@@ -11,7 +11,7 @@ TextTheme createTextTheme(
     bodyFont,
   );
 
-  var displayTextStyle = GoogleFonts.getFont(displayFont);
+  TextStyle displayTextStyle = GoogleFonts.getFont(displayFont);
 
   TextTheme fontTextTheme = GoogleFonts.getTextTheme(
     displayFont,

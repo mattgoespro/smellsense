@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smellsense/app/assets/generated/assets.gen.dart';
 import 'package:smellsense/app/pages/scent_selection/scent_selection.route.dart';
 import 'package:smellsense/app/router/router_route_data.dart';
+import 'package:smellsense/app/shared/theme/theme.dart';
 import 'package:smellsense/app/shared/widgets/animators/fade.animator.widget.dart';
 import 'package:smellsense/app/shared/widgets/animators/scale.animator.widget.dart';
 
@@ -13,12 +14,12 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage> {
   int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    MaterialTheme theme = MaterialTheme.of(context);
 
     final List<Widget> introSequence = [
       ScaleAnimate(

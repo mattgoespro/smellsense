@@ -6,7 +6,7 @@
       "detail": "Launch a virtual device.",
       "type": "shell",
       "command": "emulator",
-      "args": ["-avd", "medium_phone"],
+      "args": ["@Samsung_Galaxy_A24_API_35"],
       "isBackground": true,
       "group": {
         "kind": "test"

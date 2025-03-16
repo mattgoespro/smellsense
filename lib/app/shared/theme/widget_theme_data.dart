@@ -37,8 +37,8 @@ class WidgetThemeData {
         }),
         shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
           (Set<WidgetState> states) {
-            var borderWidth = 1.0;
-            var borderRadius = BorderRadius.circular(4);
+            double borderWidth = 1.0;
+            BorderRadius borderRadius = BorderRadius.circular(4);
 
             if (states.contains(WidgetState.disabled)) {
               return RoundedRectangleBorder(
@@ -67,8 +67,8 @@ class WidgetThemeData {
       CheckboxThemeData(
         checkColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) {
-            var isDisabled = states.contains(WidgetState.disabled);
-            var isChecked = states.contains(WidgetState.selected);
+            bool isDisabled = states.contains(WidgetState.disabled);
+            bool isChecked = states.contains(WidgetState.selected);
 
             if (isDisabled) {
               return isChecked

@@ -18,7 +18,7 @@ class DatabaseServiceProvider {
   /// This function should only be called once before the application initializes.
   ///
   static Future<DatabaseService> create() async {
-    var db = await $FloorSmellSenseDatabase
+    SmellSenseDatabase db = await $FloorSmellSenseDatabase
         .databaseBuilder(DatabaseServiceProvider.dbName)
         .build();
 

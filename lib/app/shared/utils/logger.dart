@@ -33,7 +33,7 @@ class CustomLogPrinter extends PrettyPrinter {
 }
 
 class Output {
-  static var logger = Logger(
+  static Logger logger = Logger(
     printer: CustomLogPrinter(),
     output: ConsoleOutput(),
     filter: kDebugMode ? DevelopmentFilter() : ProductionFilter(),

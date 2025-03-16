@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
 import 'package:smellsense/app/shared/modules/training_scent/training_scent.module.dart';
 import 'package:smellsense/app/assets/supported_training_scent.dart';
+import 'package:smellsense/app/shared/theme/theme.dart';
 
 class ScentSelectionCheckboxGroupWidget extends StatefulWidget {
   static const maxSelectionCount = 4;
@@ -42,8 +43,8 @@ class ScentSelectionCheckboxGroupWidgetState
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
+    MaterialTheme theme = MaterialTheme.of(context);
+    TextTheme textTheme = theme.textTheme;
 
     return ListView(
       itemExtent: 48,
@@ -51,10 +52,10 @@ class ScentSelectionCheckboxGroupWidgetState
       scrollDirection: Axis.vertical,
       clipBehavior: Clip.antiAlias,
       children: [
-        for (var scent in supportedTrainingScents)
+        for (SupportedTrainingScent scent in supportedTrainingScents)
           CheckboxListTile(
             dense: true,
-            checkboxShape: theme.checkboxTheme.shape,
+            checkboxShape: theme.themeData.checkboxTheme.shape,
             title: Text(
               "shared.scent_name.${scent.name}".tr(),
               style: textTheme.bodyMedium!.copyWith(
@@ -65,8 +66,9 @@ class ScentSelectionCheckboxGroupWidgetState
             onChanged: (value) {
               setState(
                 () {
-                  var isChecked = value ?? false;
-                  var scentSelections = selectedScents.keys
+                  bool isChecked = value ?? false;
+                  List<TrainingScentName> selectedScentNames = selectedScents
+                      .keys
                       .where((key) => selectedScents[key]!)
                       .toList();
                   TrainingScentName scentName =
@@ -75,8 +77,8 @@ class ScentSelectionCheckboxGroupWidgetState
                   if (!isChecked) {
                     setState(() {
                       selectedScents[scentName] = isChecked;
-                      scentSelections.remove(scentName);
-                      widget.onSelectionChange(scentSelections);
+                      selectedScentNames.remove(scentName);
+                      widget.onSelectionChange(selectedScentNames);
                     });
 
                     return;
@@ -86,7 +88,7 @@ class ScentSelectionCheckboxGroupWidgetState
                   /// Prevent the checkbox from being selected, and show a snackbar
                   /// to the user
                   ///
-                  if (scentSelections.length ==
+                  if (selectedScentNames.length ==
                       ScentSelectionCheckboxGroupWidget.maxSelectionCount) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -113,7 +115,7 @@ class ScentSelectionCheckboxGroupWidgetState
                   setState(() {
                     selectedScents[scentName] = isChecked;
                     widget.onSelectionChange(
-                      [...scentSelections, scentName],
+                      [...selectedScentNames, scentName],
                     );
                   });
                 },

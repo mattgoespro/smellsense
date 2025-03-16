@@ -47,9 +47,7 @@ class App extends StatelessWidget {
             locale: context.locale,
             builder: (context, child) {
               if (child == null) {
-                return const Center(
-                  child: LoaderWidget(),
-                );
+                return Placeholder();
               }
 
               return Padding(

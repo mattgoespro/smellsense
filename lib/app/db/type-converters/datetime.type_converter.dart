@@ -4,7 +4,7 @@ import 'package:smellsense/app/shared/utils/datetimeutils.dart';
 class DateTimeTypeConverter extends TypeConverter<DateTime, int> {
   @override
   DateTime decode(int databaseValue) {
-    var dateTime = DateTime.fromMillisecondsSinceEpoch(databaseValue);
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(databaseValue);
     return DateTimeUtils.getDateOnly(dateTime);
   }
 

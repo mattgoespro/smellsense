@@ -6,18 +6,13 @@
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
+      "flutterMode": "debug",
+      "console": "debugConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "presentation": {
         "group": "debug",
         "order": 1
       },
-      "console": "debugConsole",
-      "codeLens": {
-        "for": ["debug-file", "run-file"],
-        "title": "Debug",
-        "path": "${relativeFile}"
-      },
-      "flutterMode": "debug",
       "vmAdditionalArgs": [
         "--enable-software-rendering",
         "--enable-dart-profiling",
@@ -27,19 +22,19 @@
       ]
     },
     {
-      "name": "debug: device over wi-fi",
+      "name": "debug: wi-fi device",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
       "deviceId": "SM A245F",
-      "console": "debugConsole",
       "flutterMode": "debug",
+      "console": "debugConsole",
       "internalConsoleOptions": "openOnSessionStart",
+      "preLaunchTask": "adb: connect to wifi device",
       "presentation": {
         "group": "debug",
         "order": 2
-      },
-      "preLaunchTask": "adb: connect to wifi device"
+      }
     },
     {
       "name": "test: integration",

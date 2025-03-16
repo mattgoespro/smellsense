@@ -21,7 +21,7 @@ class _CommentFormWidgetState extends State<CommentFormWidget> {
         builder: (FormFieldState<dynamic> field) =>
             DropdownButtonFormField<int>(
           items: [
-            for (var reaction
+            for (TrainingSessionEntryParosmiaReaction reaction
                 in TrainingSessionEntryParosmiaReaction.getReactions())
               DropdownMenuItem(
                 value: reaction.reaction,
@@ -49,7 +49,7 @@ class _CommentFormWidgetState extends State<CommentFormWidget> {
         builder: (FormFieldState<dynamic> field) =>
             DropdownButtonFormField<int>(
           items: [
-            for (var severity
+            for (TrainingSessionEntryParosmiaSeverity severity
                 in TrainingSessionEntryParosmiaSeverity.getSeverities())
               DropdownMenuItem(
                 value: severity.severity,

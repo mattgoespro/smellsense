@@ -48,7 +48,7 @@ void main() {
 
       await trainingPeriodService.createTrainingPeriod(testTrainingPeriod);
 
-      var scents = trainingSession.entries
+      List<TrainingScent> scents = trainingSession.entries
           .map(
             TrainingScent.of,
           )

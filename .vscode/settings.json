@@ -21,6 +21,11 @@
     // strings. This setting will prevent that.
     "editor.wordBasedSuggestions": "off"
   },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
+  },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

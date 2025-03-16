@@ -1,14 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:smellsense/app/application/providers/infrastructure.provider.dart';
 import 'package:smellsense/app/shared/modules/training_period.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry.module.dart';
 import 'package:smellsense/app/shared/modules/training_session/training_session_entry_rating.module.dart';
 
 class TrainingSessionHistoryChartWidget extends StatefulWidget {
-  const TrainingSessionHistoryChartWidget({super.key});
+  final List<TrainingPeriod> periods;
+
+  const TrainingSessionHistoryChartWidget({
+    super.key,
+    required this.periods,
+  });
 
   @override
   State<StatefulWidget> createState() =>
@@ -25,147 +28,138 @@ class TrainingSessionHistoryChartWidgetState
   int touchedGroupIndex = -1;
 
   @override
-  void initState() async {
-    super.initState();
-
-    List<TrainingPeriod> periods = await context
-        .watch<Infrastructure>()
-        .databaseService
-        .getTrainingPeriods();
+  void initState() {
+    List<TrainingPeriod> periods = widget.periods;
 
     // TODO: Create bar chart series for all of the sessions done
     // in each period, in order of the period start date
     ratingBarGroups = [];
 
     visibleRatingBarGroups = ratingBarGroups;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                // makeTransactionsIcon(),
-                const SizedBox(
-                  width: 38,
-                ),
-                const Text(
-                  'Transactions',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                const Text(
-                  'state',
-                  style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 38,
-            ),
-            Expanded(
-              child: BarChart(
-                BarChartData(
-                  maxY: 20,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: ((group) {
-                        return Colors.grey;
-                      }),
-                      getTooltipItem: (a, b, c, d) => null,
-                    ),
-                    touchCallback: (FlTouchEvent event, response) {
-                      if (response == null || response.spot == null) {
-                        setState(() {
-                          touchedGroupIndex = -1;
-                          visibleRatingBarGroups = List.of(ratingBarGroups);
-                        });
-                        return;
-                      }
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [],
+        // children: <Widget>[
+        // Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: <Widget>[
+        //     // makeTransactionsIcon(),
+        //     const SizedBox(
+        //       width: 38,
+        //     ),
+        //     const Text(
+        //       'Transactions',
+        //       style: TextStyle(color: Colors.white, fontSize: 22),
+        //     ),
+        //     const SizedBox(
+        //       width: 4,
+        //     ),
+        //     const Text(
+        //       'state',
+        //       style: TextStyle(color: Color(0xff77839a), fontSize: 16),
+        //     ),
+        //   ],
+        // ),
+        // const SizedBox(
+        // height: 38,
+        // ),
+        // BarChart(
+        //   BarChartData(
+        //     maxY: 20,
+        //     barTouchData: BarTouchData(
+        //       touchTooltipData: BarTouchTooltipData(
+        //         getTooltipColor: ((group) {
+        //           return Colors.grey;
+        //         }),
+        //         getTooltipItem: (a, b, c, d) => null,
+        //       ),
+        //       touchCallback: (FlTouchEvent event, response) {
+        //         if (response == null || response.spot == null) {
+        //           setState(() {
+        //             touchedGroupIndex = -1;
+        //             visibleRatingBarGroups = List.of(ratingBarGroups);
+        //           });
+        //           return;
+        //         }
 
-                      touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+        //         touchedGroupIndex = response.spot!.touchedBarGroupIndex;
 
-                      setState(() {
-                        if (!event.isInterestedForInteractions) {
-                          touchedGroupIndex = -1;
-                          visibleRatingBarGroups = List.of(ratingBarGroups);
-                          return;
-                        }
-                        visibleRatingBarGroups = List.of(ratingBarGroups);
-                        if (touchedGroupIndex != -1) {
-                          var sum = 0.0;
-                          for (final rod
-                              in visibleRatingBarGroups[touchedGroupIndex]
-                                  .barRods) {
-                            sum += rod.toY;
-                          }
-                          final avg = sum /
-                              visibleRatingBarGroups[touchedGroupIndex]
-                                  .barRods
-                                  .length;
+        //         setState(() {
+        //           if (!event.isInterestedForInteractions) {
+        //             touchedGroupIndex = -1;
+        //             visibleRatingBarGroups = List.of(ratingBarGroups);
+        //             return;
+        //           }
+        //           visibleRatingBarGroups = List.of(ratingBarGroups);
+        //           if (touchedGroupIndex != -1) {
+        //             double sum = 0.0;
+        //             for (final rod
+        //                 in visibleRatingBarGroups[touchedGroupIndex]
+        //                     .barRods) {
+        //               sum += rod.toY;
+        //             }
+        //             final avg = sum /
+        //                 visibleRatingBarGroups[touchedGroupIndex]
+        //                     .barRods
+        //                     .length;
 
-                          visibleRatingBarGroups[touchedGroupIndex] =
-                              visibleRatingBarGroups[touchedGroupIndex]
-                                  .copyWith(
-                            barRods: visibleRatingBarGroups[touchedGroupIndex]
-                                .barRods
-                                .map((rod) {
-                              return rod.copyWith(
-                                toY: avg,
-                                color: Colors.yellow,
-                              );
-                            }).toList(),
-                          );
-                        }
-                      });
-                    },
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: bottomTitles,
-                        reservedSize: 42,
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 28,
-                        interval: 1,
-                        getTitlesWidget: leftTitles,
-                      ),
-                    ),
-                  ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: visibleRatingBarGroups,
-                  gridData: const FlGridData(show: false),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
-        ),
+        //             visibleRatingBarGroups[touchedGroupIndex] =
+        //                 visibleRatingBarGroups[touchedGroupIndex].copyWith(
+        //               barRods: visibleRatingBarGroups[touchedGroupIndex]
+        //                   .barRods
+        //                   .map((rod) {
+        //                 return rod.copyWith(
+        //                   toY: avg,
+        //                   color: Colors.yellow,
+        //                 );
+        //               }).toList(),
+        //             );
+        //           }
+        //         });
+        //       },
+        //     ),
+        //     titlesData: FlTitlesData(
+        //       show: true,
+        //       rightTitles: const AxisTitles(
+        //         sideTitles: SideTitles(showTitles: false),
+        //       ),
+        //       topTitles: const AxisTitles(
+        //         sideTitles: SideTitles(showTitles: false),
+        //       ),
+        //       bottomTitles: AxisTitles(
+        //         sideTitles: SideTitles(
+        //           showTitles: true,
+        //           getTitlesWidget: bottomTitles,
+        //           reservedSize: 42,
+        //         ),
+        //       ),
+        //       leftTitles: AxisTitles(
+        //         sideTitles: SideTitles(
+        //           showTitles: true,
+        //           reservedSize: 28,
+        //           interval: 1,
+        //           getTitlesWidget: leftTitles,
+        //         ),
+        //       ),
+        //     ),
+        //     borderData: FlBorderData(
+        //       show: false,
+        //     ),
+        //     barGroups: visibleRatingBarGroups,
+        //     gridData: const FlGridData(show: false),
+        //   ),
+        // ),
+        // const SizedBox(
+        // height: 12,
+        // ),
+        // ],
       ),
     );
   }

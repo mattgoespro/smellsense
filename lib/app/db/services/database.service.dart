@@ -71,7 +71,8 @@ class DatabaseService {
     TrainingSession session,
   ) async {
     try {
-      var period = await _trainingPeriodService.getActiveTrainingPeriod();
+      TrainingPeriod period =
+          await _trainingPeriodService.getActiveTrainingPeriod();
 
       await _trainingSessionService.recordTrainingSession(
         period,

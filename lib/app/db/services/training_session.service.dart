@@ -51,7 +51,7 @@ class TrainingSessionService {
       List<TrainingSessionEntity> sessionEntities =
           await _trainingSessionDao.findTrainingSessionsByPeriodId(periodId);
 
-      for (var sessionEntity in sessionEntities) {
+      for (TrainingSessionEntity sessionEntity in sessionEntities) {
         List<TrainingSessionEntry> sessionEntries =
             await _trainingSessionEntryService
                 .getTrainingSessionEntries(sessionEntity.id);

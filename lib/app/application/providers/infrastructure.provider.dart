@@ -15,7 +15,7 @@ class Infrastructure {
   });
 
   Infrastructure.of(BuildContext context) {
-    var infrastructure = context.read<Infrastructure>();
+    Infrastructure infrastructure = context.read<Infrastructure>();
 
     databaseService = infrastructure.databaseService;
     supportedTrainingScentProvider =

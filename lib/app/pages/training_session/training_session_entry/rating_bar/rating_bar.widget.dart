@@ -23,14 +23,15 @@ class RatingBarWidgetState extends State<RatingBarWidget>
   Widget build(BuildContext context) {
     super.build(context);
 
-    var theme = MaterialTheme.of(context);
+    MaterialTheme theme = MaterialTheme.of(context);
 
     return RatingBar.builder(
       direction: Axis.vertical,
       itemCount: TrainingSessionEntryRating.values.length,
       minRating: 1,
       itemBuilder: (context, rating) {
-        var option = TrainingSessionEntryRating.fromValue(rating.toInt());
+        TrainingSessionEntryRating option =
+            TrainingSessionEntryRating.fromValue(rating.toInt());
 
         return Text(
           "screens.training_session.training_session_entry.rating_bar.option.${option.rating}"
@@ -39,7 +40,8 @@ class RatingBarWidgetState extends State<RatingBarWidget>
         );
       },
       onRatingUpdate: (rating) {
-        var entryWidget = TrainingSessionEntryWidget.of(context);
+        TrainingSessionEntryWidgetState entryWidget =
+            TrainingSessionEntryWidget.of(context);
 
         return entryWidget.updateEntry(
           (entry) {

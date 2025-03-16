@@ -29,7 +29,7 @@ class ScentSelectionPageState extends State<ScentSelectionPage> {
       ScentSelectionCheckboxGroupWidget.maxSelectionCount;
 
   Future<void> storeScentSelections() async {
-    var infrastructure = Infrastructure.of(context);
+    Infrastructure infrastructure = Infrastructure.of(context);
 
     await infrastructure.databaseService.createTrainingPeriod(
       DateTimeUtils.date(),
@@ -80,8 +80,8 @@ class ScentSelectionPageState extends State<ScentSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = MaterialTheme.of(context);
-    var textTheme = theme.textTheme;
+    MaterialTheme theme = MaterialTheme.of(context);
+    TextTheme textTheme = theme.textTheme;
 
     return Scaffold(
       body: Center(

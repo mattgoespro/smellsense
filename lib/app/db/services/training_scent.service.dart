@@ -1,4 +1,5 @@
 import 'package:smellsense/app/application/providers/supported_training_scent.provider.dart';
+import 'package:smellsense/app/assets/supported_training_scent.dart';
 import 'package:smellsense/app/db/daos/training_scent.dao.dart';
 import 'package:smellsense/app/db/entities/training_period.entity.dart';
 import 'package:smellsense/app/db/entities/training_scent.entity.dart'
@@ -31,7 +32,7 @@ class TrainingScentService {
         throw SmellSenseDatabaseException("Training scent not found: $id");
       }
 
-      var supportedScent = supportedTrainingScentProvider
+      SupportedTrainingScent supportedScent = supportedTrainingScentProvider
           .getSupportedTrainingScentById(entity.supportedScentId);
 
       return TrainingScent(
@@ -74,8 +75,9 @@ class TrainingScentService {
       return Future.wait(
         entities.map<Future<TrainingScent>>(
           (entity) async {
-            var supportedScent = supportedTrainingScentProvider
-                .getSupportedTrainingScentById(entity.supportedScentId);
+            SupportedTrainingScent supportedScent =
+                supportedTrainingScentProvider
+                    .getSupportedTrainingScentById(entity.supportedScentId);
 
             return TrainingScent(
               id: entity.id,
@@ -101,7 +103,7 @@ class TrainingScentService {
     TrainingScent scent,
   ) async {
     try {
-      var supportedScent = supportedTrainingScentProvider
+      SupportedTrainingScent supportedScent = supportedTrainingScentProvider
           .findSupportedTrainingScentByName(scent.name.name);
 
       await _trainingScentDao.insertTrainingScent(

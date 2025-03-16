@@ -23,6 +23,7 @@
     "simonsiefke.svg-preview",
     "alexisvt.flutter-snippets",
     "eamodio.gitlens",
-    "djbkwon.flutter-dependency-docs"
+    "djbkwon.flutter-dependency-docs",
+    "redhat.vscode-xml"
   ]
 }

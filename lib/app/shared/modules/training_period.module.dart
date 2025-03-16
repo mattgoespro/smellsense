@@ -27,7 +27,8 @@ class TrainingPeriod {
 
   @override
   String toString() {
-    var sessionsString = (sessions ?? []).map((e) => e.toString()).join("\n, ");
+    String sessionsString =
+        (sessions ?? []).map((e) => e.toString()).join("\n, ");
 
     return "TrainingPeriod(startDate: $startDate, sessions: $sessionsString)";
   }

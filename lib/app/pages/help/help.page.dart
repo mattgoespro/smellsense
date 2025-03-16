@@ -1,108 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart'
-    show HtmlWidget;
+import 'package:smellsense/app/shared/theme/theme.dart';
 
 class HelpScreenPage extends StatelessWidget {
   const HelpScreenPage({super.key});
-
-  final String _helpInfo = """
-  <div style="font-family: Roboto">
-    <h1 style="font-size: 24px; font-weight: 200">What is smell training?</h1>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      Smell training engages an innate property of the brain known as
-      <span style="font-weight: 300">Neuroplasticity</span>: 'the ability of the
-      brain to form and reorganize synaptic connections, especially in response to
-      learning or experience or following injury.' - <i>Google Dictionary</i>.
-    </p>
-    <h1 style="font-size: 24px; font-weight: 200">
-      I'm ready to begin my training. What do I do?
-    </h1>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      In a training session, a set of four familiar smells (typically
-      <span style="color: #f18db0; font-weight: 400">Rose</span>,
-      <span style="color: #a0877f; font-weight: 400">Clove</span>,
-      <span style="color: #d6e063; font-weight: 400">Lemon</span>, and
-      <span style="color: #56af57; font-weight: 400">Eucalyptus</span>) are
-      smelled, in turn, for a period of 20-30 seconds, whilst mindfully
-      visualizing and remembering how each substance would have smelled prior to
-      the smell loss.
-    </p>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      Repeat the training twice daily for better results.
-    </p>
-    <h1 style="font-size: 24px; font-weight: 200">
-      Over how long a period do I need to smell train in order to recover fully?
-    </h1>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      Recovery periods naturally differ from person to person, but research
-      suggests that the average treatment would last for ~3 months.
-    </p>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      Much depends on the underlying cause of your loss of smell and the severity
-      thereof. Most people will become aware of positive changes within 3 months
-      of starting smell training. Occasionally, it is possible that you may regain
-      the smell of a desired scent, but it does not feel 'correct'. Do not be
-      concerned -
-      <span style="font-weight: 300">
-        this is a positive sign that recovery is underway, and that you should
-        continue your training as per usual.
-      </span>
-    </p>
-    <h1 style="font-size: 24px; font-weight: 200">
-      I don't have the official Smell<span style="color: #2499f0">Sense</span>
-      kit, so am I still able to use this app?
-    </h1>
-    <p style="font-size: 20px; font-weight: 300; padding-bottom: 5px">Yes!</p>
-    <p style="font-size: 14px; font-weight: 200; padding-bottom: 5px">
-      The Smell<span style="color: #2499f0">Sense</span> kit is built simply for
-      convenience, and the scents supplied are the most effective for retraining,
-      according to most research up-to-date.
-    </p>
-    <p style="font-size: 14px; font-weight: 200">
-      Otherwise, you can make up your own set of scents on which to smell train.
-      Be sure to use a set of recognizable smells that remain consistently strong
-      over the period of training. Typically, studies use a representative
-      substance from each of the 'notes' of smell:
-    </p>
-    <ul style="font-size: 14px; font-weight: 200; padding-left: 25px">
-      <li style="padding: 3px">
-        Floral - eg. <span style="color: #f18db0; font-weight: 400">Rose</span>
-      </li>
-      <li style="padding: 3px">
-        Fruity - eg. <span style="color: #d6e063; font-weight: 400">Lemon</span>
-      </li>
-      <li style="padding: 3px">
-        Spicy - eg. <span style="color: #a0877f; font-weight: 400">Clove</span>
-      </li>
-      <li style="padding: 3px">
-        Aromatic - eg.
-        <span style="color: #56af57; font-weight: 400"> Eucalyptus</span>
-      </li>
-    </ul>
-    <p style="font-size: 14px; font-weight: 200">
-      We wish you all the best with your recovery!
-    </p>
-    <p>
-      For more information and resources, refer to the
-      <span style="color: #054a9e; font-weight: 600">About</span> screen from the
-      main menu.
-    </p>
-  </div>
-  """;
-
-  static const headerStyle = TextStyle(
-    fontFamily: 'Roboto',
-    color: Colors.black,
-    fontSize: 24,
-    fontWeight: FontWeight.w200,
-  );
-
-  static const bodyStyle = TextStyle(
-    fontFamily: 'Roboto',
-    color: Colors.black,
-    fontSize: 14,
-    fontWeight: FontWeight.w200,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +10,60 @@ class HelpScreenPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: HtmlWidget(
-            _helpInfo,
+          child: Flex(
+            direction: Axis.vertical,
+            spacing: 16,
+            children: [
+              HelpParagraphWidget('What is smell training?',
+                  body:
+                      'Smell training engages an innate function of the brain known as Neuroplasticity, \'the brain\'s ability to form and reorganize synaptic connections, especially in response to learning, experiencing, or following injury.\' - Google Dictionary.'),
+              HelpParagraphWidget(
+                  'I\'m ready to begin my training. What do I do?',
+                  body:
+                      'In a smell training session, a set of four familiar scents (typically Rose, Clove, Lemon, and Eucalyptus) are smelled, in turn, for a period of 20-30 seconds, whilst mindfully visualizing and remembering how each substance would have smelled prior to the smell loss. Repeating the training multiple times daily often produces better results.'),
+              HelpParagraphWidget(
+                  'Over how long a period do I need to smell train in order for my sense of smell to fully recover/return to normal?',
+                  body:
+                      'Recovery periods naturally differ from person to person, but research suggests that the average treatment would last for ~3 months. Much depends on the underlying cause of your loss of smell and the severity thereof. Most people will become aware of positive changes within 3 months of starting smell training. Occasionally, it is possible that you may regain the smell of a desired scent, but it does not feel \'correct\'. Do not be concerned - this is a positive sign that recovery is underway and that you should continue your training regimen as per usual.'),
+              HelpParagraphWidget(
+                  'I don\'t have the official SmellSense kit. Am I still able to use the SmellSense mobile application to train?',
+                  body:
+                      'Yes! The official SmellSense kit is built simply for your convenience, and the scents supplied are those that are known to be most effective for smell training according to the most  up-to-date research. You can simply make up your own set of scents on which to smell train. Be sure to use a set of recognizable smells that remain consistently strong over the period of training. Typically, studies use a representative substance from each of the \'notes\' of smell: Floral - eg. Rose, Fruity - eg. Lemon, Spicy - eg. Clove, Aromatic - eg. Eucalyptus. We wish you all the best with your recovery! For more information and resources, refer to the About screen from the main menu.'),
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class HelpParagraphWidget extends StatelessWidget {
+  final String title;
+  final String body;
+
+  const HelpParagraphWidget(
+    this.title, {
+    super.key,
+    required this.body,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    MaterialTheme theme = MaterialTheme.of(context);
+    TextTheme textTheme = theme.textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: textTheme.headlineMedium,
+        ),
+        Text(
+          body,
+          style: textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }

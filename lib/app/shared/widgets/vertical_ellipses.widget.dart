@@ -6,8 +6,8 @@ class VerticalEllipses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = MaterialTheme.of(context);
-    var box = Padding(
+    MaterialTheme theme = MaterialTheme.of(context);
+    Padding box = Padding(
       padding: const EdgeInsets.all(2),
       child: Container(
         width: 6,

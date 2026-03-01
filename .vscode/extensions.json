@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "github.copilot-chat",
     "esbenp.prettier-vscode",
     "Dart-Code.flutter",
     "usernamehw.errorlens",
@@ -13,8 +14,6 @@
     "foxundermoon.shell-format",
     "netcorext.uuid-generator",
     "antoinegtr.flutter-icons",
-    "github.copilot",
-    "github.copilot-chat",
     "circlecodesolution.ccs-flutter-color",
     "yy0931.vscode-sqlite3-editor",
     "davidanson.vscode-markdownlint",
